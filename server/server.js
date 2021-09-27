@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 8000;
+const router = require('./routes/routes');
 
 app.use(cors());
 
@@ -20,9 +21,7 @@ try {
   console.log(`Error while connecting DB!!!: ${error}`);
 }
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Hello from homepage' });
-});
+app.use(router);
 
 app.listen(PORT, () => {
   console.log(`App running on port: ${PORT}`);
