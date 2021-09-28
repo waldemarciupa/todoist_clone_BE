@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8000;
 const router = require('./routes/routes');
 
 app.use(cors());
+app.use(express.json());
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
