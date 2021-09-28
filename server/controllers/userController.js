@@ -23,4 +23,23 @@ module.exports = {
       .status(400)
       .json({ message: 'User with this email already exist' });
   },
+  async getUserById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const user = await User.findById(id);
+
+      if (user) {
+        return res.send({
+          id: user._id,
+          name: user.name,
+          email: user.email,
+        });
+      } else {
+        return res.status(400).json({ message: "User doesn't exist" });
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
 };
