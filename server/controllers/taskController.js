@@ -2,15 +2,17 @@ const Task = require('../models/taskModel');
 
 module.exports = {
   async getAllTasks(req, res) {
+    const { project } = req.params;
+    const query = project ? { project } : {};
     try {
-      const tasks = await Task.find({});
+      const tasks = await Task.find(query);
 
       if (tasks) {
         return res.json(tasks);
       }
     } catch (error) {
       return res
-        .satus(400)
+        .status(400)
         .json({ message: "Enjoy your day. You don't have any task to do" });
     }
   },
@@ -38,11 +40,9 @@ module.exports = {
 
       if (task) {
         return res.json(task);
-      } else {
-        return res.status(400).json({ message: "Task doesn't exist" });
       }
     } catch (error) {
-      return res.status(400).json({ message: 'Error while fetching task' });
+      return res.status(400).json({ message: "Task doesn't exist" });
     }
   },
   async deleteTask(req, res) {
@@ -50,12 +50,13 @@ module.exports = {
 
     try {
       const task = await Task.findById(id);
+
       if (task) {
         await Task.findByIdAndRemove(id);
         return res.json({ message: 'Task deleted successfully' });
-      } else {
-        return res.status(400).json({ message: "Task doesn't exist" });
       }
-    } catch (error) {}
+    } catch (error) {
+      return res.status(400).json({ message: "Task doesn't exist" });
+    }
   },
 };
