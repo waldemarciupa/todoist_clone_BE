@@ -8,7 +8,7 @@ export const StyledLogin = styled.div`
   background-color: #fafafa;
 `;
 
-export const LoginBox = styled.div`
+export const LoginForm = styled.form`
   width: 450px;
   border: 1px solid #dbdbdb;
   border-radius: 8px;
