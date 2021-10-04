@@ -32,7 +32,7 @@ const Login = () => {
     <>
       <StyledLogin onSubmit={handleSubmit}>
         <LoginForm>
-          <img src='/images/todoist-logo.svg' />
+          <img alt='logo' src='/images/todoist-logo.svg' />
           <h2>Log in</h2>
           <Error>{errorMessage ? errorMessage : ''}</Error>
           <Label>Email</Label>

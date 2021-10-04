@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { StyledLogin, LoginForm } from '../components/styles/Login.styled';
 import Input from '../components/Input';
@@ -7,11 +8,12 @@ import Button from '../components/Button';
 import Error from '../components/Error';
 import HelpBlock from '../components/HelpBlock';
 
-const Login = () => {
+const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  let history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,9 +24,16 @@ const Login = () => {
         { name, email, password }
       );
 
-      setErrorMessage(data.message);
+      const userId = data._id;
+      console.log(userId);
+
+      if (userId) {
+        localStorage.setItem('user', userId);
+        history.push('/');
+      } else {
+        setErrorMessage(data.message);
+      }
     } catch (error) {
-      console.error(error);
       setErrorMessage(error.response.data.message);
     }
   };
@@ -33,7 +42,7 @@ const Login = () => {
     <>
       <StyledLogin onSubmit={handleSubmit}>
         <LoginForm>
-          <img src='/images/todoist-logo.svg' />
+          <img alt='logo' src='/images/todoist-logo.svg' />
           <h2>Sign up</h2>
           <Error>{errorMessage ? errorMessage : ''}</Error>
           <Label>Name</Label>
@@ -60,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
