@@ -5,6 +5,22 @@ module.exports = {
   async registerUser(req, res) {
     const { name, email, password } = req.body;
 
+    if (!name || !email || !password) {
+      return res
+        .status(200)
+        .json({ message: 'Enter your name, email and password ' });
+    }
+
+    if (
+      name.includes(' ') > 0 ||
+      email.includes(' ') > 0 ||
+      password.includes(' ') > 0
+    ) {
+      return res
+        .status(200)
+        .json({ message: "You can't use any whitespace characters" });
+    }
+
     const userExist = await User.findOne({ email });
 
     if (!userExist) {
@@ -16,7 +32,11 @@ module.exports = {
         password: hashedPassword,
       });
 
-      return res.json(user);
+      return res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      });
     }
 
     return res
