@@ -8,6 +8,7 @@ import Error from '../components/Error';
 import HelpBlock from '../components/HelpBlock';
 
 const Login = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -17,8 +18,8 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/login`,
-        { email, password }
+        `${process.env.REACT_APP_API_URL}/user/register`,
+        { name, email, password }
       );
 
       setErrorMessage(data.message);
@@ -33,8 +34,13 @@ const Login = () => {
       <StyledLogin onSubmit={handleSubmit}>
         <LoginForm>
           <img src='/images/todoist-logo.svg' />
-          <h2>Log in</h2>
+          <h2>Sign up</h2>
           <Error>{errorMessage ? errorMessage : ''}</Error>
+          <Label>Name</Label>
+          <Input
+            onChange={(event) => setName(event.target.value)}
+            type='text'
+          />
           <Label>Email</Label>
           <Input
             onChange={(event) => setEmail(event.target.value)}
@@ -46,8 +52,8 @@ const Login = () => {
             type='password'
             mb='20px'
           />
-          <Button primary>Log in</Button>
-          <HelpBlock />
+          <Button primary>Sign up</Button>
+          <HelpBlock register />
         </LoginForm>
       </StyledLogin>
     </>
