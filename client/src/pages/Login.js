@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { StyledLogin, LoginForm } from '../components/styles/Login.styled';
 import Input from '../components/Input';
@@ -11,6 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  let history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,6 +22,15 @@ const Login = () => {
         `${process.env.REACT_APP_API_URL}/user/login`,
         { email, password }
       );
+
+      const user = data.name;
+      const user_id = data._id;
+
+      if (user && user_id) {
+        localStorage.setItem('user', user);
+        localStorage.setItem('user_id', user_id);
+        history.push('/');
+      }
 
       setErrorMessage(data.message);
     } catch (error) {
