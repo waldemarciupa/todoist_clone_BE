@@ -7,6 +7,9 @@ import {
   DateToday,
   TasksList,
   Task,
+  TaskButton,
+  TaskButtonOuter,
+  TaskButtonInner,
   TaskContent,
   TaskActions,
   TaskTitle,
@@ -53,7 +56,16 @@ const Home = () => {
             ? data.map((task) => {
                 return (
                   <Task key={task._id}>
-                    <button>+</button>
+                    <TaskButton>
+                      <TaskButtonOuter
+                        onClick={() => {
+                          console.log('clik');
+                        }}
+                        completed={task.completed}
+                      >
+                        <TaskButtonInner />
+                      </TaskButtonOuter>
+                    </TaskButton>
                     <TaskContent>
                       <TaskTitle>{task.title}</TaskTitle>
                       <TaskDescription>{task.description}</TaskDescription>
