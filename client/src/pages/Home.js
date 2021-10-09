@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import CreateTask from '../components/CreateTask';
 import Header from '../components/Header';
 import {
   ListBox,
@@ -77,6 +78,7 @@ const Home = () => {
             : "You're all done for the week! #TodoistZero "}
         </TasksList>
       </ListBox>
+      <CreateTask />
     </>
   );
 };
