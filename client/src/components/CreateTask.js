@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
@@ -73,10 +74,12 @@ const ActionButton = styled.button`
 
 const ProjectList = styled.ul`
   left: 0;
+  display: ${(props) => (props.visible ? 'block' : 'none')};
 `;
 
 const PriorityList = styled.ul`
   right: 0;
+  display: ${(props) => (props.visible ? 'block' : 'none')};
 `;
 
 const ListItem = styled.li`
@@ -91,6 +94,12 @@ const ListItem = styled.li`
   }
 `;
 
+const FlagIcon = styled(AiOutlineFlag)`
+  width: 20px;
+  height: auto;
+  color: ${(props) => props.color};
+`;
+
 const ButtonsWrapper = styled.div`
   display: grid;
   grid-template-columns: 100px 100px 1fr;
@@ -100,6 +109,9 @@ const ButtonsWrapper = styled.div`
 `;
 
 const CreateTask = () => {
+  const [isProjectVisible, setIsProjectVisible] = useState(false);
+  const [isPriorityVisible, setIsPriorityVisible] = useState(false);
+
   return (
     <TaskWrapper>
       <form
@@ -112,40 +124,48 @@ const CreateTask = () => {
           <Input primary placeholder='e.g., Family lunch on Sunday at 11am' />
           <Input placeholder='Description' />
           <Actions>
-            <ActionButton title='Select a project' type='button'>
+            <ActionButton
+              onClick={() => {
+                setIsPriorityVisible(false);
+                setIsProjectVisible(!isProjectVisible);
+              }}
+              title='Select a project'
+              type='button'
+            >
               <AiOutlineFundProjectionScreen />
               Inbox
             </ActionButton>
-            <ProjectList>
+            <ProjectList visible={isProjectVisible}>
               <ListItem>Work</ListItem>
               <ListItem>Study</ListItem>
               <ListItem>Free time</ListItem>
             </ProjectList>
-            <ActionButton title='Set the priority p1, p2, p3, p4' type='button'>
+            <ActionButton
+              onClick={() => {
+                setIsProjectVisible(false);
+                setIsPriorityVisible(!isPriorityVisible);
+              }}
+              title='Set the priority p1, p2, p3, p4'
+              type='button'
+            >
               <AiOutlineFlag />
               Priority
             </ActionButton>
-            <PriorityList>
+            <PriorityList visible={isPriorityVisible}>
               <ListItem>
-                <AiOutlineFlag
-                  style={{ width: '20px', height: 'auto', color: 'red' }}
-                />
+                <FlagIcon color={'red'} />
                 Priority 1
               </ListItem>
               <ListItem>
-                <AiOutlineFlag
-                  style={{ width: '20px', height: 'auto', color: 'orange' }}
-                />
+                <FlagIcon color={'orange'} />
                 Priority 2
               </ListItem>
               <ListItem>
-                <AiOutlineFlag
-                  style={{ width: '20px', height: 'auto', color: 'blue' }}
-                />
+                <FlagIcon color={'blue'} />
                 Priority 3
               </ListItem>
               <ListItem>
-                <AiOutlineFlag style={{ width: '20px', height: 'auto' }} />
+                <FlagIcon />
                 Priority 4
               </ListItem>
             </PriorityList>
