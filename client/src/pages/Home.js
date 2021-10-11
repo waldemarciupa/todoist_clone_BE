@@ -19,6 +19,7 @@ import {
 
 const Home = () => {
   const [data, setData] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -37,9 +38,18 @@ const Home = () => {
     fetchTasks();
   }, []);
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const hideModal = () => {
+    console.log('hide');
+    setIsModalVisible(false);
+  };
+
   return (
     <>
-      <Header />
+      <Header showModal={showModal} />
       <ListBox>
         <DateHeader>
           Today <DateToday>{new Date().toDateString()}</DateToday>
@@ -70,7 +80,7 @@ const Home = () => {
             : "You're all done for the week! #TodoistZero "}
         </TasksList>
       </ListBox>
-      <CreateTask />
+      <CreateTask isModalVisible={isModalVisible} hideModal={hideModal} />
     </>
   );
 };

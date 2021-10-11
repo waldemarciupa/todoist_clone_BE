@@ -13,7 +13,7 @@ import {
   AiOutlineSearch,
 } from 'react-icons/ai';
 
-const Header = () => {
+const Header = ({ showModal }) => {
   return (
     <StyledHeader>
       <Control>
@@ -31,7 +31,7 @@ const Header = () => {
         </SearchBar>
       </Control>
       <Control>
-        <StyledButton>
+        <StyledButton onClick={showModal} title='Add task'>
           <AiOutlinePlus />
         </StyledButton>
         <StyledButton>

@@ -21,9 +21,9 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, primary, type }) => {
+const Button = ({ hideModal, children, primary, type }) => {
   return (
-    <StyledButton type={type} primary={primary}>
+    <StyledButton onClick={hideModal} type={type} primary={primary}>
       {children}
     </StyledButton>
   );

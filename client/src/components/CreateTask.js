@@ -5,6 +5,7 @@ import Button from './Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
 
 const TaskWrapper = styled.div`
+  display: ${(props) => (props.isModalVisible ? 'block' : 'none')};
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12,6 +13,7 @@ const TaskWrapper = styled.div`
   width: 550px;
   box-shadow: 0 15px 50px 0 rgb(0 0 0 / 35%);
   border-radius: 10px;
+  background: #fff;
 `;
 
 const TaskContent = styled.div`
@@ -109,7 +111,7 @@ const ButtonsWrapper = styled.div`
   border-top: 1px solid #ddd;
 `;
 
-const CreateTask = () => {
+const CreateTask = ({ isModalVisible, hideModal }) => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
 
@@ -165,7 +167,7 @@ const CreateTask = () => {
   };
 
   return (
-    <TaskWrapper>
+    <TaskWrapper isModalVisible={isModalVisible}>
       <form onSubmit={createTask}>
         <TaskContent>
           <Input
@@ -230,7 +232,9 @@ const CreateTask = () => {
           <Button type='submit' primary>
             Add task
           </Button>
-          <Button type='button'>Cancel</Button>
+          <Button hideModal={hideModal} type='button'>
+            Cancel
+          </Button>
         </ButtonsWrapper>
       </form>
     </TaskWrapper>
