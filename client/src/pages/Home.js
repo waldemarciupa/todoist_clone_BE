@@ -38,18 +38,13 @@ const Home = () => {
     fetchTasks();
   }, []);
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const hideModal = () => {
-    console.log('hide');
-    setIsModalVisible(false);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
   };
 
   return (
     <>
-      <Header showModal={showModal} />
+      <Header showModal={toggleModal} />
       <ListBox>
         <DateHeader>
           Today <DateToday>{new Date().toDateString()}</DateToday>
@@ -80,7 +75,7 @@ const Home = () => {
             : "You're all done for the week! #TodoistZero "}
         </TasksList>
       </ListBox>
-      <CreateTask isModalVisible={isModalVisible} hideModal={hideModal} />
+      {isModalVisible ? <CreateTask hideModal={toggleModal} /> : null}
     </>
   );
 };

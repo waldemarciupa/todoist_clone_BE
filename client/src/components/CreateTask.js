@@ -4,12 +4,20 @@ import styled from 'styled-components';
 import Button from './Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
 
+const ModalOuter = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+`;
+
 const TaskWrapper = styled.div`
-  display: ${(props) => (props.isModalVisible ? 'block' : 'none')};
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 550px;
   box-shadow: 0 15px 50px 0 rgb(0 0 0 / 35%);
   border-radius: 10px;
@@ -167,77 +175,85 @@ const CreateTask = ({ isModalVisible, hideModal }) => {
   };
 
   return (
-    <TaskWrapper isModalVisible={isModalVisible}>
-      <form onSubmit={createTask}>
-        <TaskContent>
-          <Input
-            primary
-            placeholder='e.g., Family lunch on Sunday at 11am'
-            onChange={(event) => setTitle(event.target.value)}
-          />
-          <Input
-            placeholder='Description'
-            onChange={(event) => setDescription(event.target.value)}
-          />
-          <Actions>
-            <ActionButton
-              onClick={() => {
-                setIsPriorityVisible(false);
-                setIsProjectVisible(!isProjectVisible);
-              }}
-              title='Select a project'
-              type='button'
-            >
-              <AiOutlineFundProjectionScreen />
-              {project}
-            </ActionButton>
-            <ProjectList visible={isProjectVisible}>
-              <ListItem onClick={handleProject}>Inbox</ListItem>
-              <ListItem onClick={handleProject}>Work</ListItem>
-              <ListItem onClick={handleProject}>Study</ListItem>
-              <ListItem onClick={handleProject}>Free time</ListItem>
-            </ProjectList>
-            <ActionButton
-              onClick={() => {
-                setIsProjectVisible(false);
-                setIsPriorityVisible(!isPriorityVisible);
-              }}
-              title='Set the priority p1, p2, p3, p4'
-              type='button'
-            >
-              <AiOutlineFlag />
-              {priority}
-            </ActionButton>
-            <PriorityList visible={isPriorityVisible}>
-              <ListItem onClick={handlePriority}>
-                <FlagIcon color={'red'} />
-                Priority 1
-              </ListItem>
-              <ListItem onClick={handlePriority}>
-                <FlagIcon color={'orange'} />
-                Priority 2
-              </ListItem>
-              <ListItem onClick={handlePriority}>
-                <FlagIcon color={'blue'} />
-                Priority 3
-              </ListItem>
-              <ListItem onClick={handlePriority}>
-                <FlagIcon />
-                Priority 4
-              </ListItem>
-            </PriorityList>
-          </Actions>
-        </TaskContent>
-        <ButtonsWrapper>
-          <Button type='submit' primary>
-            Add task
-          </Button>
-          <Button hideModal={hideModal} type='button'>
-            Cancel
-          </Button>
-        </ButtonsWrapper>
-      </form>
-    </TaskWrapper>
+    <ModalOuter onClick={hideModal}>
+      <TaskWrapper
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+      >
+        <form onSubmit={createTask}>
+          <TaskContent>
+            <Input
+              required
+              primary
+              placeholder='e.g., Family lunch on Sunday at 11am'
+              onChange={(event) => setTitle(event.target.value)}
+            />
+            <Input
+              required
+              placeholder='Description'
+              onChange={(event) => setDescription(event.target.value)}
+            />
+            <Actions>
+              <ActionButton
+                onClick={() => {
+                  setIsPriorityVisible(false);
+                  setIsProjectVisible(!isProjectVisible);
+                }}
+                title='Select a project'
+                type='button'
+              >
+                <AiOutlineFundProjectionScreen />
+                {project}
+              </ActionButton>
+              <ProjectList visible={isProjectVisible}>
+                <ListItem onClick={handleProject}>Inbox</ListItem>
+                <ListItem onClick={handleProject}>Work</ListItem>
+                <ListItem onClick={handleProject}>Study</ListItem>
+                <ListItem onClick={handleProject}>Free time</ListItem>
+              </ProjectList>
+              <ActionButton
+                onClick={() => {
+                  setIsProjectVisible(false);
+                  setIsPriorityVisible(!isPriorityVisible);
+                }}
+                title='Set the priority p1, p2, p3, p4'
+                type='button'
+              >
+                <AiOutlineFlag />
+                {priority}
+              </ActionButton>
+              <PriorityList visible={isPriorityVisible}>
+                <ListItem onClick={handlePriority}>
+                  <FlagIcon color={'red'} />
+                  Priority 1
+                </ListItem>
+                <ListItem onClick={handlePriority}>
+                  <FlagIcon color={'orange'} />
+                  Priority 2
+                </ListItem>
+                <ListItem onClick={handlePriority}>
+                  <FlagIcon color={'blue'} />
+                  Priority 3
+                </ListItem>
+                <ListItem onClick={handlePriority}>
+                  <FlagIcon />
+                  Priority 4
+                </ListItem>
+              </PriorityList>
+            </Actions>
+          </TaskContent>
+          <ButtonsWrapper>
+            <Button type='submit' primary>
+              Add task
+            </Button>
+            <Button hideModal={hideModal} type='button'>
+              Cancel
+            </Button>
+          </ButtonsWrapper>
+        </form>
+      </TaskWrapper>
+    </ModalOuter>
   );
 };
 
