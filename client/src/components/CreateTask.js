@@ -111,6 +111,18 @@ const ButtonsWrapper = styled.div`
 const CreateTask = () => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
+  const [project, setProject] = useState('Inbox');
+  const [priority, setPriority] = useState('Priority 4');
+
+  const handleProject = (e) => {
+    setProject(e.target.innerText);
+    setIsProjectVisible(false);
+  };
+
+  const handlePriority = (e) => {
+    setPriority(e.target.innerText);
+    setIsPriorityVisible(false);
+  };
 
   return (
     <TaskWrapper>
@@ -133,12 +145,13 @@ const CreateTask = () => {
               type='button'
             >
               <AiOutlineFundProjectionScreen />
-              Inbox
+              {project}
             </ActionButton>
             <ProjectList visible={isProjectVisible}>
-              <ListItem>Work</ListItem>
-              <ListItem>Study</ListItem>
-              <ListItem>Free time</ListItem>
+              <ListItem onClick={handleProject}>Inbox</ListItem>
+              <ListItem onClick={handleProject}>Work</ListItem>
+              <ListItem onClick={handleProject}>Study</ListItem>
+              <ListItem onClick={handleProject}>Free time</ListItem>
             </ProjectList>
             <ActionButton
               onClick={() => {
@@ -149,22 +162,22 @@ const CreateTask = () => {
               type='button'
             >
               <AiOutlineFlag />
-              Priority
+              {priority}
             </ActionButton>
             <PriorityList visible={isPriorityVisible}>
-              <ListItem>
+              <ListItem onClick={handlePriority}>
                 <FlagIcon color={'red'} />
                 Priority 1
               </ListItem>
-              <ListItem>
+              <ListItem onClick={handlePriority}>
                 <FlagIcon color={'orange'} />
                 Priority 2
               </ListItem>
-              <ListItem>
+              <ListItem onClick={handlePriority}>
                 <FlagIcon color={'blue'} />
                 Priority 3
               </ListItem>
-              <ListItem>
+              <ListItem onClick={handlePriority}>
                 <FlagIcon />
                 Priority 4
               </ListItem>
