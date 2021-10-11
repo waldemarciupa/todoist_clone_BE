@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import Button from './Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
@@ -111,30 +112,71 @@ const ButtonsWrapper = styled.div`
 const CreateTask = () => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [project, setProject] = useState('Inbox');
   const [priority, setPriority] = useState('Priority 4');
+  const [completed] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const handleProject = (e) => {
-    setProject(e.target.innerText);
+  useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
+    if (user_id) {
+      setUser(user_id);
+    }
+  }, []);
+
+  const handleProject = (event) => {
+    setProject(event.target.innerText);
     setIsProjectVisible(false);
   };
 
-  const handlePriority = (e) => {
-    setPriority(e.target.innerText);
+  const handlePriority = (event) => {
+    setPriority(event.target.innerText);
     setIsPriorityVisible(false);
+  };
+
+  const createTask = async (event) => {
+    event.preventDefault();
+    console.log('Form submitted');
+    console.log(title, description, project, completed, priority, user);
+
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL}`,
+        {
+          title,
+          description,
+          project,
+          priority,
+          completed,
+        },
+        {
+          headers: {
+            user_id: user,
+          },
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <TaskWrapper>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          console.log('Form submitted');
-        }}
-      >
+      <form onSubmit={createTask}>
         <TaskContent>
-          <Input primary placeholder='e.g., Family lunch on Sunday at 11am' />
-          <Input placeholder='Description' />
+          <Input
+            primary
+            placeholder='e.g., Family lunch on Sunday at 11am'
+            onChange={(event) => setTitle(event.target.value)}
+          />
+          <Input
+            placeholder='Description'
+            onChange={(event) => setDescription(event.target.value)}
+          />
           <Actions>
             <ActionButton
               onClick={() => {

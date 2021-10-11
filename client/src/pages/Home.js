@@ -18,15 +18,7 @@ import {
 } from '../components/styles/Home.styled';
 
 const Home = () => {
-  const user_id = localStorage.getItem('user_id');
-
   const [data, setData] = useState(null);
-
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [project, setProject] = useState('');
-  const [priority, setPriority] = useState('');
-  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
