@@ -21,6 +21,8 @@ export const TasksList = styled.ul`
 
 export const Task = styled.li`
   display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
 `;
 
 export const TaskButton = styled.button`
@@ -66,6 +68,12 @@ export const TaskDescription = styled.p`
   word-wrap: break-word;
   word-break: break-all;
   color: #808080;
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const TaskProject = styled.a``;

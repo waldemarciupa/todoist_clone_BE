@@ -15,6 +15,8 @@ import {
   TaskActions,
   TaskTitle,
   TaskDescription,
+  TaskProject,
+  Wrapper,
 } from '../components/styles/Home.styled';
 
 const Home = () => {
@@ -67,6 +69,10 @@ const Home = () => {
                     <TaskContent>
                       <TaskTitle>{task.title}</TaskTitle>
                       <TaskDescription>{task.description}</TaskDescription>
+                      <Wrapper>
+                        <div></div>
+                        <TaskProject>{task.project}</TaskProject>
+                      </Wrapper>
                     </TaskContent>
                     <TaskActions>Akcje</TaskActions>
                   </Task>

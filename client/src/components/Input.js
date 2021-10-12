@@ -12,7 +12,7 @@ const StyledInput = styled.input`
 `;
 
 const Input = ({ onChange, type, mb }) => {
-  return <StyledInput onChange={onChange} type={type} mb={mb} />;
+  return <StyledInput onChange={onChange} type={type} mb={mb} required />;
 };
 
 export default Input;

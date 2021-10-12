@@ -11,7 +11,7 @@ import HelpBlock from '../components/HelpBlock';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState('');
   let history = useHistory();
 
   const handleSubmit = async (event) => {
@@ -32,10 +32,10 @@ const Login = () => {
         history.push('/');
       }
 
-      setErrorMessage(data.message);
+      setError(data.message);
     } catch (error) {
       console.error(error);
-      setErrorMessage(error.response.data.message);
+      setError(error.response.data.message);
     }
   };
 
@@ -45,7 +45,7 @@ const Login = () => {
         <LoginForm>
           <img alt='logo' src='/images/todoist-logo.svg' />
           <h2>Log in</h2>
-          <Error>{errorMessage ? errorMessage : ''}</Error>
+          <Error>{error ? error : ''}</Error>
           <Label>Email</Label>
           <Input
             onChange={(event) => setEmail(event.target.value)}
