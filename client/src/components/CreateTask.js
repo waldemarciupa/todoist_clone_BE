@@ -119,7 +119,7 @@ const ButtonsWrapper = styled.div`
   border-top: 1px solid #ddd;
 `;
 
-const CreateTask = ({ hideModal, fetchTasks }) => {
+const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
 
@@ -173,6 +173,10 @@ const CreateTask = ({ hideModal, fetchTasks }) => {
       setPriority('Priority 4');
       fetchTasks();
       hideModal();
+      setCreateMessage(true);
+      setTimeout(() => {
+        setCreateMessage(false);
+      }, 3000);
     } catch (error) {
       console.log(error);
     }

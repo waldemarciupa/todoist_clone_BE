@@ -18,11 +18,18 @@ import {
   TaskDescription,
   TaskProject,
   Wrapper,
+  Message,
 } from '../components/styles/Home.styled';
 
 const Home = () => {
   const [data, setData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [createMessage, setCreateMessage] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState(false);
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const fetchTasks = async () => {
     try {
@@ -37,12 +44,20 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
+  };
+
+  const deleteTask = async (e) => {
+    await axios.delete(
+      `${process.env.REACT_APP_API_URL}/task/${e.currentTarget.parentNode.dataset.id}`
+    );
+    createMessage && setCreateMessage(false);
+    setDeleteMessage(true);
+    setTimeout(() => {
+      setDeleteMessage(false);
+    }, 3000);
+    fetchTasks();
   };
 
   return (
@@ -75,14 +90,7 @@ const Home = () => {
                         <TaskProject>{task.project}</TaskProject>
                       </Wrapper>
                     </TaskContent>
-                    <TaskActions
-                      onClick={async (e) => {
-                        await axios.delete(
-                          `${process.env.REACT_APP_API_URL}/task/${e.currentTarget.parentNode.dataset.id}`
-                        );
-                        fetchTasks();
-                      }}
-                    >
+                    <TaskActions onClick={deleteTask}>
                       <AiOutlineDelete />
                     </TaskActions>
                   </Task>
@@ -92,8 +100,18 @@ const Home = () => {
         </TasksList>
       </ListBox>
       {isModalVisible ? (
-        <CreateTask fetchTasks={fetchTasks} hideModal={toggleModal} />
+        <CreateTask
+          fetchTasks={fetchTasks}
+          hideModal={toggleModal}
+          setCreateMessage={setCreateMessage}
+        />
       ) : null}
+      {createMessage ? (
+        <Message>
+          Task successfully created for {new Date().toLocaleDateString()}{' '}
+        </Message>
+      ) : null}
+      {deleteMessage ? <Message>Task successfully deleted</Message> : null}
     </>
   );
 };
