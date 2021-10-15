@@ -23,20 +23,20 @@ const Home = () => {
   const [data, setData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}`);
+  const fetchTasks = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}`);
 
-        if (data) {
-          console.log(data);
-          setData(data);
-        }
-      } catch (error) {
-        console.log(error);
+      if (data) {
+        console.log(data);
+        setData(data);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     fetchTasks();
   }, []);
 
@@ -81,7 +81,9 @@ const Home = () => {
             : "You're all done for the week! #TodoistZero "}
         </TasksList>
       </ListBox>
-      {isModalVisible ? <CreateTask hideModal={toggleModal} /> : null}
+      {isModalVisible ? (
+        <CreateTask fetchTasks={fetchTasks} hideModal={toggleModal} />
+      ) : null}
     </>
   );
 };

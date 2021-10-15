@@ -119,7 +119,7 @@ const ButtonsWrapper = styled.div`
   border-top: 1px solid #ddd;
 `;
 
-const CreateTask = ({ isModalVisible, hideModal }) => {
+const CreateTask = ({ hideModal, fetchTasks }) => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
 
@@ -149,11 +149,9 @@ const CreateTask = ({ isModalVisible, hideModal }) => {
 
   const createTask = async (event) => {
     event.preventDefault();
-    console.log('Form submitted');
-    console.log(title, description, project, completed, priority, user);
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_API_URL}`,
         {
           title,
@@ -168,7 +166,13 @@ const CreateTask = ({ isModalVisible, hideModal }) => {
           },
         }
       );
-      console.log(data);
+
+      setTitle('');
+      setDescription('');
+      setProject('Inbox');
+      setPriority('Priority 4');
+      fetchTasks();
+      hideModal();
     } catch (error) {
       console.log(error);
     }
