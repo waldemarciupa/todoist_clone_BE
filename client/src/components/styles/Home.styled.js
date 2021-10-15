@@ -76,6 +76,15 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const TaskProject = styled.a``;
+export const TaskProject = styled.a`
+  font-size: 12px;
+  color: grey;
+`;
 
-export const TaskActions = styled.div``;
+export const TaskActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 40px;
+  cursor: pointer;
+`;

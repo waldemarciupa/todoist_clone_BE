@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
 import CreateTask from '../components/CreateTask';
 import Header from '../components/Header';
 import {
@@ -55,7 +56,7 @@ const Home = () => {
           {data
             ? data.map((task) => {
                 return (
-                  <Task key={task._id}>
+                  <Task data-id={task._id} key={task._id}>
                     <TaskButton>
                       <TaskButtonOuter
                         onClick={() => {
@@ -74,7 +75,16 @@ const Home = () => {
                         <TaskProject>{task.project}</TaskProject>
                       </Wrapper>
                     </TaskContent>
-                    <TaskActions>Akcje</TaskActions>
+                    <TaskActions
+                      onClick={async (e) => {
+                        await axios.delete(
+                          `${process.env.REACT_APP_API_URL}/task/${e.currentTarget.parentNode.dataset.id}`
+                        );
+                        fetchTasks();
+                      }}
+                    >
+                      <AiOutlineDelete />
+                    </TaskActions>
                   </Task>
                 );
               })
