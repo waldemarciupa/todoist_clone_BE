@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { AiOutlineDelete } from 'react-icons/ai';
 import CreateTask from '../components/CreateTask';
 import Header from '../components/Header';
+import Aside from '../components/Aside';
 import {
   ListBox,
   DateHeader,
@@ -72,42 +73,45 @@ const Home = () => {
   return (
     <>
       <Header showModal={toggleModal} />
-      <ListBox>
-        <DateHeader>
-          Today <DateToday>{new Date().toDateString()}</DateToday>
-        </DateHeader>
-        <TasksList>
-          {data && data.length
-            ? data.map((task) => {
-                return (
-                  <Task data-id={task._id} key={task._id}>
-                    <TaskButton>
-                      <TaskButtonOuter
-                        onClick={() => {
-                          console.log('clik');
-                        }}
-                        completed={task.completed}
-                      >
-                        <TaskButtonInner />
-                      </TaskButtonOuter>
-                    </TaskButton>
-                    <TaskContent>
-                      <TaskTitle>{task.title}</TaskTitle>
-                      <TaskDescription>{task.description}</TaskDescription>
-                      <Wrapper>
-                        <div></div>
-                        <TaskProject>{task.project}</TaskProject>
-                      </Wrapper>
-                    </TaskContent>
-                    <TaskActions onClick={deleteTask}>
-                      <AiOutlineDelete />
-                    </TaskActions>
-                  </Task>
-                );
-              })
-            : "You're all done for the week! #TodoistZero "}
-        </TasksList>
-      </ListBox>
+      <Wrapper>
+        <Aside></Aside>
+        <ListBox>
+          <DateHeader>
+            Today <DateToday>{new Date().toDateString()}</DateToday>
+          </DateHeader>
+          <TasksList>
+            {data && data.length
+              ? data.map((task) => {
+                  return (
+                    <Task data-id={task._id} key={task._id}>
+                      <TaskButton>
+                        <TaskButtonOuter
+                          onClick={() => {
+                            console.log('clik');
+                          }}
+                          completed={task.completed}
+                        >
+                          <TaskButtonInner />
+                        </TaskButtonOuter>
+                      </TaskButton>
+                      <TaskContent>
+                        <TaskTitle>{task.title}</TaskTitle>
+                        <TaskDescription>{task.description}</TaskDescription>
+                        <Wrapper>
+                          <div></div>
+                          <TaskProject>{task.project}</TaskProject>
+                        </Wrapper>
+                      </TaskContent>
+                      <TaskActions onClick={deleteTask}>
+                        <AiOutlineDelete />
+                      </TaskActions>
+                    </Task>
+                  );
+                })
+              : "You're all done for the week! #TodoistZero "}
+          </TasksList>
+        </ListBox>
+      </Wrapper>
       {isModalVisible ? (
         <CreateTask
           fetchTasks={fetchTasks}

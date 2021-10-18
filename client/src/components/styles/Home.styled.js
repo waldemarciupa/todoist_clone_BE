@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const ListBox = styled.div`
+  height: 100vh;
+  flex-grow: 1;
   padding: 16px 55px 0;
 `;
 
