@@ -62,6 +62,16 @@ const Home = () => {
     }
   };
 
+  const filterHandler = (query) => {
+    if (query) {
+      fetchTasks(query);
+      setProject(query);
+    } else {
+      fetchTasks();
+      setProject('All tasks');
+    }
+  };
+
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
@@ -75,7 +85,7 @@ const Home = () => {
     setTimeout(() => {
       setDeleteMessage(false);
     }, 3000);
-    fetchTasks();
+    filterHandler();
   };
 
   return (
@@ -86,8 +96,7 @@ const Home = () => {
           <AsideTitle
             title='Select all tasks'
             onClick={() => {
-              fetchTasks();
-              setProject('All tasks');
+              filterHandler();
             }}
           >
             Projects
@@ -96,8 +105,7 @@ const Home = () => {
             <ListItem>
               <Project
                 onClick={() => {
-                  fetchTasks('Inbox');
-                  setProject('Inbox');
+                  filterHandler('Inbox');
                 }}
               >
                 Inbox
@@ -106,8 +114,7 @@ const Home = () => {
             <ListItem>
               <Project
                 onClick={() => {
-                  fetchTasks('Work');
-                  setProject('Work');
+                  filterHandler('Work');
                 }}
               >
                 Work
@@ -116,8 +123,7 @@ const Home = () => {
             <ListItem>
               <Project
                 onClick={() => {
-                  fetchTasks('Study');
-                  setProject('Study');
+                  filterHandler('Study');
                 }}
               >
                 Study
@@ -126,8 +132,7 @@ const Home = () => {
             <ListItem>
               <Project
                 onClick={() => {
-                  fetchTasks('Free time');
-                  setProject('Free time');
+                  filterHandler('Free time');
                 }}
               >
                 Free time
