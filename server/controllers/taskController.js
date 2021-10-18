@@ -3,7 +3,17 @@ const Task = require('../models/taskModel');
 module.exports = {
   async getAllTasks(req, res) {
     const { project } = req.params;
-    const query = project ? { project } : {};
+    const { user_id } = req.headers;
+
+    const query = project
+      ? {
+          user: user_id,
+          project: project,
+        }
+      : {
+          user: user_id,
+        };
+
     try {
       const tasks = await Task.find(query);
 
