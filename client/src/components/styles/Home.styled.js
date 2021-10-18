@@ -101,3 +101,49 @@ export const Message = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 `;
+
+export const StyledAside = styled.div`
+  height: 100vh;
+  width: 305px;
+  background: #fafafa;
+  padding: 30px 0 0 35px;
+`;
+
+export const AsideTitle = styled.button`
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  font-weight: 700;
+  padding: 10px 0;
+  cursor: pointer;
+`;
+
+export const ProjectsList = styled.ul`
+  list-style: none;
+`;
+
+export const ListItem = styled.li``;
+
+export const Project = styled.button`
+  display: inline-block;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  line-height: normal;
+  height: 35px;
+  line-height: 35px;
+  padding: 0;
+  padding-left: 20px;
+  cursor: pointer;
+  background: transparent;
+  text-align: left;
+
+  &:hover {
+    background: #eee;
+  }
+`;

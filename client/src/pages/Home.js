@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { AiOutlineDelete } from 'react-icons/ai';
 import CreateTask from '../components/CreateTask';
 import Header from '../components/Header';
-import Aside from '../components/Aside';
 import {
   ListBox,
   DateHeader,
@@ -21,6 +20,11 @@ import {
   TaskProject,
   Wrapper,
   Message,
+  StyledAside,
+  AsideTitle,
+  ProjectsList,
+  ListItem,
+  Project,
 } from '../components/styles/Home.styled';
 
 const Home = () => {
@@ -28,6 +32,7 @@ const Home = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
+  const [project, setProject] = useState('Today');
 
   useEffect(() => {
     fetchTasks();
@@ -41,9 +46,12 @@ const Home = () => {
     history.push('/user/login');
   }
 
-  const fetchTasks = async () => {
+  const fetchTasks = async (filter) => {
+    const url = filter
+      ? `${process.env.REACT_APP_API_URL}/tasks/${filter}`
+      : `${process.env.REACT_APP_API_URL}`;
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}`);
+      const { data } = await axios.get(url, { headers: { user_id } });
 
       if (data) {
         console.log(data);
@@ -74,10 +82,62 @@ const Home = () => {
     <>
       <Header showModal={toggleModal} />
       <Wrapper>
-        <Aside></Aside>
+        <StyledAside>
+          <AsideTitle
+            title='Select all tasks'
+            onClick={() => {
+              fetchTasks();
+              setProject('All tasks');
+            }}
+          >
+            Projects
+          </AsideTitle>
+          <ProjectsList>
+            <ListItem>
+              <Project
+                onClick={() => {
+                  fetchTasks('Inbox');
+                  setProject('Inbox');
+                }}
+              >
+                Inbox
+              </Project>
+            </ListItem>
+            <ListItem>
+              <Project
+                onClick={() => {
+                  fetchTasks('Work');
+                  setProject('Work');
+                }}
+              >
+                Work
+              </Project>
+            </ListItem>
+            <ListItem>
+              <Project
+                onClick={() => {
+                  fetchTasks('Study');
+                  setProject('Study');
+                }}
+              >
+                Study
+              </Project>
+            </ListItem>
+            <ListItem>
+              <Project
+                onClick={() => {
+                  fetchTasks('Free time');
+                  setProject('Free time');
+                }}
+              >
+                Free time
+              </Project>
+            </ListItem>
+          </ProjectsList>
+        </StyledAside>
         <ListBox>
           <DateHeader>
-            Today <DateToday>{new Date().toDateString()}</DateToday>
+            {project} <DateToday>{new Date().toDateString()}</DateToday>
           </DateHeader>
           <TasksList>
             {data && data.length
