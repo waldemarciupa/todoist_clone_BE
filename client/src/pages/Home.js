@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AiOutlineDelete } from 'react-icons/ai';
 import CreateTask from '../components/CreateTask';
 import Header from '../components/Header';
@@ -30,6 +31,14 @@ const Home = () => {
   useEffect(() => {
     fetchTasks();
   }, []);
+
+  const user_id = localStorage.getItem('user_id');
+
+  let history = useHistory();
+
+  if (!user_id) {
+    history.push('/user/login');
+  }
 
   const fetchTasks = async () => {
     try {
@@ -68,7 +77,7 @@ const Home = () => {
           Today <DateToday>{new Date().toDateString()}</DateToday>
         </DateHeader>
         <TasksList>
-          {data
+          {data && data.length
             ? data.map((task) => {
                 return (
                   <Task data-id={task._id} key={task._id}>
