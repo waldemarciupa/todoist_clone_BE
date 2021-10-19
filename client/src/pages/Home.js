@@ -52,7 +52,7 @@ const Home = () => {
       ? `${process.env.REACT_APP_API_URL}/tasks/${filter}`
       : `${process.env.REACT_APP_API_URL}`;
     try {
-      const { data } = await axios.get(url, { headers: { user_id } });
+      const { data } = await axios.get(url, { headers: { user, user_id } });
 
       if (data) {
         console.log(data);

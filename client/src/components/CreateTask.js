@@ -129,11 +129,14 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
   const [priority, setPriority] = useState('Priority 4');
   const [completed] = useState(false);
   const [user, setUser] = useState(null);
+  const [user_id, setUserId] = useState(null);
 
   useEffect(() => {
+    const user = localStorage.getItem('user');
     const user_id = localStorage.getItem('user_id');
     if (user_id) {
-      setUser(user_id);
+      setUser(user);
+      setUserId(user_id);
     }
   }, []);
 
@@ -162,7 +165,8 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
         },
         {
           headers: {
-            user_id: user,
+            user: user,
+            user_id: user_id,
           },
         }
       );

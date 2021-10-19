@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 const taskController = require('../controllers/taskController');
 const userController = require('../controllers/userController');
+const protect = require('../middleware/authMiddleware');
 
 // Task
 router
   .route('/')
-  .get(taskController.getAllTasks)
-  .post(taskController.createTask);
+  .get(protect, taskController.getAllTasks)
+  .post(protect, taskController.createTask);
 
-router.route('/tasks/:project').get(taskController.getAllTasks);
+router.route('/tasks/:project').get(protect, taskController.getAllTasks);
 
 router.route('/task/:id').get(taskController.getTaskById);
 router.route('/task/:id').delete(taskController.deleteTask);
