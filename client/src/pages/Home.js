@@ -38,6 +38,7 @@ const Home = () => {
     fetchTasks();
   }, []);
 
+  const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
 
   let history = useHistory();

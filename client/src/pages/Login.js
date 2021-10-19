@@ -23,8 +23,8 @@ const Login = () => {
         { email, password }
       );
 
-      const user = data.name;
-      const user_id = data._id;
+      const user = data.user;
+      const user_id = data.user_id || false;
 
       if (user && user_id) {
         localStorage.setItem('user', user);

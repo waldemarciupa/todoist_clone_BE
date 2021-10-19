@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 module.exports = {
@@ -32,10 +33,11 @@ module.exports = {
         password: hashedPassword,
       });
 
-      return res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
+      return jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
+        return res.json({
+          user: token,
+          user_id: user._id,
+        });
       });
     }
 
@@ -62,7 +64,16 @@ module.exports = {
           email: user.email,
         };
 
-        return res.json(userResponse);
+        return jwt.sign(
+          { userResponse },
+          process.env.JWT_SECRET,
+          (err, token) => {
+            return res.json({
+              user: token,
+              user_id: user._id,
+            });
+          }
+        );
       } else {
         return res.status(401).json({ message: 'Invalid email or password' });
       }

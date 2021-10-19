@@ -24,11 +24,12 @@ const Register = () => {
         { name, email, password }
       );
 
-      const userId = data._id;
-      console.log(userId);
+      const user = data.user || false;
+      const user_id = data.user_id || false;
 
-      if (userId) {
-        localStorage.setItem('user', userId);
+      if (user && user_id) {
+        localStorage.setItem('user', user);
+        localStorage.setItem('user_id', user_id);
         history.push('/');
       } else {
         setErrorMessage(data.message);
