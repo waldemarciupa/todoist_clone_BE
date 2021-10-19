@@ -43,15 +43,15 @@ const Home = () => {
 
   let history = useHistory();
 
-  if (!user_id) {
+  if (!user) {
     history.push('/user/login');
   }
 
   const fetchTasks = async (filter) => {
-    const url = filter
-      ? `${process.env.REACT_APP_API_URL}/tasks/${filter}`
-      : `${process.env.REACT_APP_API_URL}`;
     try {
+      const url = filter
+        ? `${process.env.REACT_APP_API_URL}/tasks/${filter}`
+        : `${process.env.REACT_APP_API_URL}`;
       const { data } = await axios.get(url, { headers: { user, user_id } });
 
       if (data) {
@@ -59,7 +59,7 @@ const Home = () => {
         setData(data);
       }
     } catch (error) {
-      console.log(error);
+      history.push('/user/login');
     }
   };
 
@@ -79,7 +79,8 @@ const Home = () => {
 
   const deleteTask = async (e) => {
     await axios.delete(
-      `${process.env.REACT_APP_API_URL}/task/${e.currentTarget.parentNode.dataset.id}`
+      `${process.env.REACT_APP_API_URL}/task/${e.currentTarget.parentNode.dataset.id}`,
+      { headers: { user, user_id } }
     );
     createMessage && setCreateMessage(false);
     setDeleteMessage(true);

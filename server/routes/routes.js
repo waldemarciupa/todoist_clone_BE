@@ -13,7 +13,7 @@ router
 router.route('/tasks/:project').get(protect, taskController.getAllTasks);
 
 router.route('/task/:id').get(taskController.getTaskById);
-router.route('/task/:id').delete(taskController.deleteTask);
+router.route('/task/:id').delete(protect, taskController.deleteTask);
 
 // User
 router.route('/user/register').post(userController.registerUser);
