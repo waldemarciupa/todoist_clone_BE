@@ -77,6 +77,12 @@ const Home = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('user_id');
+    history.push('/user/login');
+  };
+
   const deleteTask = async (e) => {
     await axios.delete(
       `${process.env.REACT_APP_API_URL}/task/${e.currentTarget.parentNode.dataset.id}`,
@@ -92,7 +98,7 @@ const Home = () => {
 
   return (
     <>
-      <Header showModal={toggleModal} />
+      <Header showModal={toggleModal} logoutHandler={logoutHandler} />
       <Wrapper>
         <StyledAside>
           <AsideTitle

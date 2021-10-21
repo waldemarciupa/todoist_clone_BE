@@ -21,9 +21,9 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ hideModal, children, primary, type }) => {
+const Button = ({ clickHandler, children, primary, type, logoutHandler }) => {
   return (
-    <StyledButton onClick={hideModal} type={type} primary={primary}>
+    <StyledButton onClick={clickHandler} type={type} primary={primary}>
       {children}
     </StyledButton>
   );

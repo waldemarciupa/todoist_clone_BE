@@ -259,7 +259,7 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
             <Button type='submit' primary>
               Add task
             </Button>
-            <Button hideModal={hideModal} type='button'>
+            <Button clickHandler={hideModal} type='button'>
               Cancel
             </Button>
           </ButtonsWrapper>

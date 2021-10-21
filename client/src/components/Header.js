@@ -1,3 +1,4 @@
+import Button from './Button';
 import {
   StyledHeader,
   Control,
@@ -13,7 +14,7 @@ import {
   AiOutlineSearch,
 } from 'react-icons/ai';
 
-const Header = ({ showModal }) => {
+const Header = ({ showModal, logoutHandler }) => {
   return (
     <StyledHeader>
       <Control>
@@ -37,6 +38,9 @@ const Header = ({ showModal }) => {
         <StyledButton>
           <AiOutlineBell />
         </StyledButton>
+        <Button primary clickHandler={logoutHandler}>
+          Log out
+        </Button>
       </Control>
     </StyledHeader>
   );
