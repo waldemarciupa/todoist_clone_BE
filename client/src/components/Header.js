@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import Button from './Button';
 import {
   StyledHeader,
@@ -14,14 +15,31 @@ import {
   AiOutlineSearch,
 } from 'react-icons/ai';
 
-const Header = ({ showModal, logoutHandler, toggleAside }) => {
+const Header = ({
+  showModal,
+  logoutHandler,
+  isAsideVisible,
+  toggleAside,
+  fetchTasks,
+}) => {
+  let history = useHistory();
+
   return (
     <StyledHeader>
       <Control>
-        <StyledButton onClick={toggleAside}>
+        <StyledButton
+          title={isAsideVisible ? 'Close menu' : 'Open menu'}
+          onClick={toggleAside}
+        >
           <AiOutlineMenu />
         </StyledButton>
-        <StyledButton>
+        <StyledButton
+          title='Home'
+          onClick={() => {
+            history.push('/');
+            fetchTasks();
+          }}
+        >
           <AiOutlineHome />
         </StyledButton>
         <SearchBar>
@@ -38,7 +56,7 @@ const Header = ({ showModal, logoutHandler, toggleAside }) => {
         <StyledButton>
           <AiOutlineBell />
         </StyledButton>
-        <Button primary clickHandler={logoutHandler}>
+        <Button title='Log out' primary clickHandler={logoutHandler}>
           Log out
         </Button>
       </Control>

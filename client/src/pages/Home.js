@@ -106,7 +106,9 @@ const Home = () => {
       <Header
         showModal={toggleModal}
         logoutHandler={logoutHandler}
+        isAsideVisible={isAsideVisible}
         toggleAside={toggleAside}
+        fetchTasks={fetchTasks}
       />
       <Wrapper>
         <StyledAside isAsideVisible={isAsideVisible}>
@@ -184,7 +186,7 @@ const Home = () => {
                           <TaskProject>{task.project}</TaskProject>
                         </Wrapper>
                       </TaskContent>
-                      <TaskActions onClick={deleteTask}>
+                      <TaskActions title='Delete' onClick={deleteTask}>
                         <AiOutlineDelete />
                       </TaskActions>
                     </Task>

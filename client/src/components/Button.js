@@ -21,9 +21,14 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ clickHandler, children, primary, type, logoutHandler }) => {
+const Button = ({ clickHandler, children, primary, type, title }) => {
   return (
-    <StyledButton onClick={clickHandler} type={type} primary={primary}>
+    <StyledButton
+      title={title}
+      onClick={clickHandler}
+      type={type}
+      primary={primary}
+    >
       {children}
     </StyledButton>
   );
