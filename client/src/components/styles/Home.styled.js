@@ -41,12 +41,14 @@ export const TaskButtonOuter = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 1px solid #808080;
 
-  background: ${(props) => (props.completed ? '#808080' : 'transparent')};
+  border: 1px solid rgb(${(props) => props.color});
+
+  background: ${(props) =>
+    props.completed ? `rgb(${props.color})` : 'transparent'};
 
   &:hover {
-    background: hsla(0, 0%, 50.2%, 0.2);
+    background: rgba(${(props) => props.color}, 0.2);
   }
 `;
 

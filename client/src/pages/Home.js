@@ -174,6 +174,12 @@ const Home = () => {
                             console.log('clik');
                           }}
                           completed={task.completed}
+                          color={
+                            (task.priority === 'Priority 1' && '255,0,0') ||
+                            (task.priority === 'Priority 2' && '0,0,255') ||
+                            (task.priority === 'Priority 3' && '255,165,0') ||
+                            (task.priority === 'Priority 4' && '128,128,128')
+                          }
                         >
                           <TaskButtonInner />
                         </TaskButtonOuter>
