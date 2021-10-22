@@ -33,17 +33,25 @@ module.exports = {
         password: hashedPassword,
       });
 
-      return jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
-        return res.json({
-          user: token,
-          user_id: user._id,
-        });
-      });
+      return jwt.sign(
+        {
+          userResponse: {
+            _id: user._id,
+          },
+        },
+        process.env.JWT_SECRET,
+        (err, token) => {
+          return res.json({
+            user: token,
+            user_id: user._id,
+          });
+        }
+      );
+    } else {
+      return res
+        .status(400)
+        .json({ message: 'User with this email already exist' });
     }
-
-    return res
-      .status(400)
-      .json({ message: 'User with this email already exist' });
   },
   async authUser(req, res) {
     try {
