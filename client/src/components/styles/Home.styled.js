@@ -104,9 +104,13 @@ export const Message = styled.div`
 
 export const StyledAside = styled.div`
   height: 100vh;
-  width: 305px;
+  width: ${(props) => (props.isAsideVisible ? '305px' : '0')};
   background: #fafafa;
-  padding: 30px 0 0 35px;
+  padding: ${(props) =>
+    props.isAsideVisible ? '30px 0 0 35px' : '30px 0 0 0 '};
+  transform: ${(props) =>
+    props.isAsideVisible ? 'translate(0)' : 'translate(-305px)'};
+  transition: all 0.2s ease-in-out;
 `;
 
 export const AsideTitle = styled.button`

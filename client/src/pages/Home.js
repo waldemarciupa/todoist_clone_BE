@@ -30,6 +30,7 @@ import {
 const Home = () => {
   const [data, setData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAsideVisible, setIsAsideVisible] = useState(true);
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
   const [project, setProject] = useState('Today');
@@ -77,6 +78,10 @@ const Home = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+  const toggleAside = () => {
+    setIsAsideVisible(!isAsideVisible);
+  };
+
   const logoutHandler = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('user_id');
@@ -98,9 +103,13 @@ const Home = () => {
 
   return (
     <>
-      <Header showModal={toggleModal} logoutHandler={logoutHandler} />
+      <Header
+        showModal={toggleModal}
+        logoutHandler={logoutHandler}
+        toggleAside={toggleAside}
+      />
       <Wrapper>
-        <StyledAside>
+        <StyledAside isAsideVisible={isAsideVisible}>
           <AsideTitle
             title='Select all tasks'
             onClick={() => {

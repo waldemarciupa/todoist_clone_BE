@@ -14,11 +14,11 @@ import {
   AiOutlineSearch,
 } from 'react-icons/ai';
 
-const Header = ({ showModal, logoutHandler }) => {
+const Header = ({ showModal, logoutHandler, toggleAside }) => {
   return (
     <StyledHeader>
       <Control>
-        <StyledButton>
+        <StyledButton onClick={toggleAside}>
           <AiOutlineMenu />
         </StyledButton>
         <StyledButton>
