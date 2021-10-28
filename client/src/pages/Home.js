@@ -184,7 +184,7 @@ const Home = () => {
                           <TaskButtonInner />
                         </TaskButtonOuter>
                       </TaskButton>
-                      <TaskContent>
+                      <TaskContent to={`task/${task._id}`}>
                         <TaskTitle>{task.title}</TaskTitle>
                         <TaskDescription>{task.description}</TaskDescription>
                         <Wrapper>

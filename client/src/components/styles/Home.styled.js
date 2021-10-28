@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const ListBox = styled.div`
   height: 100vh;
@@ -54,8 +55,10 @@ export const TaskButtonOuter = styled.div`
 
 export const TaskButtonInner = styled.span``;
 
-export const TaskContent = styled.div`
+export const TaskContent = styled(Link)`
   flex-grow: 1;
+  cursor: pointer;
+  text-decoration: none;
 `;
 
 export const TaskTitle = styled.p`
