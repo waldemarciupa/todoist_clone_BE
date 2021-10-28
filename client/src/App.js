@@ -10,6 +10,7 @@ function App() {
     <Router>
       <GlobalStyles />
       <Route path='/' exact component={Home} />
+      <Route path='/task/:id' component={Home} />
       <Route path='/user/login' component={Login} />
       <Route path='/user/register' component={Register} />
     </Router>

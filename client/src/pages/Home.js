@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import CreateTask from '../components/CreateTask';
 import Header from '../components/Header';
 import Tasks from '../components/Tasks';
@@ -21,13 +21,17 @@ const Home = () => {
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
   const [project, setProject] = useState('Today');
+
   useEffect(() => {
     fetchTasks();
   }, []);
+
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
 
   let history = useHistory();
+  let match = useRouteMatch();
+  console.log(match);
 
   if (!user) {
     history.push('/user/login');

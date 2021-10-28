@@ -55,8 +55,11 @@ export const TaskButtonOuter = styled.div`
 
 export const TaskButtonInner = styled.span``;
 
-export const TaskContent = styled(Link)`
+export const TaskContent = styled.div`
   flex-grow: 1;
+`;
+
+export const TaskLink = styled(Link)`
   cursor: pointer;
   text-decoration: none;
 `;

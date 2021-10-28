@@ -9,6 +9,7 @@ import {
   TaskButtonOuter,
   TaskButtonInner,
   TaskContent,
+  TaskLink,
   TaskActions,
   TaskTitle,
   TaskDescription,
@@ -43,9 +44,11 @@ const Tasks = ({ deleteTask, project, data }) => {
                       <TaskButtonInner />
                     </TaskButtonOuter>
                   </TaskButton>
-                  <TaskContent to={`task/${task._id}`}>
-                    <TaskTitle>{task.title}</TaskTitle>
-                    <TaskDescription>{task.description}</TaskDescription>
+                  <TaskContent>
+                    <TaskLink to={`/task/${task._id}`}>
+                      <TaskTitle>{task.title}</TaskTitle>
+                      <TaskDescription>{task.description}</TaskDescription>
+                    </TaskLink>
                     <Wrapper>
                       <div></div>
                       <TaskProject>{task.project}</TaskProject>
