@@ -1,23 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AiOutlineDelete } from 'react-icons/ai';
 import CreateTask from '../components/CreateTask';
 import Header from '../components/Header';
+import Tasks from '../components/Tasks';
 import {
-  ListBox,
-  DateHeader,
-  DateToday,
-  TasksList,
-  Task,
-  TaskButton,
-  TaskButtonOuter,
-  TaskButtonInner,
-  TaskContent,
-  TaskActions,
-  TaskTitle,
-  TaskDescription,
-  TaskProject,
   Wrapper,
   Message,
   StyledAside,
@@ -34,11 +21,9 @@ const Home = () => {
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
   const [project, setProject] = useState('Today');
-
   useEffect(() => {
     fetchTasks();
   }, []);
-
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
 
@@ -159,48 +144,12 @@ const Home = () => {
             </ListItem>
           </ProjectsList>
         </StyledAside>
-        <ListBox>
-          <DateHeader>
-            {project} <DateToday>{new Date().toDateString()}</DateToday>
-          </DateHeader>
-          <TasksList>
-            {data && data.length
-              ? data.map((task) => {
-                  return (
-                    <Task data-id={task._id} key={task._id}>
-                      <TaskButton>
-                        <TaskButtonOuter
-                          onClick={() => {
-                            console.log('clik');
-                          }}
-                          completed={task.completed}
-                          color={
-                            (task.priority === 'Priority 1' && '255,0,0') ||
-                            (task.priority === 'Priority 2' && '255,165,0') ||
-                            (task.priority === 'Priority 3' && '0,0,255') ||
-                            (task.priority === 'Priority 4' && '128,128,128')
-                          }
-                        >
-                          <TaskButtonInner />
-                        </TaskButtonOuter>
-                      </TaskButton>
-                      <TaskContent to={`task/${task._id}`}>
-                        <TaskTitle>{task.title}</TaskTitle>
-                        <TaskDescription>{task.description}</TaskDescription>
-                        <Wrapper>
-                          <div></div>
-                          <TaskProject>{task.project}</TaskProject>
-                        </Wrapper>
-                      </TaskContent>
-                      <TaskActions title='Delete' onClick={deleteTask}>
-                        <AiOutlineDelete />
-                      </TaskActions>
-                    </Task>
-                  );
-                })
-              : "You're all done for the week! #TodoistZero "}
-          </TasksList>
-        </ListBox>
+        <Tasks
+          fetchTasks={fetchTasks}
+          deleteTask={deleteTask}
+          project={project}
+          data={data}
+        />
       </Wrapper>
       {isModalVisible ? (
         <CreateTask
