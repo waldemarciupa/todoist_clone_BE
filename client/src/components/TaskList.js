@@ -17,7 +17,7 @@ import {
   Wrapper,
 } from './styles/Home.styled';
 
-const Tasks = ({ deleteTask, project, data }) => {
+const TaskList = ({ deleteTask, project, data }) => {
   return (
     <ListBox>
       <DateHeader>
@@ -66,4 +66,4 @@ const Tasks = ({ deleteTask, project, data }) => {
   );
 };
 
-export default Tasks;
+export default TaskList;

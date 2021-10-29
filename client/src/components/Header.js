@@ -36,7 +36,7 @@ const Header = ({
         <StyledButton
           title='Home'
           onClick={() => {
-            history.push('/');
+            history.push('/task');
             fetchTasks();
           }}
         >

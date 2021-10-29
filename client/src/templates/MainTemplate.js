@@ -1,9 +1,10 @@
+import React from 'react';
+import GlobalStyles from '../components/styles/Global';
+import Header from '../components/Header';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import CreateTask from '../components/CreateTask';
-import Header from '../components/Header';
-import Tasks from '../components/Tasks';
 import {
   Wrapper,
   Message,
@@ -14,7 +15,7 @@ import {
   Project,
 } from '../components/styles/Home.styled';
 
-const Home = () => {
+const MainTemplate = ({ children }) => {
   const [data, setData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAsideVisible, setIsAsideVisible] = useState(true);
@@ -30,8 +31,6 @@ const Home = () => {
   const user_id = localStorage.getItem('user_id');
 
   let history = useHistory();
-  let match = useRouteMatch();
-  console.log(match);
 
   if (!user) {
     history.push('/user/login');
@@ -92,6 +91,7 @@ const Home = () => {
 
   return (
     <>
+      <GlobalStyles />
       <Header
         showModal={toggleModal}
         logoutHandler={logoutHandler}
@@ -148,12 +148,8 @@ const Home = () => {
             </ListItem>
           </ProjectsList>
         </StyledAside>
-        <Tasks
-          fetchTasks={fetchTasks}
-          deleteTask={deleteTask}
-          project={project}
-          data={data}
-        />
+
+        {children}
       </Wrapper>
       {isModalVisible ? (
         <CreateTask
@@ -172,4 +168,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MainTemplate;

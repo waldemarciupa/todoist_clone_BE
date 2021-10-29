@@ -1,16 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import GlobalStyles from './components/styles/Global';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import MainTemplate from './templates/MainTemplate';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Home from './pages/Home';
+import TaskList from './components/TaskList';
+import TaskSingle from './components/TaskSingle';
 
 function App() {
   return (
     <Router>
-      <GlobalStyles />
-      <Route path='/' exact component={Home} />
-      <Route path='/task/:id' component={Home} />
+      <Route exact path='/'>
+        <Redirect to='/task' />
+      </Route>
+      <Route path='/task'>
+        <MainTemplate>
+          <Route exact path='/task' component={TaskList} />
+          <Route path='/task/:id' component={TaskSingle} />
+        </MainTemplate>
+      </Route>
       <Route path='/user/login' component={Login} />
       <Route path='/user/register' component={Register} />
     </Router>
