@@ -1,8 +1,7 @@
-import React from 'react';
+import axios from 'axios';
+import { useState, useEffect, createContext } from 'react';
 import GlobalStyles from '../components/styles/Global';
 import Header from '../components/Header';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import CreateTask from '../components/CreateTask';
 import {
@@ -14,6 +13,8 @@ import {
   ListItem,
   Project,
 } from '../components/styles/Home.styled';
+
+export const Context = createContext();
 
 const MainTemplate = ({ children }) => {
   const [data, setData] = useState(null);
@@ -148,8 +149,11 @@ const MainTemplate = ({ children }) => {
             </ListItem>
           </ProjectsList>
         </StyledAside>
-
-        {children}
+        <Context.Provider
+          value={{ data: data, project: project, deleteTask: deleteTask }}
+        >
+          {children}
+        </Context.Provider>
       </Wrapper>
       {isModalVisible ? (
         <CreateTask

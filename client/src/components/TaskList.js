@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { Context } from '../templates/MainTemplate';
 import { AiOutlineDelete } from 'react-icons/ai';
 import {
   ListBox,
@@ -17,7 +19,9 @@ import {
   Wrapper,
 } from './styles/Home.styled';
 
-const TaskList = ({ deleteTask, project, data }) => {
+const TaskList = () => {
+  const { data, project, deleteTask } = useContext(Context);
+
   return (
     <ListBox>
       <DateHeader>
