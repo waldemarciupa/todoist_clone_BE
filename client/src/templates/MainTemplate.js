@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../services/api';
 import { useState, useEffect, createContext } from 'react';
 import GlobalStyles from '../components/styles/Global';
 import Header from '../components/Header';
@@ -39,10 +39,8 @@ const MainTemplate = ({ children }) => {
 
   const fetchTasks = async (filter) => {
     try {
-      const url = filter
-        ? `${process.env.REACT_APP_API_URL}/tasks/${filter}`
-        : `${process.env.REACT_APP_API_URL}`;
-      const { data } = await axios.get(url, { headers: { user, user_id } });
+      const url = filter ? `/tasks/${filter}` : ``;
+      const { data } = await api.get(url, { headers: { user, user_id } });
 
       if (data) {
         console.log(data);
@@ -78,10 +76,9 @@ const MainTemplate = ({ children }) => {
   };
 
   const deleteTask = async (e) => {
-    await axios.delete(
-      `${process.env.REACT_APP_API_URL}/task/${e.currentTarget.parentNode.dataset.id}`,
-      { headers: { user, user_id } }
-    );
+    await api.delete(`/task/${e.currentTarget.parentNode.dataset.id}`, {
+      headers: { user, user_id },
+    });
     createMessage && setCreateMessage(false);
     setDeleteMessage(true);
     setTimeout(() => {

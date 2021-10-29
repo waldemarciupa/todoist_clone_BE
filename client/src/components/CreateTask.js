@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import styled from 'styled-components';
 import Button from './Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
@@ -154,8 +154,8 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
     event.preventDefault();
 
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}`,
+      await api.post(
+        '',
         {
           title,
           description,

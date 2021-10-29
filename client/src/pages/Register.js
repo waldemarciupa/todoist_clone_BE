@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { StyledLogin, LoginForm } from '../components/styles/Login.styled';
 import Input from '../components/Input';
 import Label from '../components/Label';
@@ -19,10 +19,11 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/register`,
-        { name, email, password }
-      );
+      const { data } = await api.post('/user/register', {
+        name,
+        email,
+        password,
+      });
 
       const user = data.user || false;
       const user_id = data.user_id || false;

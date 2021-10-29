@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import { StyledLogin, LoginForm } from '../components/styles/Login.styled';
 import Input from '../components/Input';
 import Label from '../components/Label';
 import Button from '../components/Button';
 import Error from '../components/Error';
 import HelpBlock from '../components/HelpBlock';
+import api from '../services/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,10 +18,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/login`,
-        { email, password }
-      );
+      const { data } = await api.post(`/user/login`, { email, password });
 
       const user = data.user;
       const user_id = data.user_id || false;
