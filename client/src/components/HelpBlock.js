@@ -19,7 +19,7 @@ const HelpBlock = ({ register }) => {
       {register ? (
         <p>
           Already signed up? Got to
-          <StyledLink to='/user/login'> login</StyledLink>
+          <StyledLink to='/users/login'> login</StyledLink>
         </p>
       ) : (
         <p>

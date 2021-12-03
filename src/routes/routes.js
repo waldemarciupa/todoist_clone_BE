@@ -16,8 +16,8 @@ router.route('/task/:id').get(taskController.getTaskById);
 router.route('/task/:id').delete(protect, taskController.deleteTask);
 
 // User
-router.route('/user/register').post(userController.registerUser);
-router.route('/user/login').post(userController.authUser);
+router.route('/users/register').post(userController.registerUser);
+router.route('/users/login').post(userController.authUser);
 router.route('/user/:id').get(userController.getUserById);
 
 module.exports = router;

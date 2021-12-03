@@ -18,7 +18,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const { data } = await api.post(`/user/login`, { email, password });
+      const { data } = await api.post(`/users/login`, { email, password });
 
       const user = data.user;
       const user_id = data.user_id || false;

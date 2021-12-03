@@ -34,7 +34,7 @@ const MainTemplate = ({ children }) => {
   let history = useHistory();
 
   if (!user) {
-    history.push('/user/login');
+    history.push('/users/login');
   }
 
   const fetchTasks = async (filter) => {
@@ -47,7 +47,7 @@ const MainTemplate = ({ children }) => {
         setData(data);
       }
     } catch (error) {
-      history.push('/user/login');
+      history.push('/users/login');
     }
   };
 
@@ -72,7 +72,7 @@ const MainTemplate = ({ children }) => {
   const logoutHandler = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('user_id');
-    history.push('/user/login');
+    history.push('/users/login');
   };
 
   const deleteTask = async (e) => {

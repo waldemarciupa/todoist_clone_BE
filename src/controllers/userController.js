@@ -105,7 +105,7 @@ module.exports = {
         return res.status(400).json({ message: "User doesn't exist" });
       }
     } catch (error) {
-      throw new Error(error);
+      return res.status(400).json({ message: "User doesn't exist" });
     }
   },
 };

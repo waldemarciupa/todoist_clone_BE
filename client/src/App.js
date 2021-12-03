@@ -18,7 +18,7 @@ function App() {
           <Route path='/task/:id' component={TaskSingle} />
         </MainTemplate>
       </Route>
-      <Route path='/user/login' component={Login} />
+      <Route path='/users/login' component={Login} />
       <Route path='/user/register' component={Register} />
     </Router>
   );
