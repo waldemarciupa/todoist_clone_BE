@@ -1,11 +1,9 @@
 import axios from 'axios';
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
   const api = axios.create({
     baseURL: 'https://my-todoist-clone.herokuapp.com',
   });
-
-  return api;
 }
 
 const api = axios.create({
