@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import api from '../services/api';
 
 const TaskSingle = () => {
   const [task, setTask] = useState(null);
-
-  let match = useRouteMatch();
-  const task_id = match.params.id;
+  const params = useParams();
+  const task_id = params.id;
 
   const fetchTask = async (id) => {
     try {
@@ -19,7 +18,6 @@ const TaskSingle = () => {
 
   useEffect(() => {
     fetchTask(task_id);
-    console.log(task);
   }, []);
 
   return (

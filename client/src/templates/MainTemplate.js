@@ -2,7 +2,7 @@ import api from '../services/api';
 import { useState, useEffect, createContext } from 'react';
 import GlobalStyles from '../components/styles/Global';
 import Header from '../components/Header';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import CreateTask from '../components/CreateTask';
 import {
   Wrapper,
@@ -31,10 +31,10 @@ const MainTemplate = ({ children }) => {
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
 
-  let history = useHistory();
+  const navigate = useNavigate();
 
   if (!user) {
-    history.push('/users/login');
+    navigate('/users/login');
   }
 
   const fetchTasks = async (filter) => {
@@ -47,7 +47,7 @@ const MainTemplate = ({ children }) => {
         setData(data);
       }
     } catch (error) {
-      history.push('/users/login');
+      navigate('/users/login');
     }
   };
 
@@ -72,7 +72,7 @@ const MainTemplate = ({ children }) => {
   const logoutHandler = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('user_id');
-    history.push('/users/login');
+    navigate('/users/login');
   };
 
   const deleteTask = async (e) => {
@@ -149,7 +149,7 @@ const MainTemplate = ({ children }) => {
         <Context.Provider
           value={{ data: data, project: project, deleteTask: deleteTask }}
         >
-          {children}
+          <Outlet />
         </Context.Provider>
       </Wrapper>
       {isModalVisible ? (

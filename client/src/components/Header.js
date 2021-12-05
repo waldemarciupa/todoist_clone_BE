@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import {
   StyledHeader,
@@ -22,7 +22,7 @@ const Header = ({
   toggleAside,
   fetchTasks,
 }) => {
-  let history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <StyledHeader>
@@ -36,7 +36,7 @@ const Header = ({
         <StyledButton
           title='Home'
           onClick={() => {
-            history.push('/task');
+            navigate('/task');
             fetchTasks();
           }}
         >
