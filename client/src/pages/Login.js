@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { StyledLogin, LoginForm } from '../components/styles/Login.styled';
 import Input from '../components/Input';
 import Label from '../components/Label';
@@ -12,7 +12,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  let history = useHistory();
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,7 +27,7 @@ const Login = () => {
       if (user && user_id) {
         localStorage.setItem('user', user);
         localStorage.setItem('user_id', user_id);
-        history.push('/');
+        navigate('/');
       }
 
       setError(data.message);
