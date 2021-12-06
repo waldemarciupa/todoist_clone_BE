@@ -16,16 +16,27 @@ import {
 
 export const Context = createContext();
 
-const MainTemplate = ({ children }) => {
+const MainTemplate = () => {
   const [data, setData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isAsideVisible, setIsAsideVisible] = useState(true);
+  const [isAsideVisible, setIsAsideVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
   const [project, setProject] = useState('Today');
+  const [size, setSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleSize = () => {
+      setSize(window.innerWidth);
+      size <= 768 ? setIsAsideVisible(false) : setIsAsideVisible(true);
+    };
+
+    window.addEventListener('resize', handleSize);
+  }, [size]);
 
   useEffect(() => {
     fetchTasks();
+    size > 768 && setIsAsideVisible(true);
   }, []);
 
   const user = localStorage.getItem('user');
