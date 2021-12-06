@@ -6,6 +6,11 @@ export const StyledLogin = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fafafa;
+
+  @media (max-width: 400px) {
+    background: #fff;
+    align-items: flex-start;
+  }
 `;
 
 export const LoginForm = styled.form`
@@ -15,4 +20,8 @@ export const LoginForm = styled.form`
   background: #fff;
   margin: 50px 0;
   padding: 25px;
+
+  @media (max-width: 400px) {
+    border: none;
+  }
 `;

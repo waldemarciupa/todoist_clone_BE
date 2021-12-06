@@ -10,20 +10,24 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import TaskList from './components/TaskList';
 import TaskSingle from './components/TaskSingle';
+import GlobalStyle from './components/styles/Global';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Navigate to='/task' />} />
-        <Route path='/task' element={<MainTemplate />}>
-          <Route path='' element={<TaskList />} />
-          <Route path=':id' element={<TaskSingle />} />
-        </Route>
-        <Route path='/users/login' element={<Login />} />
-        <Route path='/user/register' element={<Register />} />
-      </Routes>
-    </Router>
+    <>
+      <GlobalStyle />
+      <Router>
+        <Routes>
+          <Route path='/' element={<Navigate to='/task' />} />
+          <Route path='/task' element={<MainTemplate />}>
+            <Route path='' element={<TaskList />} />
+            <Route path=':id' element={<TaskSingle />} />
+          </Route>
+          <Route path='/users/login' element={<Login />} />
+          <Route path='/user/register' element={<Register />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
