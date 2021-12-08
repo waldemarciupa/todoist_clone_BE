@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import api from '../services/api';
+import { useDispatch } from 'react-redux';
+import { taskAdded } from './tasksSlice';
+import api from '../../services/api';
 import styled from 'styled-components';
-import Button from './Button';
+import Button from '../../components/Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
 
 const ModalOuter = styled.div`
@@ -119,9 +121,11 @@ const ButtonsWrapper = styled.div`
   border-top: 1px solid #ddd;
 `;
 
-const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
+const TaskCreate = ({ hideModal, setCreateMessage }) => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
+
+  const dispatch = useDispatch();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -150,7 +154,7 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
     setIsPriorityVisible(false);
   };
 
-  const createTask = async (event) => {
+  const TaskCreate = async (event) => {
     event.preventDefault();
 
     try {
@@ -171,11 +175,11 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
         }
       );
 
+      dispatch(taskAdded());
       setTitle('');
       setDescription('');
       setProject('Inbox');
       setPriority('Priority 4');
-      fetchTasks();
       hideModal();
       setCreateMessage(true);
       setTimeout(() => {
@@ -193,7 +197,7 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
           event.stopPropagation();
         }}
       >
-        <form onSubmit={createTask}>
+        <form onSubmit={TaskCreate}>
           <TaskContent>
             <Input
               required
@@ -269,4 +273,4 @@ const CreateTask = ({ hideModal, fetchTasks, setCreateMessage }) => {
   );
 };
 
-export default CreateTask;
+export default TaskCreate;

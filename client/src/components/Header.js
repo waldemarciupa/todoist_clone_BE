@@ -15,13 +15,7 @@ import {
   AiOutlineSearch,
 } from 'react-icons/ai';
 
-const Header = ({
-  showModal,
-  logoutHandler,
-  isAsideVisible,
-  toggleAside,
-  fetchTasks,
-}) => {
+const Header = ({ showModal, logoutHandler, isAsideVisible, toggleAside }) => {
   const navigate = useNavigate();
 
   return (
@@ -37,7 +31,6 @@ const Header = ({
           title='Home'
           onClick={() => {
             navigate('/task');
-            fetchTasks();
           }}
         >
           <AiOutlineHome />

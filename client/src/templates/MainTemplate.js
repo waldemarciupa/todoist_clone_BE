@@ -1,9 +1,11 @@
 import api from '../services/api';
 import { useState, useEffect, createContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { selectTasks } from '../features/Tasks/tasksSlice';
 import GlobalStyles from '../components/styles/Global';
 import Header from '../components/Header';
 import { useNavigate, Outlet } from 'react-router-dom';
-import CreateTask from '../components/CreateTask';
+import TaskCreate from '../features/Tasks/TaskCreate';
 import {
   Wrapper,
   Message,
@@ -17,13 +19,25 @@ import {
 export const Context = createContext();
 
 const MainTemplate = () => {
-  const [data, setData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAsideVisible, setIsAsideVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
   const [project, setProject] = useState('Today');
   const [size, setSize] = useState(window.innerWidth);
+
+  const dispatch = useDispatch();
+
+  const user = localStorage.getItem('user');
+  const user_id = localStorage.getItem('user_id');
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/users/login');
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     const handleSize = () => {
@@ -32,42 +46,15 @@ const MainTemplate = () => {
     };
 
     window.addEventListener('resize', handleSize);
-  }, [size]);
-
-  useEffect(() => {
-    fetchTasks();
     size > 768 && setIsAsideVisible(true);
-  }, []);
-
-  const user = localStorage.getItem('user');
-  const user_id = localStorage.getItem('user_id');
-
-  const navigate = useNavigate();
-
-  if (!user) {
-    navigate('/users/login');
-  }
-
-  const fetchTasks = async (filter) => {
-    try {
-      const url = filter ? `/tasks/${filter}` : ``;
-      const { data } = await api.get(url, { headers: { user, user_id } });
-
-      if (data) {
-        console.log(data);
-        setData(data);
-      }
-    } catch (error) {
-      navigate('/users/login');
-    }
-  };
+  }, [size]);
 
   const filterHandler = (query) => {
     if (query) {
-      fetchTasks(query);
+      dispatch(selectTasks(query));
       setProject(query);
     } else {
-      fetchTasks();
+      dispatch(selectTasks());
       setProject('All tasks');
     }
   };
@@ -106,7 +93,6 @@ const MainTemplate = () => {
         logoutHandler={logoutHandler}
         isAsideVisible={isAsideVisible}
         toggleAside={toggleAside}
-        fetchTasks={fetchTasks}
       />
       <Wrapper>
         <StyledAside isAsideVisible={isAsideVisible}>
@@ -157,15 +143,12 @@ const MainTemplate = () => {
             </ListItem>
           </ProjectsList>
         </StyledAside>
-        <Context.Provider
-          value={{ data: data, project: project, deleteTask: deleteTask }}
-        >
+        <Context.Provider value={{ project: project, deleteTask: deleteTask }}>
           <Outlet />
         </Context.Provider>
       </Wrapper>
       {isModalVisible ? (
-        <CreateTask
-          fetchTasks={fetchTasks}
+        <TaskCreate
           hideModal={toggleModal}
           setCreateMessage={setCreateMessage}
         />

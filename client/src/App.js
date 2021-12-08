@@ -8,8 +8,8 @@ import {
 import MainTemplate from './templates/MainTemplate';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import TaskList from './components/TaskList';
-import TaskSingle from './components/TaskSingle';
+import TasksList from './features/Tasks/TasksList';
+import TaskSingle from './features/Tasks/TaskSingle';
 import GlobalStyle from './components/styles/Global';
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Navigate to='/task' />} />
           <Route path='/task' element={<MainTemplate />}>
-            <Route path='' element={<TaskList />} />
+            <Route path='' element={<TasksList />} />
             <Route path=':id' element={<TaskSingle />} />
           </Route>
           <Route path='/users/login' element={<Login />} />

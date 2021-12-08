@@ -1,5 +1,7 @@
-import { useContext } from 'react';
-import { Context } from '../templates/MainTemplate';
+import React, { useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchTasks, selectTasksByProject } from './tasksSlice';
+import { Context } from '../../templates/MainTemplate';
 import { AiOutlineDelete } from 'react-icons/ai';
 import {
   ListBox,
@@ -17,10 +19,20 @@ import {
   TaskDescription,
   TaskProject,
   Wrapper,
-} from './styles/Home.styled';
+} from '../../components/styles/Home.styled';
 
 const TaskList = () => {
-  const { data, project, deleteTask } = useContext(Context);
+  const dispatch = useDispatch();
+  const tasks = useSelector(selectTasksByProject);
+  const taskStatus = useSelector((state) => state.tasks.status);
+  const error = useSelector((state) => state.tasks.error);
+  const { project, deleteTask } = useContext(Context);
+
+  useEffect(() => {
+    if (taskStatus === 'idle') {
+      dispatch(fetchTasks());
+    }
+  }, [taskStatus, dispatch]);
 
   return (
     <ListBox>
@@ -28,8 +40,10 @@ const TaskList = () => {
         {project} <DateToday>{new Date().toDateString()}</DateToday>
       </DateHeader>
       <TasksList>
-        {data && data.length
-          ? data.map((task) => {
+        {taskStatus === 'failed' && error + ' Please refresh the page'}
+        {taskStatus === 'loading'
+          ? 'Loading...'
+          : tasks.map((task) => {
               return (
                 <Task data-id={task._id} key={task._id}>
                   <TaskButton>
@@ -63,8 +77,7 @@ const TaskList = () => {
                   </TaskActions>
                 </Task>
               );
-            })
-          : "You're all done for the week! #TodoistZero "}
+            })}
       </TasksList>
     </ListBox>
   );
