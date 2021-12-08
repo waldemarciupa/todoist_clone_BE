@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { taskAdded } from './tasksSlice';
+import { addNewTask } from './tasksSlice';
 import api from '../../services/api';
 import styled from 'styled-components';
 import Button from '../../components/Button';
@@ -156,38 +156,16 @@ const TaskCreate = ({ hideModal, setCreateMessage }) => {
 
   const TaskCreate = async (event) => {
     event.preventDefault();
-
-    try {
-      await api.post(
-        '',
-        {
-          title,
-          description,
-          project,
-          priority,
-          completed,
-        },
-        {
-          headers: {
-            user: user,
-            user_id: user_id,
-          },
-        }
-      );
-
-      dispatch(taskAdded());
-      setTitle('');
-      setDescription('');
-      setProject('Inbox');
-      setPriority('Priority 4');
-      hideModal();
-      setCreateMessage(true);
-      setTimeout(() => {
-        setCreateMessage(false);
-      }, 3000);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(addNewTask({ title, description, project, priority, completed }));
+    setTitle('');
+    setDescription('');
+    setProject('Inbox');
+    setPriority('Priority 4');
+    hideModal();
+    setCreateMessage(true);
+    setTimeout(() => {
+      setCreateMessage(false);
+    }, 3000);
   };
 
   return (
