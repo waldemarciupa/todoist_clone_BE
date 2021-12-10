@@ -8,24 +8,32 @@ const initialState = {
   error: null,
 };
 
-const user = localStorage.getItem('user');
-const user_id = localStorage.getItem('user_id');
-
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const { data } = await api.get('', { headers: { user, user_id } });
-  return data;
-});
+export const fetchTasks = createAsyncThunk(
+  'tasks/fetchTasks',
+  async (payload) => {
+    const { data } = await api.get('', {
+      headers: { user: payload.user, user_id: payload.user_id },
+    });
+    return data;
+  }
+);
 
 export const addNewTask = createAsyncThunk(
   'tasks/addNewTask',
-  async (initialTask) => {
-    const response = await api.post('', initialTask, {
-      headers: {
-        user: user,
-        user_id: user_id,
-      },
+  async (payload) => {
+    const response = await api.post('', payload, {
+      headers: { user: payload.user, user_id: payload.user_id },
     });
     return response.data;
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  'task/deleteTask',
+  async (payload) => {
+    await api.delete(`/task/${payload.task_id}`, {
+      headers: { user: payload.user, user_id: payload.user_id },
+    });
   }
 );
 
@@ -38,6 +46,11 @@ export const tasksSlice = createSlice({
         state.tasksByProject = state.tasks.filter((task) => {
           return action.payload ? task.project === action.payload : true;
         });
+      },
+    },
+    resetTasks: {
+      reducer(state, action) {
+        return (state = initialState);
       },
     },
   },
@@ -58,11 +71,20 @@ export const tasksSlice = createSlice({
       .addCase(addNewTask.fulfilled, (state, action) => {
         state.tasks.push(action.payload);
         state.tasksByProject.push(action.payload);
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.tasks = state.tasks.filter((task) => {
+          return task._id !== action.meta.arg.task_id;
+        });
+
+        state.tasksByProject = state.tasksByProject.filter((task) => {
+          return task._id !== action.meta.arg.task_id;
+        });
       });
   },
 });
 
-export const { selectTasks } = tasksSlice.actions;
+export const { selectTasks, resetTasks } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
 

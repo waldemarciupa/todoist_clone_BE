@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNewTask } from './tasksSlice';
-import api from '../../services/api';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
@@ -156,7 +155,17 @@ const TaskCreate = ({ hideModal, setCreateMessage }) => {
 
   const TaskCreate = async (event) => {
     event.preventDefault();
-    dispatch(addNewTask({ title, description, project, priority, completed }));
+    dispatch(
+      addNewTask({
+        title,
+        description,
+        project,
+        priority,
+        completed,
+        user,
+        user_id,
+      })
+    );
     setTitle('');
     setDescription('');
     setProject('Inbox');

@@ -1,3 +1,5 @@
+import { resetTasks } from '../features/Tasks/tasksSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import {
@@ -15,8 +17,16 @@ import {
   AiOutlineSearch,
 } from 'react-icons/ai';
 
-const Header = ({ showModal, logoutHandler, isAsideVisible, toggleAside }) => {
+const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('user_id');
+    dispatch(resetTasks());
+    navigate('/users/login');
+  };
 
   return (
     <StyledHeader>
@@ -31,6 +41,7 @@ const Header = ({ showModal, logoutHandler, isAsideVisible, toggleAside }) => {
           title='Home'
           onClick={() => {
             navigate('/task');
+            filterHandler();
           }}
         >
           <AiOutlineHome />

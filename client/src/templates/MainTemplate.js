@@ -1,4 +1,3 @@
-import api from '../services/api';
 import { useState, useEffect, createContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { selectTasks } from '../features/Tasks/tasksSlice';
@@ -29,7 +28,6 @@ const MainTemplate = () => {
   const dispatch = useDispatch();
 
   const user = localStorage.getItem('user');
-  const user_id = localStorage.getItem('user_id');
 
   const navigate = useNavigate();
 
@@ -57,6 +55,7 @@ const MainTemplate = () => {
       dispatch(selectTasks());
       setProject('All tasks');
     }
+    navigate('/task');
   };
 
   const toggleModal = () => {
@@ -67,32 +66,14 @@ const MainTemplate = () => {
     setIsAsideVisible(!isAsideVisible);
   };
 
-  const logoutHandler = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('user_id');
-    navigate('/users/login');
-  };
-
-  const deleteTask = async (e) => {
-    await api.delete(`/task/${e.currentTarget.parentNode.dataset.id}`, {
-      headers: { user, user_id },
-    });
-    createMessage && setCreateMessage(false);
-    setDeleteMessage(true);
-    setTimeout(() => {
-      setDeleteMessage(false);
-    }, 3000);
-    filterHandler();
-  };
-
   return (
     <>
       <GlobalStyles />
       <Header
         showModal={toggleModal}
-        logoutHandler={logoutHandler}
         isAsideVisible={isAsideVisible}
         toggleAside={toggleAside}
+        filterHandler={filterHandler}
       />
       <Wrapper>
         <StyledAside isAsideVisible={isAsideVisible}>
@@ -143,7 +124,9 @@ const MainTemplate = () => {
             </ListItem>
           </ProjectsList>
         </StyledAside>
-        <Context.Provider value={{ project: project, deleteTask: deleteTask }}>
+        <Context.Provider
+          value={{ project, createMessage, setCreateMessage, setDeleteMessage }}
+        >
           <Outlet />
         </Context.Provider>
       </Wrapper>
