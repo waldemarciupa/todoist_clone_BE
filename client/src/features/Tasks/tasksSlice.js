@@ -8,39 +8,49 @@ const initialState = {
   error: null,
 };
 
-const user = localStorage.getItem('user');
-const user_id = localStorage.getItem('user_id');
+export const fetchTasks = createAsyncThunk(
+  'tasks/fetchTasks',
+  async (payload) => {
+    const { data } = await api.get('', {
+      headers: { user: payload.user, user_id: payload.user_id },
+    });
+    return data;
+  }
+);
 
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const { data } = await api.get('', { headers: { user, user_id } });
-  return data;
-});
+export const addNewTask = createAsyncThunk(
+  'tasks/addNewTask',
+  async (payload) => {
+    const response = await api.post('', payload, {
+      headers: { user: payload.user, user_id: payload.user_id },
+    });
+    return response.data;
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  'task/deleteTask',
+  async (payload) => {
+    await api.delete(`/task/${payload.task_id}`, {
+      headers: { user: payload.user, user_id: payload.user_id },
+    });
+  }
+);
 
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    taskAdded: {
-      reducer(state, action) {
-        console.log(action);
-        state.tasks.push(action.payload);
-      },
-      prepare(title, content, userId) {
-        return {
-          payload: {
-            date: new Date().toISOString(),
-            title,
-            content,
-            user: userId,
-          },
-        };
-      },
-    },
     selectTasks: {
       reducer(state, action) {
         state.tasksByProject = state.tasks.filter((task) => {
           return action.payload ? task.project === action.payload : true;
         });
+      },
+    },
+    resetTasks: {
+      reducer(state, action) {
+        return (state = initialState);
       },
     },
   },
@@ -51,18 +61,30 @@ export const tasksSlice = createSlice({
       })
       .addCase(fetchTasks.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        // Add any fetched tasks to the array
-        state.tasks = action.payload;
-        state.tasksByProject = action.payload;
+        state.tasks = state.tasks.concat(action.payload);
+        state.tasksByProject = state.tasksByProject.concat(action.payload);
       })
       .addCase(fetchTasks.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(addNewTask.fulfilled, (state, action) => {
+        state.tasks.push(action.payload);
+        state.tasksByProject.push(action.payload);
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.tasks = state.tasks.filter((task) => {
+          return task._id !== action.meta.arg.task_id;
+        });
+
+        state.tasksByProject = state.tasksByProject.filter((task) => {
+          return task._id !== action.meta.arg.task_id;
+        });
       });
   },
 });
 
-export const { taskAdded, selectTasks } = tasksSlice.actions;
+export const { selectTasks, resetTasks } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
 

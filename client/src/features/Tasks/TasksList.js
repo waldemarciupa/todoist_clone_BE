@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTasks, selectTasksByProject } from './tasksSlice';
+import { fetchTasks, deleteTask, selectTasksByProject } from './tasksSlice';
 import { Context } from '../../templates/MainTemplate';
 import { AiOutlineDelete } from 'react-icons/ai';
 import {
@@ -26,13 +26,30 @@ const TaskList = () => {
   const tasks = useSelector(selectTasksByProject);
   const taskStatus = useSelector((state) => state.tasks.status);
   const error = useSelector((state) => state.tasks.error);
-  const { project, deleteTask } = useContext(Context);
+  const { project, createMessage, setCreateMessage, setDeleteMessage } =
+    useContext(Context);
+
+  const user = localStorage.getItem('user');
+  const user_id = localStorage.getItem('user_id');
 
   useEffect(() => {
-    if (taskStatus === 'idle') {
-      dispatch(fetchTasks());
+    if (!user) {
+      return;
     }
-  }, [taskStatus, dispatch]);
+    if (taskStatus === 'idle') {
+      dispatch(fetchTasks({ user, user_id }));
+    }
+  }, [user, user_id, taskStatus, dispatch]);
+
+  const deleteTaskHandler = (e) => {
+    const task_id = e.currentTarget.parentNode.dataset.id;
+    dispatch(deleteTask({ task_id, user, user_id }));
+    createMessage && setCreateMessage(false);
+    setDeleteMessage(true);
+    setTimeout(() => {
+      setDeleteMessage(false);
+    }, 3000);
+  };
 
   return (
     <ListBox>
@@ -72,7 +89,7 @@ const TaskList = () => {
                       <TaskProject>{task.project}</TaskProject>
                     </Wrapper>
                   </TaskContent>
-                  <TaskActions title='Delete' onClick={deleteTask}>
+                  <TaskActions title='Delete' onClick={deleteTaskHandler}>
                     <AiOutlineDelete />
                   </TaskActions>
                 </Task>

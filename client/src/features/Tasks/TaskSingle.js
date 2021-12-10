@@ -18,7 +18,7 @@ const TaskSingle = () => {
 
   useEffect(() => {
     fetchTask(task_id);
-  }, []);
+  }, [task_id]);
 
   return (
     task && (
