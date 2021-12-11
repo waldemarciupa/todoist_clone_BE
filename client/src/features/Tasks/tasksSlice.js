@@ -2,6 +2,7 @@ import api from '../../services/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
+  task: {},
   tasks: [],
   tasksByProject: [],
   status: 'idle',
@@ -41,6 +42,13 @@ export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
+    selectTaskSingle: {
+      reducer(state, action) {
+        state.task = state.tasks.filter((task) => {
+          return task._id === action.payload;
+        })[0];
+      },
+    },
     selectTasks: {
       reducer(state, action) {
         state.tasksByProject = state.tasks.filter((task) => {
@@ -84,8 +92,9 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const { selectTasks, resetTasks } = tasksSlice.actions;
+export const { selectTaskSingle, selectTasks, resetTasks } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
 
 export const selectTasksByProject = (state) => state.tasks.tasksByProject;
+export const taskSingle = (state) => state.tasks.task;
