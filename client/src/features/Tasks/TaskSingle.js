@@ -1,24 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import api from '../../services/api';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectTaskSingle, taskSingle } from './tasksSlice';
 
 const TaskSingle = () => {
-  const [task, setTask] = useState(null);
+  const task = useSelector(taskSingle);
   const params = useParams();
   const task_id = params.id;
-
-  const fetchTask = async (id) => {
-    try {
-      const { data } = await api.get(`/task/${id}`);
-      setTask(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchTask(task_id);
-  }, [task_id]);
+    dispatch(selectTaskSingle(task_id));
+  }, [dispatch, task_id]);
 
   return (
     task && (
