@@ -9,6 +9,7 @@ import {
   DateToday,
   TasksList,
   Task,
+  ButtonWrapper,
   TaskButton,
   TaskButtonOuter,
   TaskButtonInner,
@@ -63,22 +64,24 @@ const TaskList = () => {
           : tasks.map((task) => {
               return (
                 <Task data-id={task._id} key={task._id}>
-                  <TaskButton>
-                    <TaskButtonOuter
-                      onClick={() => {
-                        console.log('clik');
-                      }}
-                      completed={task.completed}
-                      color={
-                        (task.priority === 'Priority 1' && '255,0,0') ||
-                        (task.priority === 'Priority 2' && '255,165,0') ||
-                        (task.priority === 'Priority 3' && '0,0,255') ||
-                        (task.priority === 'Priority 4' && '128,128,128')
-                      }
-                    >
-                      <TaskButtonInner />
-                    </TaskButtonOuter>
-                  </TaskButton>
+                  <ButtonWrapper>
+                    <TaskButton>
+                      <TaskButtonOuter
+                        onClick={() => {
+                          console.log('clik');
+                        }}
+                        completed={task.completed}
+                        color={
+                          (task.priority === 'Priority 1' && '255,0,0') ||
+                          (task.priority === 'Priority 2' && '255,165,0') ||
+                          (task.priority === 'Priority 3' && '0,0,255') ||
+                          (task.priority === 'Priority 4' && '128,128,128')
+                        }
+                      >
+                        <TaskButtonInner />
+                      </TaskButtonOuter>
+                    </TaskButton>
+                  </ButtonWrapper>
                   <TaskContent>
                     <TaskLink to={`/task/${task._id}`}>
                       <TaskTitle>{task.title}</TaskTitle>

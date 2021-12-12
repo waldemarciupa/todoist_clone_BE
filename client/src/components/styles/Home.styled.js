@@ -28,6 +28,13 @@ export const Task = styled.li`
   border-bottom: 1px solid #f0f0f0;
 `;
 
+export const ButtonWrapper = styled.div`
+  min-width: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
 export const TaskButton = styled.button`
   min-width: 18px;
   height: 18px;
@@ -35,7 +42,6 @@ export const TaskButton = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-  margin-right: 6px;
 `;
 
 export const TaskButtonOuter = styled.div`
@@ -68,7 +74,7 @@ export const TaskTitle = styled.p`
   color: #202020;
   margin: 0;
   font-size: 14px;
-  line-height: 21px;
+  line-height: 16px;
   word-wrap: break-word;
   word-break: break-word;
 `;
@@ -83,7 +89,7 @@ export const TaskDescription = styled.p`
 export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const TaskProject = styled.a`
@@ -112,7 +118,7 @@ export const Message = styled.div`
 
 export const StyledAside = styled.div`
   height: 100vh;
-  width: ${(props) => (props.isAsideVisible ? '305px' : '0')};
+  min-width: ${(props) => (props.isAsideVisible ? '300px' : '0')};
   background: #fafafa;
   padding: ${(props) =>
     props.isAsideVisible ? '30px 0 0 35px' : '30px 0 0 0 '};
