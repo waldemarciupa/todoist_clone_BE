@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectTaskSingle, taskSingle } from './tasksSlice';
+import { useSelector } from 'react-redux';
+import { taskSingle } from './tasksSlice';
+import { AiOutlineCheck } from 'react-icons/ai';
 import {
   StyledTaskSingle,
   ProjectColorWrapper,
@@ -26,11 +25,6 @@ import {
 
 const TaskSingle = () => {
   const task = useSelector(taskSingle);
-  const params = useParams();
-  const task_id = params.id;
-  const dispatch = useDispatch();
-
-  const date = new Date(task.createdAt);
 
   const months = {
     0: 'January',
@@ -46,10 +40,6 @@ const TaskSingle = () => {
     10: 'November',
     11: 'December',
   };
-
-  useEffect(() => {
-    dispatch(selectTaskSingle(task_id));
-  }, [dispatch, task_id]);
 
   return task ? (
     <StyledTaskSingle>
@@ -75,7 +65,9 @@ const TaskSingle = () => {
                   (task.priority === 'Priority 4' && '128,128,128')
                 }
               >
-                <TaskButtonInner />
+                <TaskButtonInner>
+                  <AiOutlineCheck style={{ width: '9px', height: '9px' }} />
+                </TaskButtonInner>
               </TaskButtonOuter>
             </TaskButton>
           </ButtonWrapper>
@@ -91,9 +83,12 @@ const TaskSingle = () => {
         </ButtonsList>
       </TaskDetails>
       <AddedOn>
-        Added on {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}
+        Added on {new Date(task.createdAt).getDate()}{' '}
+        {months[new Date(task.createdAt).getMonth()]}{' '}
+        {new Date(task.createdAt).getFullYear()}
         {', '}
-        {date.getHours()}:{date.getMinutes()}
+        {new Date(task.createdAt).getHours()}:
+        {new Date(task.createdAt).getMinutes()}
       </AddedOn>
     </StyledTaskSingle>
   ) : (
