@@ -2,7 +2,7 @@ import api from '../../services/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
-  task: {},
+  task: null,
   tasks: [],
   tasksByProject: [],
   status: 'idle',

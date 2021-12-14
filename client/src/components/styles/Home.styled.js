@@ -55,11 +55,22 @@ export const TaskButtonOuter = styled.div`
     props.completed ? `rgb(${props.color})` : 'transparent'};
 
   &:hover {
-    background: rgba(${(props) => props.color}, 0.2);
+    background: ${(props) =>
+      props.completed ? `rgb(${props.color})` : `rgba(${props.color}, 0.2)`};
+
+    & > * {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 
-export const TaskButtonInner = styled.span``;
+export const TaskButtonInner = styled.span`
+  display: none;
+  width: 100%;
+  height: 100%;
+`;
 
 export const TaskContent = styled.div`
   flex-grow: 1;

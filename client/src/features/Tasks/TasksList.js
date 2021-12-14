@@ -1,8 +1,13 @@
 import React, { useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTasks, deleteTask, selectTasksByProject } from './tasksSlice';
+import {
+  fetchTasks,
+  deleteTask,
+  selectTasksByProject,
+  selectTaskSingle,
+} from './tasksSlice';
 import { Context } from '../../templates/MainTemplate';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineCheck } from 'react-icons/ai';
 import {
   ListBox,
   DateHeader,
@@ -78,12 +83,21 @@ const TaskList = () => {
                           (task.priority === 'Priority 4' && '128,128,128')
                         }
                       >
-                        <TaskButtonInner />
+                        <TaskButtonInner>
+                          <AiOutlineCheck
+                            style={{ width: '9px', height: '9px' }}
+                          />
+                        </TaskButtonInner>
                       </TaskButtonOuter>
                     </TaskButton>
                   </ButtonWrapper>
                   <TaskContent>
-                    <TaskLink to={`/task/${task._id}`}>
+                    <TaskLink
+                      onClick={() => {
+                        dispatch(selectTaskSingle(task._id));
+                      }}
+                      to={`/task/${task._id}`}
+                    >
                       <TaskTitle>{task.title}</TaskTitle>
                       <TaskDescription>{task.description}</TaskDescription>
                     </TaskLink>
