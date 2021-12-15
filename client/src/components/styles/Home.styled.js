@@ -33,6 +33,8 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  display: ${(props) => (props.isEditingMode ? `none` : 'flex')};
 `;
 
 export const TaskButton = styled.button`

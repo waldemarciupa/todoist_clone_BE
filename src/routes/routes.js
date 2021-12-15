@@ -13,6 +13,7 @@ router
 router.route('/tasks/:project').get(protect, taskController.getAllTasks);
 
 router.route('/task/:id').get(taskController.getTaskById);
+router.route('/task/:id').put(taskController.editTask);
 router.route('/task/:id').delete(protect, taskController.deleteTask);
 
 // User

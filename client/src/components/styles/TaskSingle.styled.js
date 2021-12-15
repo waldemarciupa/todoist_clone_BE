@@ -27,21 +27,29 @@ export const Project = styled.div``;
 export const FlexLine = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
 `;
 
 export const Task = styled.div`
   margin-top: 10px;
+  border-radius: 5px;
+  cursor: text;
+  padding: ${(props) => (props.isEditingMode ? `10px 10px 0` : '10px 0 0 0 ')};
+  border: ${(props) =>
+    props.isEditingMode ? `1px solid #ddd` : '1px solid transparent'};
 `;
 
 export const TaskTitle = styled.div`
   font-size: 16px;
   line-height: 26px;
   font-weight: 700;
+  outline: none;
 `;
 
 export const TaskDescription = styled.div`
-  padding-left: 26px;
+  padding-left: ${(props) => (props.isEditingMode ? `0` : '30px')};
   margin-bottom: 16px;
+  outline: none;
 `;
 
 export const TaskDetails = styled.div``;
@@ -72,4 +80,11 @@ export const AddedOn = styled.div`
   border-bottom: 1px solid #ddd;
   padding: 12px 20px;
   font-weight: 700;
+`;
+
+export const FormButtonWrapper = styled.div`
+  display: ${(props) => (props.isEditingMode ? `grid` : 'none')};
+  grid-template-columns: 100px 100px 1fr;
+  grid-gap: 10px;
+  padding: 10px 0;
 `;
