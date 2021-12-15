@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { taskSingle } from './tasksSlice';
+import Button from '../../components/Button';
 import { AiOutlineCheck } from 'react-icons/ai';
 import {
   StyledTaskSingle,
@@ -12,8 +14,9 @@ import {
   TaskDescription,
   TaskDetails,
   ButtonsList,
-  Button,
+  Button as TabButton,
   AddedOn,
+  FormButtonWrapper,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -25,6 +28,28 @@ import {
 
 const TaskSingle = () => {
   const task = useSelector(taskSingle);
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const [isEditingMode, setIsEditingMode] = useState(false);
+
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title);
+      setDescription(task.description);
+    }
+  }, []);
+
+  const startEdition = () => {
+    setIsEditingMode(true);
+  };
+
+  const finishEdition = (e) => {
+    setIsEditingMode(false);
+    setTitle(task.title);
+    setDescription(task.description);
+  };
 
   const months = {
     0: 'January',
@@ -49,37 +74,68 @@ const TaskSingle = () => {
         </ProjectColorWrapper>
         <Project>{task.project}</Project>
       </FlexLine>
-      <Task>
-        <FlexLine>
-          <ButtonWrapper>
-            <TaskButton>
-              <TaskButtonOuter
-                onClick={() => {
-                  console.log('clik');
+      <form>
+        <Task isEditingMode={isEditingMode}>
+          <FlexLine>
+            <ButtonWrapper isEditingMode={isEditingMode}>
+              <TaskButton
+                type='button'
+                onClick={(e) => {
+                  e.stopPropagation();
                 }}
-                completed={task.completed}
-                color={
-                  (task.priority === 'Priority 1' && '255,0,0') ||
-                  (task.priority === 'Priority 2' && '255,165,0') ||
-                  (task.priority === 'Priority 3' && '0,0,255') ||
-                  (task.priority === 'Priority 4' && '128,128,128')
-                }
               >
-                <TaskButtonInner>
-                  <AiOutlineCheck style={{ width: '9px', height: '9px' }} />
-                </TaskButtonInner>
-              </TaskButtonOuter>
-            </TaskButton>
-          </ButtonWrapper>
-          <TaskTitle>{task.title}</TaskTitle>
-        </FlexLine>
-        <TaskDescription>{task.description}</TaskDescription>
-      </Task>
+                <TaskButtonOuter
+                  completed={task.completed}
+                  color={
+                    (task.priority === 'Priority 1' && '255,0,0') ||
+                    (task.priority === 'Priority 2' && '255,165,0') ||
+                    (task.priority === 'Priority 3' && '0,0,255') ||
+                    (task.priority === 'Priority 4' && '128,128,128')
+                  }
+                >
+                  <TaskButtonInner>
+                    <AiOutlineCheck style={{ width: '9px', height: '9px' }} />
+                  </TaskButtonInner>
+                </TaskButtonOuter>
+              </TaskButton>
+            </ButtonWrapper>
+            <TaskTitle
+              contentEditable={isEditingMode}
+              suppressContentEditableWarning={true}
+              onClick={(e) => {
+                startEdition();
+                setTitle(e.target.innerText + ' ');
+              }}
+            >
+              {title}
+            </TaskTitle>
+          </FlexLine>
+          <TaskDescription
+            contentEditable={isEditingMode}
+            isEditingMode={isEditingMode}
+            suppressContentEditableWarning={true}
+            onClick={(e) => {
+              startEdition();
+              setDescription(e.target.innerText + ' ');
+            }}
+          >
+            {description}
+          </TaskDescription>
+        </Task>
+        <FormButtonWrapper isEditingMode={isEditingMode}>
+          <Button primary type='submit'>
+            Save
+          </Button>
+          <Button type='button' clickHandler={finishEdition}>
+            Cancel
+          </Button>
+        </FormButtonWrapper>
+      </form>
       <TaskDetails>
         <ButtonsList>
-          <Button tabSelected={false}>Sub-tasks</Button>
-          <Button tabSelected={false}>Comments</Button>
-          <Button tabSelected={true}>Activity</Button>
+          <TabButton tabSelected={false}>Sub-tasks</TabButton>
+          <TabButton tabSelected={false}>Comments</TabButton>
+          <TabButton tabSelected={true}>Activity</TabButton>
         </ButtonsList>
       </TaskDetails>
       <AddedOn>
@@ -92,7 +148,7 @@ const TaskSingle = () => {
       </AddedOn>
     </StyledTaskSingle>
   ) : (
-    <p>There is no task with specific ID</p>
+    <StyledTaskSingle>There is no task with specific ID</StyledTaskSingle>
   );
 };
 
