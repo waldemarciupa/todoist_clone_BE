@@ -29,6 +29,21 @@ export const addNewTask = createAsyncThunk(
   }
 );
 
+export const editTask = createAsyncThunk('tasks/editTask', async (payload) => {
+  const response = await api.put(
+    `/task/${payload.id}`,
+    {
+      title: payload.title,
+      description: payload.description,
+      id: payload.id,
+    },
+    {
+      headers: { user: payload.user, user_id: payload.user_id },
+    }
+  );
+  return response.data;
+});
+
 export const deleteTask = createAsyncThunk(
   'task/deleteTask',
   async (payload) => {
@@ -79,6 +94,18 @@ export const tasksSlice = createSlice({
       .addCase(addNewTask.fulfilled, (state, action) => {
         state.tasks.push(action.payload);
         state.tasksByProject.push(action.payload);
+      })
+      .addCase(editTask.fulfilled, (state, action) => {
+        state.task = action.payload;
+        state.tasks = state.tasks.map((task) => {
+          return task._id === action.meta.arg.id
+            ? {
+                ...task,
+                title: action.payload.title,
+                description: action.payload.description,
+              }
+            : task;
+        });
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.tasks = state.tasks.filter((task) => {

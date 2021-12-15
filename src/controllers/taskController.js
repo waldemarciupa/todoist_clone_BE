@@ -43,6 +43,19 @@ module.exports = {
       throw new Error(error);
     }
   },
+  async editTask(req, res) {
+    const { title, description, id } = req.body;
+    const { user_id } = req.headers;
+    try {
+      await Task.findOneAndUpdate({ _id: id }, { title, description });
+      const task = await Task.findById(id);
+      if (task) {
+        return res.json(task);
+      }
+    } catch (error) {
+      return res.status(400).json({ message: "Task doesn't exist" });
+    }
+  },
   async getTaskById(req, res) {
     const { id } = req.params;
     try {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { taskSingle } from './tasksSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { editTask, taskSingle } from './tasksSlice';
 import Button from '../../components/Button';
 import { AiOutlineCheck } from 'react-icons/ai';
 import {
@@ -27,17 +27,23 @@ import {
 } from '../../components/styles/Home.styled';
 
 const TaskSingle = () => {
+  const dispatch = useDispatch();
   const task = useSelector(taskSingle);
 
+  const [id, setId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const [isEditingMode, setIsEditingMode] = useState(false);
 
+  const user = localStorage.getItem('user');
+  const user_id = localStorage.getItem('user_id');
+
   useEffect(() => {
     if (task) {
       setTitle(task.title);
       setDescription(task.description);
+      setId(task._id);
     }
   }, []);
 
@@ -49,6 +55,12 @@ const TaskSingle = () => {
     setIsEditingMode(false);
     setTitle(task.title);
     setDescription(task.description);
+  };
+
+  const saveTask = (e) => {
+    e.preventDefault();
+    dispatch(editTask({ user, user_id, title, description, id }));
+    setIsEditingMode(false);
   };
 
   const months = {
@@ -74,7 +86,7 @@ const TaskSingle = () => {
         </ProjectColorWrapper>
         <Project>{task.project}</Project>
       </FlexLine>
-      <form>
+      <form onSubmit={saveTask}>
         <Task isEditingMode={isEditingMode}>
           <FlexLine>
             <ButtonWrapper isEditingMode={isEditingMode}>
@@ -104,6 +116,8 @@ const TaskSingle = () => {
               suppressContentEditableWarning={true}
               onClick={(e) => {
                 startEdition();
+              }}
+              onBlur={(e) => {
                 setTitle(e.target.innerText + ' ');
               }}
             >
@@ -114,8 +128,10 @@ const TaskSingle = () => {
             contentEditable={isEditingMode}
             isEditingMode={isEditingMode}
             suppressContentEditableWarning={true}
-            onClick={(e) => {
+            onClick={() => {
               startEdition();
+            }}
+            onBlur={(e) => {
               setDescription(e.target.innerText + ' ');
             }}
           >
