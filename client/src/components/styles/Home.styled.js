@@ -1,15 +1,23 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+const colors = {
+  'Priority 1': '209, 69, 59',
+  'Priority 2': '235, 137, 9',
+  'Priority 3': '36, 111, 224',
+  'Priority 4': '128,128,128',
+};
+
 export const ListBox = styled.div`
   height: 100vh;
   flex-grow: 1;
-  padding: 16px 55px 0;
+  padding: 16px 45px 0;
 `;
 
 export const DateHeader = styled.h1`
   font-size: 20px;
   margin-bottom: 24px;
+  padding-left: 14px;
 `;
 
 export const DateToday = styled.span`
@@ -24,8 +32,16 @@ export const TasksList = styled.ul`
 
 export const Task = styled.li`
   display: flex;
-  padding: 8px 0;
+  padding: 10px 10px;
   border-bottom: 1px solid #f0f0f0;
+  gap: 6px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fafafa;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgb(31 96 194 / 40%);
+  }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -50,26 +66,30 @@ export const TaskButtonOuter = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-
-  border: 1px solid rgb(${(props) => props.color});
-
+  border: 2px solid rgb(${(props) => colors[props.color]});
   background: ${(props) =>
-    props.completed ? `rgb(${props.color})` : 'transparent'};
+    props.completed
+      ? `rgb(${colors[props.color]})`
+      : `rgba(${colors[props.color]}, 0.1)`};
 
   &:hover {
     background: ${(props) =>
-      props.completed ? `rgb(${props.color})` : `rgba(${props.color}, 0.2)`};
+      props.completed
+        ? `rgb(${colors[props.color]})`
+        : `rgba(${colors[props.color]}, 0.2)`};
 
     & > * {
       display: flex;
-      justify-content: center;
-      align-items: center;
     }
   }
 `;
 
 export const TaskButtonInner = styled.span`
-  display: none;
+  display: ${(props) => (props.completed ? 'flex' : 'none')};
+  color: ${(props) =>
+    props.completed ? '#fff' : `rgb(${colors[props.color]})`};
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 `;

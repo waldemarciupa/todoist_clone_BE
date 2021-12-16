@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { editTask, taskSingle } from './tasksSlice';
 import Button from '../../components/Button';
@@ -30,22 +30,15 @@ const TaskSingle = () => {
   const dispatch = useDispatch();
   const task = useSelector(taskSingle);
 
-  const [id, setId] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [id] = useState(task._id);
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
+  const [completed, setCompleted] = useState(task.completed);
 
   const [isEditingMode, setIsEditingMode] = useState(false);
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
-
-  useEffect(() => {
-    if (task) {
-      setTitle(task.title);
-      setDescription(task.description);
-      setId(task._id);
-    }
-  }, []);
 
   const startEdition = () => {
     setIsEditingMode(true);
@@ -59,7 +52,7 @@ const TaskSingle = () => {
 
   const saveTask = (e) => {
     e.preventDefault();
-    dispatch(editTask({ user, user_id, title, description, id }));
+    dispatch(editTask({ user, user_id, title, description, id, completed }));
     setIsEditingMode(false);
   };
 
@@ -92,21 +85,28 @@ const TaskSingle = () => {
             <ButtonWrapper isEditingMode={isEditingMode}>
               <TaskButton
                 type='button'
-                onClick={(e) => {
-                  e.stopPropagation();
+                onClick={() => {
+                  setCompleted(!completed);
+                  dispatch(
+                    editTask({
+                      user,
+                      user_id,
+                      title,
+                      description,
+                      id,
+                      completed: !completed,
+                    })
+                  );
                 }}
               >
-                <TaskButtonOuter
-                  completed={task.completed}
-                  color={
-                    (task.priority === 'Priority 1' && '255,0,0') ||
-                    (task.priority === 'Priority 2' && '255,165,0') ||
-                    (task.priority === 'Priority 3' && '0,0,255') ||
-                    (task.priority === 'Priority 4' && '128,128,128')
-                  }
-                >
-                  <TaskButtonInner>
-                    <AiOutlineCheck style={{ width: '9px', height: '9px' }} />
+                <TaskButtonOuter completed={completed} color={task.priority}>
+                  <TaskButtonInner completed={completed} color={task.priority}>
+                    <AiOutlineCheck
+                      style={{
+                        width: '9px',
+                        height: '9px',
+                      }}
+                    />
                   </TaskButtonInner>
                 </TaskButtonOuter>
               </TaskButton>
