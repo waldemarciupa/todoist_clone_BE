@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchTasks,
+  editTask,
   deleteTask,
   selectTasksByProject,
   selectTaskSingle,
@@ -64,54 +65,62 @@ const TaskList = () => {
       </DateHeader>
       <TasksList>
         {taskStatus === 'failed' && error + ' Please refresh the page'}
-        {taskStatus === 'loading'
-          ? 'Loading...'
-          : tasks.map((task) => {
-              return (
-                <Task data-id={task._id} key={task._id}>
-                  <ButtonWrapper>
-                    <TaskButton>
-                      <TaskButtonOuter
-                        onClick={() => {
-                          console.log('clik');
-                        }}
-                        completed={task.completed}
-                        color={
-                          (task.priority === 'Priority 1' && '255,0,0') ||
-                          (task.priority === 'Priority 2' && '255,165,0') ||
-                          (task.priority === 'Priority 3' && '0,0,255') ||
-                          (task.priority === 'Priority 4' && '128,128,128')
-                        }
-                      >
-                        <TaskButtonInner>
-                          <AiOutlineCheck
-                            style={{ width: '9px', height: '9px' }}
-                          />
-                        </TaskButtonInner>
-                      </TaskButtonOuter>
-                    </TaskButton>
-                  </ButtonWrapper>
-                  <TaskContent>
-                    <TaskLink
+        {taskStatus === 'loading' && 'Loading...'}
+        {tasks.length ? (
+          tasks.map((task) => {
+            return (
+              <Task data-id={task._id} key={task._id}>
+                <ButtonWrapper>
+                  <TaskButton>
+                    <TaskButtonOuter
+                      completed={task.completed}
                       onClick={() => {
-                        dispatch(selectTaskSingle(task._id));
+                        dispatch(
+                          editTask({
+                            user,
+                            user_id,
+                            id: task._id,
+                            completed: !task.completed,
+                          })
+                        );
                       }}
-                      to={`/task/${task._id}`}
+                      color={task.priority}
                     >
-                      <TaskTitle>{task.title}</TaskTitle>
-                      <TaskDescription>{task.description}</TaskDescription>
-                    </TaskLink>
-                    <Wrapper>
-                      <div></div>
-                      <TaskProject>{task.project}</TaskProject>
-                    </Wrapper>
-                  </TaskContent>
-                  <TaskActions title='Delete' onClick={deleteTaskHandler}>
-                    <AiOutlineDelete />
-                  </TaskActions>
-                </Task>
-              );
-            })}
+                      <TaskButtonInner
+                        completed={task.completed}
+                        color={task.priority}
+                      >
+                        <AiOutlineCheck
+                          style={{ width: '9px', height: '9px' }}
+                        />
+                      </TaskButtonInner>
+                    </TaskButtonOuter>
+                  </TaskButton>
+                </ButtonWrapper>
+                <TaskContent>
+                  <TaskLink
+                    onClick={() => {
+                      dispatch(selectTaskSingle(task._id));
+                    }}
+                    to={`/task/${task._id}`}
+                  >
+                    <TaskTitle>{task.title}</TaskTitle>
+                    <TaskDescription>{task.description}</TaskDescription>
+                  </TaskLink>
+                  <Wrapper>
+                    <div></div>
+                    <TaskProject>{task.project}</TaskProject>
+                  </Wrapper>
+                </TaskContent>
+                <TaskActions title='Delete' onClick={deleteTaskHandler}>
+                  <AiOutlineDelete />
+                </TaskActions>
+              </Task>
+            );
+          })
+        ) : (
+          <p>You're all done for the week! #TodoistZero</p>
+        )}
       </TasksList>
     </ListBox>
   );

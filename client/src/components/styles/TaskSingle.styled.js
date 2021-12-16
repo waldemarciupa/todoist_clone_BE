@@ -27,7 +27,7 @@ export const Project = styled.div``;
 export const FlexLine = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 `;
 
 export const Task = styled.div`
@@ -47,7 +47,7 @@ export const TaskTitle = styled.div`
 `;
 
 export const TaskDescription = styled.div`
-  padding-left: ${(props) => (props.isEditingMode ? `0` : '30px')};
+  padding-left: ${(props) => (props.isEditingMode ? `0` : '32px')};
   margin-bottom: 16px;
   outline: none;
 `;

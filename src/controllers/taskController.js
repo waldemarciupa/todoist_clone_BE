@@ -44,10 +44,13 @@ module.exports = {
     }
   },
   async editTask(req, res) {
-    const { title, description, id } = req.body;
+    const { title, description, id, completed } = req.body;
     const { user_id } = req.headers;
     try {
-      await Task.findOneAndUpdate({ _id: id }, { title, description });
+      await Task.findOneAndUpdate(
+        { _id: id },
+        { title, description, completed }
+      );
       const task = await Task.findById(id);
       if (task) {
         return res.json(task);

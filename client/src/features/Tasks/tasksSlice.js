@@ -36,6 +36,7 @@ export const editTask = createAsyncThunk('tasks/editTask', async (payload) => {
       title: payload.title,
       description: payload.description,
       id: payload.id,
+      completed: payload.completed,
     },
     {
       headers: { user: payload.user, user_id: payload.user_id },
@@ -103,6 +104,17 @@ export const tasksSlice = createSlice({
                 ...task,
                 title: action.payload.title,
                 description: action.payload.description,
+                completed: action.payload.completed,
+              }
+            : task;
+        });
+        state.tasksByProject = state.tasksByProject.map((task) => {
+          return task._id === action.meta.arg.id
+            ? {
+                ...task,
+                title: action.payload.title,
+                description: action.payload.description,
+                completed: action.payload.completed,
               }
             : task;
         });
