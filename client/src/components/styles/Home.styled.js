@@ -9,7 +9,6 @@ const colors = {
 };
 
 export const ListBox = styled.div`
-  height: 100vh;
   flex-grow: 1;
   padding: 16px 45px 0;
 `;
@@ -150,14 +149,35 @@ export const Message = styled.div`
 `;
 
 export const StyledAside = styled.div`
-  height: 100vh;
+  height: calc(100vh - 44px);
+  width: ${(props) => (props.isAsideVisible ? '300px' : '0')};
   min-width: ${(props) => (props.isAsideVisible ? '300px' : '0')};
   background: #fafafa;
   padding: ${(props) =>
     props.isAsideVisible ? '30px 0 0 35px' : '30px 0 0 0 '};
   transform: ${(props) =>
     props.isAsideVisible ? 'translate(0)' : 'translate(-305px)'};
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  z-index: 2;
+
+  @media (max-width: 767px) {
+    position: absolute;
+    box-shadow: ${(props) =>
+      props.isAsideVisible ? ' 0 2px 10px rgb(0 0 0 / 30%)' : 'none'};
+  }
+`;
+
+export const Overlay = styled.div`
+  @media (max-width: 767px) {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: ${(props) => (props.isAsideVisible ? '1' : '0')};
+    visibility: ${(props) => (props.isAsideVisible ? 'visible' : 'hidden')};
+  }
 `;
 
 export const AsideTitle = styled.button`

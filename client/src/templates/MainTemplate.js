@@ -9,6 +9,7 @@ import {
   Wrapper,
   Message,
   StyledAside,
+  Overlay,
   AsideTitle,
   ProjectsList,
   ListItem,
@@ -51,6 +52,9 @@ const MainTemplate = () => {
     if (query) {
       dispatch(selectTasks(query));
       setProject(query);
+      if (size < 767) {
+        toggleAside();
+      }
     } else {
       dispatch(selectTasks());
       setProject('All tasks');
@@ -124,6 +128,7 @@ const MainTemplate = () => {
             </ListItem>
           </ProjectsList>
         </StyledAside>
+        <Overlay isAsideVisible={isAsideVisible} onClick={toggleAside} />
         <Context.Provider
           value={{ project, createMessage, setCreateMessage, setDeleteMessage }}
         >
