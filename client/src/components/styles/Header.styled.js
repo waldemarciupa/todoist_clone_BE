@@ -8,6 +8,10 @@ export const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 540px) {
+    padding: 0 12px;
+  }
 `;
 
 export const Control = styled.div`
@@ -37,6 +41,10 @@ export const SearchBar = styled.div`
   border-radius: 3px;
   color: #fff;
   position: relative;
+
+  @media (max-width: 540px) {
+    display: none;
+  }
 `;
 
 export const Search = styled.input`

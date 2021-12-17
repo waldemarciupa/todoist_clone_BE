@@ -23,6 +23,7 @@ const TaskWrapper = styled.div`
   box-shadow: 0 15px 50px 0 rgb(0 0 0 / 35%);
   border-radius: 10px;
   background: #fff;
+  margin: 0 32px;
 `;
 
 const TaskContent = styled.div`
