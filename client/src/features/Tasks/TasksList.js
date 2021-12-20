@@ -104,7 +104,9 @@ const TaskList = () => {
                     }}
                     to={`/task/${task._id}`}
                   >
-                    <TaskTitle>{task.title}</TaskTitle>
+                    <TaskTitle completed={task.completed}>
+                      {task.title}
+                    </TaskTitle>
                     <TaskDescription>{task.description}</TaskDescription>
                   </TaskLink>
                   <Wrapper>

@@ -44,6 +44,7 @@ export const TaskTitle = styled.div`
   line-height: 26px;
   font-weight: 700;
   outline: none;
+  text-decoration: ${(props) => (props.completed ? `line-through` : 'none')};
 `;
 
 export const TaskDescription = styled.div`

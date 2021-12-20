@@ -30,6 +30,8 @@ const TaskSingle = () => {
   const dispatch = useDispatch();
   const task = useSelector(taskSingle);
 
+  console.log(task);
+
   const [id] = useState(task._id);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
@@ -112,6 +114,7 @@ const TaskSingle = () => {
               </TaskButton>
             </ButtonWrapper>
             <TaskTitle
+              completed={completed}
               contentEditable={isEditingMode}
               suppressContentEditableWarning={true}
               onClick={(e) => {

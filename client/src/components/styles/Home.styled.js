@@ -109,7 +109,9 @@ export const TaskTitle = styled.p`
   line-height: 16px;
   word-wrap: break-word;
   word-break: break-word;
+  text-decoration: ${(props) => (props.completed ? `line-through` : 'none')};
 `;
+
 export const TaskDescription = styled.p`
   margin: 0;
   font-size: 12px;
@@ -129,12 +131,19 @@ export const TaskProject = styled.a`
   color: grey;
 `;
 
-export const TaskActions = styled.div`
+export const TaskActions = styled.button`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   min-width: 40px;
+  border: none;
+  background: transparent;
   cursor: pointer;
+
+  &:hover {
+    background: #e8e8e8;
+    border-radius: 5px;
+  }
 `;
 
 export const Message = styled.div`
