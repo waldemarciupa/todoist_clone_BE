@@ -45,12 +45,14 @@ export const TaskTitle = styled.div`
   font-weight: 700;
   outline: none;
   text-decoration: ${(props) => (props.completed ? `line-through` : 'none')};
+  color: ${(props) => (props.completed ? `#808080` : '#202020')};
 `;
 
 export const TaskDescription = styled.div`
   padding-left: ${(props) => (props.isEditingMode ? `0` : '32px')};
   margin-bottom: 16px;
   outline: none;
+  color: ${(props) => (props.completed ? `rgba(0,0,0,.4)` : '#202020')};
 `;
 
 export const TaskDetails = styled.div``;
