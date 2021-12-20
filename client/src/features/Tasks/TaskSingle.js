@@ -30,8 +30,6 @@ const TaskSingle = () => {
   const dispatch = useDispatch();
   const task = useSelector(taskSingle);
 
-  console.log(task);
-
   const [id] = useState(task._id);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
@@ -43,6 +41,8 @@ const TaskSingle = () => {
   const user_id = localStorage.getItem('user_id');
 
   const startEdition = () => {
+    if (completed) return;
+
     setIsEditingMode(true);
   };
 
@@ -128,6 +128,7 @@ const TaskSingle = () => {
             </TaskTitle>
           </FlexLine>
           <TaskDescription
+            completed={completed}
             contentEditable={isEditingMode}
             isEditingMode={isEditingMode}
             suppressContentEditableWarning={true}

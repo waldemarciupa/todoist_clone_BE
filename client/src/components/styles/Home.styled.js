@@ -103,7 +103,7 @@ export const TaskLink = styled(Link)`
 `;
 
 export const TaskTitle = styled.p`
-  color: #202020;
+  color: ${(props) => (props.completed ? `#808080` : '#202020')};
   margin: 0;
   font-size: 14px;
   line-height: 16px;
@@ -163,7 +163,7 @@ export const StyledAside = styled.div`
   min-width: ${(props) => (props.isAsideVisible ? '300px' : '0')};
   background: #fafafa;
   padding: ${(props) =>
-    props.isAsideVisible ? '30px 0 0 35px' : '30px 0 0 0 '};
+    props.isAsideVisible ? '30px 5px 0 35px' : '30px 5px 0 0 '};
   transform: ${(props) =>
     props.isAsideVisible ? 'translate(0)' : 'translate(-305px)'};
   transition: all 0.3s ease-in-out;
@@ -197,7 +197,7 @@ export const AsideTitle = styled.button`
   font-size: 14px;
   color: #333;
   font-weight: 700;
-  padding: 10px 0;
+  padding: 0;
   cursor: pointer;
 `;
 
@@ -205,25 +205,46 @@ export const ProjectsList = styled.ul`
   list-style: none;
 `;
 
-export const ListItem = styled.li``;
-
-export const Project = styled.button`
-  display: inline-block;
-  width: 100%;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #333;
-  line-height: normal;
-  height: 35px;
-  line-height: 35px;
-  padding: 0;
-  padding-left: 20px;
+export const ListItem = styled.li`
+  height: 34px;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px 16px 5px 5px;
   cursor: pointer;
-  background: transparent;
-  text-align: left;
+
+  & > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   &:hover {
     background: #eee;
+  }
+`;
+
+export const Project = styled.div`
+  display: inline-block;
+  width: 100%;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  line-height: normal;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+`;
+
+export const ProjectColor = styled.span`
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: ${(props) => props.color};
   }
 `;

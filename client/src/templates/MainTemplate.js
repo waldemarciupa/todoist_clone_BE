@@ -5,6 +5,8 @@ import GlobalStyles from '../components/styles/Global';
 import Header from '../components/Header';
 import { useNavigate, Outlet } from 'react-router-dom';
 import TaskCreate from '../features/Tasks/TaskCreate';
+import Today from '../components/Today';
+import { BsChevronDown } from 'react-icons/bs';
 import {
   Wrapper,
   Message,
@@ -14,6 +16,7 @@ import {
   ProjectsList,
   ListItem,
   Project,
+  ProjectColor,
 } from '../components/styles/Home.styled';
 
 export const Context = createContext();
@@ -81,51 +84,53 @@ const MainTemplate = () => {
       />
       <Wrapper>
         <StyledAside isAsideVisible={isAsideVisible}>
-          <AsideTitle
-            title='Select all tasks'
-            onClick={() => {
-              filterHandler();
-            }}
-          >
-            Projects
-          </AsideTitle>
           <ProjectsList>
             <ListItem>
-              <Project
-                onClick={() => {
-                  filterHandler('Inbox');
-                }}
-              >
-                Inbox
-              </Project>
+              <Today />
+              <Project>Today</Project>
             </ListItem>
-            <ListItem>
-              <Project
-                onClick={() => {
-                  filterHandler('Work');
-                }}
-              >
-                Work
-              </Project>
-            </ListItem>
-            <ListItem>
-              <Project
-                onClick={() => {
-                  filterHandler('Study');
-                }}
-              >
-                Study
-              </Project>
-            </ListItem>
-            <ListItem>
-              <Project
-                onClick={() => {
-                  filterHandler('Free time');
-                }}
-              >
-                Free time
-              </Project>
-            </ListItem>
+            <li>
+              <ListItem>
+                <span>
+                  <BsChevronDown />
+                </span>
+                <AsideTitle>Projects</AsideTitle>
+              </ListItem>
+              <ul>
+                <ListItem
+                  onClick={() => {
+                    filterHandler('Inbox');
+                  }}
+                >
+                  <ProjectColor color={'rgb(219, 64, 53)'} />
+                  <Project>Inbox</Project>
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    filterHandler('Work');
+                  }}
+                >
+                  <ProjectColor color={'violet'} />
+                  <Project>Work</Project>
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    filterHandler('Study');
+                  }}
+                >
+                  <ProjectColor color={'rgb(235, 150, 235)'} />
+                  <Project>Study</Project>
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    filterHandler('Free time');
+                  }}
+                >
+                  <ProjectColor color={'gold'} />
+                  <Project>Free time</Project>
+                </ListItem>
+              </ul>
+            </li>
           </ProjectsList>
         </StyledAside>
         <Overlay isAsideVisible={isAsideVisible} onClick={toggleAside} />
