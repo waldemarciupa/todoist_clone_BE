@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const taskController = require('../controllers/taskController');
+const projectController = require('../controllers/projectController');
 const userController = require('../controllers/userController');
 const protect = require('../middleware/authMiddleware');
 
@@ -9,6 +10,11 @@ router
   .route('/')
   .get(protect, taskController.getAllTasks)
   .post(protect, taskController.createTask);
+
+router
+  .route('/projects')
+  .get(protect, projectController.getAllProjects)
+  .post(protect, projectController.createProject);
 
 router.route('/tasks/:project').get(protect, taskController.getAllTasks);
 

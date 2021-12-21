@@ -27,7 +27,7 @@ module.exports = {
     }
   },
   async createTask(req, res) {
-    const { title, description, project, priority, completed } = req.body;
+    const { title, description, project, priority } = req.body;
     const { user_id } = req.headers;
     try {
       const task = await Task.create({
