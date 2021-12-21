@@ -193,7 +193,7 @@ export const AsideTitle = styled.div`
   font-weight: 700;
 `;
 
-export const ProjectsList = styled.ul`
+export const Navigation = styled.ul`
   list-style: none;
 `;
 

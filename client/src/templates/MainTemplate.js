@@ -1,11 +1,12 @@
 import { useState, useEffect, createContext } from 'react';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { selectTasks } from '../features/Tasks/tasksSlice';
-import GlobalStyles from '../components/styles/Global';
-import Header from '../components/Header';
-import { useNavigate, Outlet } from 'react-router-dom';
 import TaskCreate from '../features/Tasks/TaskCreate';
+import Header from '../components/Header';
+import ProjectsList from '../features/Projects/ProjectsList';
 import Today from '../components/Today';
+import GlobalStyles from '../components/styles/Global';
 import { BsChevronDown } from 'react-icons/bs';
 import {
   Wrapper,
@@ -13,10 +14,9 @@ import {
   StyledAside,
   Overlay,
   AsideTitle,
-  ProjectsList,
+  Navigation,
   ListItem,
   Project,
-  ProjectColor,
 } from '../components/styles/Home.styled';
 
 export const Context = createContext();
@@ -84,7 +84,7 @@ const MainTemplate = () => {
       />
       <Wrapper>
         <StyledAside isAsideVisible={isAsideVisible}>
-          <ProjectsList>
+          <Navigation>
             <ListItem>
               <Today />
               <Project>Today</Project>
@@ -96,42 +96,9 @@ const MainTemplate = () => {
                 </span>
                 <AsideTitle>Projects</AsideTitle>
               </ListItem>
-              <ul>
-                {/* <ListItem
-                  onClick={() => {
-                    filterHandler('Inbox');
-                  }}
-                >
-                  <ProjectColor color={'rgb(219, 64, 53)'} />
-                  <Project>Inbox</Project>
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    filterHandler('Work');
-                  }}
-                >
-                  <ProjectColor color={'violet'} />
-                  <Project>Work</Project>
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    filterHandler('Study');
-                  }}
-                >
-                  <ProjectColor color={'rgb(235, 150, 235)'} />
-                  <Project>Study</Project>
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    filterHandler('Free time');
-                  }}
-                >
-                  <ProjectColor color={'gold'} />
-                  <Project>Free time</Project>
-                </ListItem> */}
-              </ul>
+              <ProjectsList filterHandler={filterHandler} />
             </li>
-          </ProjectsList>
+          </Navigation>
         </StyledAside>
         <Overlay isAsideVisible={isAsideVisible} onClick={toggleAside} />
         <Context.Provider
