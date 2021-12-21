@@ -1,6 +1,7 @@
-import { resetTasks } from '../features/Tasks/tasksSlice';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { resetTasks } from '../features/Tasks/tasksSlice';
+import { resetProjects } from '../features/Projects/projectsSlice';
 import Button from './Button';
 import {
   StyledHeader,
@@ -25,6 +26,7 @@ const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
     localStorage.removeItem('user');
     localStorage.removeItem('user_id');
     dispatch(resetTasks());
+    dispatch(resetProjects());
     navigate('/users/login');
   };
 
