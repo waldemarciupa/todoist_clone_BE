@@ -189,16 +189,8 @@ export const Overlay = styled.div`
   }
 `;
 
-export const AsideTitle = styled.button`
-  background: transparent;
-  border: none;
-  width: 100%;
-  text-align: left;
-  font-size: 14px;
-  color: #333;
+export const AsideTitle = styled.div`
   font-weight: 700;
-  padding: 0;
-  cursor: pointer;
 `;
 
 export const ProjectsList = styled.ul`

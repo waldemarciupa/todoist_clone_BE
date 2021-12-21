@@ -90,14 +90,14 @@ const MainTemplate = () => {
               <Project>Today</Project>
             </ListItem>
             <li>
-              <ListItem>
+              <ListItem as='div'>
                 <span>
                   <BsChevronDown />
                 </span>
                 <AsideTitle>Projects</AsideTitle>
               </ListItem>
               <ul>
-                <ListItem
+                {/* <ListItem
                   onClick={() => {
                     filterHandler('Inbox');
                   }}
@@ -128,7 +128,7 @@ const MainTemplate = () => {
                 >
                   <ProjectColor color={'gold'} />
                   <Project>Free time</Project>
-                </ListItem>
+                </ListItem> */}
               </ul>
             </li>
           </ProjectsList>
