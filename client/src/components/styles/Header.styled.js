@@ -16,10 +16,12 @@ export const StyledHeader = styled.header`
 
 export const Control = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
 `;
 
 export const StyledButton = styled.button`
+  height: 28px;
   border: 0;
   background: transparent;
   color: #fff;
@@ -37,6 +39,7 @@ export const StyledButton = styled.button`
 `;
 
 export const SearchBar = styled.div`
+  height: 28px;
   background: hsla(0, 0%, 100%, 0.2);
   border-radius: 3px;
   color: #fff;
