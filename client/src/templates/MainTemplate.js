@@ -3,6 +3,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { selectTasks } from '../features/Tasks/tasksSlice';
 import TaskCreate from '../features/Tasks/TaskCreate';
+import ProjectCreate from '../features/Projects/ProjectCreate';
 import Header from '../components/Header';
 import ProjectsList from '../features/Projects/ProjectsList';
 import Today from '../components/Today';
@@ -26,6 +27,7 @@ export const Context = createContext();
 
 const MainTemplate = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isProjectModalVisible, setIsProjectModalVisible] = useState(false);
   const [isAsideVisible, setIsAsideVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
@@ -72,6 +74,10 @@ const MainTemplate = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+  const toggleProjectModal = () => {
+    setIsProjectModalVisible(!isProjectModalVisible);
+  };
+
   const toggleAside = () => {
     setIsAsideVisible(!isAsideVisible);
   };
@@ -99,7 +105,10 @@ const MainTemplate = () => {
                 </span>
                 <ProjectToggleContent>
                   <span>Projects</span>
-                  <AddProjectBtn title='Add project'>
+                  <AddProjectBtn
+                    onClick={toggleProjectModal}
+                    title='Add project'
+                  >
                     <AiOutlinePlus />
                   </AddProjectBtn>
                 </ProjectToggleContent>
@@ -115,12 +124,15 @@ const MainTemplate = () => {
           <Outlet />
         </Context.Provider>
       </Wrapper>
-      {isModalVisible ? (
+      {isModalVisible && (
         <TaskCreate
           hideModal={toggleModal}
           setCreateMessage={setCreateMessage}
         />
-      ) : null}
+      )}
+      {isProjectModalVisible && (
+        <ProjectCreate hideProjectModal={toggleProjectModal} />
+      )}
       {createMessage ? (
         <Message>
           Task successfully created for {new Date().toLocaleDateString()}{' '}
