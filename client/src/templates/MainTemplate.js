@@ -8,12 +8,15 @@ import ProjectsList from '../features/Projects/ProjectsList';
 import Today from '../components/Today';
 import GlobalStyles from '../components/styles/Global';
 import { BsChevronDown } from 'react-icons/bs';
+import { AiOutlinePlus } from 'react-icons/ai';
 import {
   Wrapper,
   Message,
   StyledAside,
   Overlay,
-  AsideTitle,
+  ProjectToggle,
+  ProjectToggleContent,
+  AddProjectBtn,
   Navigation,
   ListItem,
   Project,
@@ -90,12 +93,17 @@ const MainTemplate = () => {
               <Project>Today</Project>
             </ListItem>
             <li>
-              <ListItem as='div'>
+              <ProjectToggle>
                 <span>
                   <BsChevronDown />
                 </span>
-                <AsideTitle>Projects</AsideTitle>
-              </ListItem>
+                <ProjectToggleContent>
+                  <span>Projects</span>
+                  <AddProjectBtn title='Add project'>
+                    <AiOutlinePlus />
+                  </AddProjectBtn>
+                </ProjectToggleContent>
+              </ProjectToggle>
               <ProjectsList filterHandler={filterHandler} />
             </li>
           </Navigation>

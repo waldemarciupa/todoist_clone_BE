@@ -1,5 +1,25 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+
+const listItemStyles = css`
+  height: 34px;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px 16px 5px 5px;
+  cursor: pointer;
+
+  & > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover {
+    background: #eee;
+  }
+`;
 
 const colors = {
   'Priority 1': '209, 69, 59',
@@ -189,28 +209,41 @@ export const Overlay = styled.div`
   }
 `;
 
-export const AsideTitle = styled.div`
-  font-weight: 700;
-`;
-
 export const Navigation = styled.ul`
   list-style: none;
 `;
 
 export const ListItem = styled.li`
-  height: 34px;
-  display: grid;
-  grid-template-columns: 34px 1fr;
-  align-items: center;
-  border-radius: 5px;
-  padding: 5px 16px 5px 5px;
-  cursor: pointer;
+  ${listItemStyles}
+`;
 
-  & > span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+export const ProjectToggle = styled.div`
+  ${listItemStyles}
+
+  &:hover {
+    background: transparent;
   }
+`;
+
+export const ProjectToggleContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  line-height: 20px;
+`;
+
+export const AddProjectBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 
   &:hover {
     background: #eee;
