@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { editTask, taskSingle } from './tasksSlice';
+import { selectProjects } from '../Projects/projectsSlice';
 import Button from '../../components/Button';
 import { AiOutlineCheck } from 'react-icons/ai';
 import {
@@ -29,16 +30,30 @@ import {
 const TaskSingle = () => {
   const dispatch = useDispatch();
   const task = useSelector(taskSingle);
+  const projects = useSelector(selectProjects);
 
   const [id] = useState(task._id);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [completed, setCompleted] = useState(task.completed);
+  const [projectColor, setProjectColor] = useState('rgb(5, 133, 39)');
 
   const [isEditingMode, setIsEditingMode] = useState(false);
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
+
+  useEffect(() => {
+    const currentColor = projects.filter((pp) => {
+      return pp.name === task.project;
+    });
+
+    if (currentColor.length) {
+      setProjectColor(currentColor[0].color);
+    } else {
+      return;
+    }
+  }, []);
 
   const startEdition = () => {
     if (completed) return;
@@ -77,7 +92,7 @@ const TaskSingle = () => {
     <StyledTaskSingle>
       <FlexLine>
         <ProjectColorWrapper>
-          <ProjectColor />
+          <ProjectColor color={projectColor} />
         </ProjectColorWrapper>
         <Project>{task.project}</Project>
       </FlexLine>

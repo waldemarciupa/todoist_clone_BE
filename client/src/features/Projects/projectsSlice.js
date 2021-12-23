@@ -18,6 +18,16 @@ export const fetchProjects = createAsyncThunk(
   }
 );
 
+export const addNewProject = createAsyncThunk(
+  'projects/addNewProject',
+  async (payload) => {
+    const { data } = await api.post('/projects', payload, {
+      headers: { user: payload.user, user_id: payload.user_id },
+    });
+    return data;
+  }
+);
+
 export const projectsSlice = createSlice({
   name: 'projects',
   initialState,
@@ -36,6 +46,9 @@ export const projectsSlice = createSlice({
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.list = state.list.concat(action.payload);
+      })
+      .addCase(addNewProject.fulfilled, (state, action) => {
+        state.list.push(action.payload);
       });
   },
 });

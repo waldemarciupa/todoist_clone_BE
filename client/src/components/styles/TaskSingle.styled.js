@@ -18,7 +18,7 @@ export const ProjectColor = styled.span`
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: crimson;
+  background: ${(props) => props.color};
   border-radius: 50%;
 `;
 
@@ -40,6 +40,7 @@ export const Task = styled.div`
 `;
 
 export const TaskTitle = styled.div`
+  width: 100%;
   font-size: 16px;
   line-height: 26px;
   font-weight: 700;

@@ -146,7 +146,7 @@ export const Wrapper = styled.div`
   align-items: flex-start;
 `;
 
-export const TaskProject = styled.a`
+export const TaskProject = styled.span`
   font-size: 12px;
   color: grey;
 `;

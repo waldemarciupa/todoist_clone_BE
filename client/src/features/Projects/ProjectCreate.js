@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addNewProject } from './projectsSlice';
 import styled, { css } from 'styled-components';
 import Button from '../../components/Button';
 import { ProjectColorList } from './ProjectColorList';
@@ -127,9 +129,24 @@ const ButtonsWrapper = styled.div`
 `;
 
 const ProjectCreate = ({ hideProjectModal }) => {
+  const [name, setName] = useState('');
   const [title, setTitle] = useState('Charcoal');
   const [color, setColor] = useState('rgb(128, 128, 128)');
   const [isOpen, setIsOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const user = localStorage.getItem('user');
+  const user_id = localStorage.getItem('user_id');
+
+  const handleChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addNewProject({ name, title, color, user, user_id }));
+    hideProjectModal();
+  };
 
   return (
     <ModalOuter onClick={hideProjectModal}>
@@ -141,11 +158,11 @@ const ProjectCreate = ({ hideProjectModal }) => {
         <Header>
           <Title>Add project</Title>
         </Header>
-        <form>
+        <form onSubmit={handleSubmit}>
           <FormContent>
             <FormField>
               <Label>Name</Label>
-              <Input required />
+              <Input required value={name} onChange={handleChange} />
             </FormField>
             <FormField>
               <Label>Color</Label>

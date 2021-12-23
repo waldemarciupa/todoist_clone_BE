@@ -36,12 +36,12 @@ const ProjectsList = ({ filterHandler }) => {
           return (
             <ListItem
               onClick={() => {
-                filterHandler(project.title);
+                filterHandler(project.name);
               }}
               key={project._id}
             >
               <ProjectColor color={project.color} />
-              <Project>{project.title}</Project>
+              <Project>{project.name}</Project>
             </ListItem>
           );
         })
