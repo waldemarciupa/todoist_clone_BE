@@ -15,10 +15,11 @@ module.exports = {
     }
   },
   async createProject(req, res) {
-    const { title, color } = req.body;
+    const { name, title, color } = req.body;
     const { user_id } = req.headers;
     try {
       const project = await Project.create({
+        name,
         title,
         color,
         user: user_id,
