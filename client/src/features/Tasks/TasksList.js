@@ -108,11 +108,11 @@ const TaskList = () => {
                       {task.title}
                     </TaskTitle>
                     <TaskDescription>{task.description}</TaskDescription>
+                    <Wrapper>
+                      <div></div>
+                      <TaskProject>{task.project}</TaskProject>
+                    </Wrapper>
                   </TaskLink>
-                  <Wrapper>
-                    <div></div>
-                    <TaskProject>{task.project}</TaskProject>
-                  </Wrapper>
                 </TaskContent>
                 <TaskActions title='Delete' onClick={deleteTaskHandler}>
                   <AiOutlineDelete />

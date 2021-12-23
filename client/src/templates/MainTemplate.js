@@ -96,7 +96,13 @@ const MainTemplate = () => {
           <Navigation>
             <ListItem>
               <Today />
-              <Project>Today</Project>
+              <Project
+                onClick={() => {
+                  filterHandler('Today');
+                }}
+              >
+                Today
+              </Project>
             </ListItem>
             <li>
               <ProjectToggle>

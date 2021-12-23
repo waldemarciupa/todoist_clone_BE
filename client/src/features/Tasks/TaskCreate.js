@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectProjects } from '../Projects/projectsSlice';
 import { addNewTask } from './tasksSlice';
 import styled from 'styled-components';
 import Button from '../../components/Button';
@@ -126,10 +127,11 @@ const TaskCreate = ({ hideModal, setCreateMessage }) => {
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
 
   const dispatch = useDispatch();
+  const projects = useSelector(selectProjects);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [project, setProject] = useState('Inbox');
+  const [project, setProject] = useState('Today');
   const [priority, setPriority] = useState('Priority 4');
   const [completed] = useState(false);
   const [user, setUser] = useState(null);
@@ -210,12 +212,17 @@ const TaskCreate = ({ hideModal, setCreateMessage }) => {
                 <AiOutlineFundProjectionScreen />
                 {project}
               </ActionButton>
-              <ProjectList visible={isProjectVisible}>
-                <ListItem onClick={handleProject}>Inbox</ListItem>
-                <ListItem onClick={handleProject}>Work</ListItem>
-                <ListItem onClick={handleProject}>Study</ListItem>
-                <ListItem onClick={handleProject}>Free time</ListItem>
-              </ProjectList>
+              {projects.length ? (
+                <ProjectList visible={isProjectVisible}>
+                  {projects.map((project) => {
+                    return (
+                      <ListItem key={project._id} onClick={handleProject}>
+                        {project.name}
+                      </ListItem>
+                    );
+                  })}
+                </ProjectList>
+              ) : null}
               <ActionButton
                 onClick={() => {
                   setIsProjectVisible(false);
