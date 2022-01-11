@@ -16,7 +16,7 @@ import {
   StyledAside,
   Overlay,
   ProjectToggle,
-  ProjectToggleContent,
+  ProjectContent,
   AddProjectBtn,
   Navigation,
   ListItem,
@@ -109,7 +109,7 @@ const MainTemplate = () => {
                 <span>
                   <BsChevronDown />
                 </span>
-                <ProjectToggleContent>
+                <ProjectContent>
                   <span>Projects</span>
                   <AddProjectBtn
                     onClick={toggleProjectModal}
@@ -117,7 +117,7 @@ const MainTemplate = () => {
                   >
                     <AiOutlinePlus />
                   </AddProjectBtn>
-                </ProjectToggleContent>
+                </ProjectContent>
               </ProjectToggle>
               <ProjectsList filterHandler={filterHandler} />
             </li>

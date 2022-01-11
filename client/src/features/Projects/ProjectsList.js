@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjects, selectProjects } from './projectsSlice';
 import {
   ListItem,
+  ProjectContent,
   Project,
   ProjectColor,
+  ProjectDots,
 } from '../../components/styles/Home.styled';
+import { AiOutlineEllipsis } from 'react-icons/ai';
 import styled from 'styled-components';
 
 const Message = styled.li`
@@ -41,7 +44,14 @@ const ProjectsList = ({ filterHandler }) => {
               key={project._id}
             >
               <ProjectColor color={project.color} />
-              <Project>{project.name}</Project>
+              <ProjectContent>
+                <Project>{project.name}</Project>
+                <ProjectDots>
+                  <AiOutlineEllipsis
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </ProjectDots>
+              </ProjectContent>
             </ListItem>
           );
         })
