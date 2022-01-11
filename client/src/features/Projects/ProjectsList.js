@@ -3,9 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjects, selectProjects } from './projectsSlice';
 import {
   ListItem,
+  ProjectContent,
   Project,
   ProjectColor,
+  ProjectDots,
+  ListMenu,
+  MenuItem,
+  MenuItemDelete,
 } from '../../components/styles/Home.styled';
+import { AiOutlineEllipsis, AiOutlineDelete } from 'react-icons/ai';
 import styled from 'styled-components';
 
 const Message = styled.li`
@@ -41,7 +47,29 @@ const ProjectsList = ({ filterHandler }) => {
               key={project._id}
             >
               <ProjectColor color={project.color} />
-              <Project>{project.name}</Project>
+              <ProjectContent>
+                <Project>{project.name}</Project>
+                <ProjectDots
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log('click');
+                  }}
+                >
+                  <AiOutlineEllipsis
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </ProjectDots>
+                <ListMenu>
+                  <MenuItem>
+                    <MenuItemDelete>
+                      <AiOutlineDelete
+                        style={{ width: '16px', height: '16px' }}
+                      />
+                    </MenuItemDelete>
+                    <span>Delete project</span>
+                  </MenuItem>
+                </ListMenu>
+              </ProjectContent>
             </ListItem>
           );
         })

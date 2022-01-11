@@ -1,6 +1,13 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
+const colors = {
+  'Priority 1': '209, 69, 59',
+  'Priority 2': '235, 137, 9',
+  'Priority 3': '36, 111, 224',
+  'Priority 4': '128,128,128',
+};
+
 const listItemStyles = css`
   height: 34px;
   display: grid;
@@ -21,12 +28,18 @@ const listItemStyles = css`
   }
 `;
 
-const colors = {
-  'Priority 1': '209, 69, 59',
-  'Priority 2': '235, 137, 9',
-  'Priority 3': '36, 111, 224',
-  'Priority 4': '128,128,128',
-};
+const projectBtnStyles = css`
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+`;
 
 export const ListBox = styled.div`
   flex-grow: 1;
@@ -215,6 +228,12 @@ export const Navigation = styled.ul`
 
 export const ListItem = styled.li`
   ${listItemStyles}
+
+  &:hover {
+    button {
+      display: flex;
+    }
+  }
 `;
 
 export const ProjectToggle = styled.div`
@@ -225,25 +244,18 @@ export const ProjectToggle = styled.div`
   }
 `;
 
-export const ProjectToggleContent = styled.div`
-  display: flex;
-  justify-content: space-between;
+export const ProjectContent = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 26px;
   align-items: center;
   font-weight: 700;
-  line-height: 20px;
+  line-height: 26px;
 `;
 
 export const AddProjectBtn = styled.button`
+  ${projectBtnStyles}
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 4px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
 
   &:hover {
     background: #eee;
@@ -255,8 +267,9 @@ export const Project = styled.div`
   width: 100%;
   border: none;
   font-size: 14px;
+  font-weight: normal;
   color: #333;
-  line-height: normal;
+  line-height: 26px;
   padding: 0;
   background: transparent;
   text-align: left;
@@ -272,4 +285,40 @@ export const ProjectColor = styled.span`
     border-radius: 50%;
     background: ${(props) => props.color};
   }
+`;
+
+export const ProjectDots = styled.button`
+  ${projectBtnStyles}
+`;
+
+export const ListMenu = styled.div`
+  /* display: ${(props) => (props.isOpen ? 'block' : 'none')}; */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 200px;
+  padding: 4px 0;
+  background-color: #fff;
+  color: #333;
+  border-radius: 3px;
+  box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+  border: 1px solid #ddd;
+`;
+
+export const MenuItem = styled.div`
+  font-weight: normal;
+  font-size: 13px;
+  padding: 4px 10px;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+
+  &:hover {
+    background: #f3f3f3;
+    color: #cc4643;
+  }
+`;
+
+export const MenuItemDelete = styled.span`
+  display: flex;
+  align-items: center;
 `;
