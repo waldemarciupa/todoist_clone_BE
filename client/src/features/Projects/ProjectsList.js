@@ -7,8 +7,11 @@ import {
   Project,
   ProjectColor,
   ProjectDots,
+  ListMenu,
+  MenuItem,
+  MenuItemDelete,
 } from '../../components/styles/Home.styled';
-import { AiOutlineEllipsis } from 'react-icons/ai';
+import { AiOutlineEllipsis, AiOutlineDelete } from 'react-icons/ai';
 import styled from 'styled-components';
 
 const Message = styled.li`
@@ -46,11 +49,26 @@ const ProjectsList = ({ filterHandler }) => {
               <ProjectColor color={project.color} />
               <ProjectContent>
                 <Project>{project.name}</Project>
-                <ProjectDots>
+                <ProjectDots
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log('click');
+                  }}
+                >
                   <AiOutlineEllipsis
                     style={{ width: '100%', height: '100%' }}
                   />
                 </ProjectDots>
+                <ListMenu>
+                  <MenuItem>
+                    <MenuItemDelete>
+                      <AiOutlineDelete
+                        style={{ width: '16px', height: '16px' }}
+                      />
+                    </MenuItemDelete>
+                    <span>Delete project</span>
+                  </MenuItem>
+                </ListMenu>
               </ProjectContent>
             </ListItem>
           );

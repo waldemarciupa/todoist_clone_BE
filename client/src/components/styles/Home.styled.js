@@ -245,6 +245,7 @@ export const ProjectToggle = styled.div`
 `;
 
 export const ProjectContent = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 26px;
   align-items: center;
@@ -288,4 +289,36 @@ export const ProjectColor = styled.span`
 
 export const ProjectDots = styled.button`
   ${projectBtnStyles}
+`;
+
+export const ListMenu = styled.div`
+  /* display: ${(props) => (props.isOpen ? 'block' : 'none')}; */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 200px;
+  padding: 4px 0;
+  background-color: #fff;
+  color: #333;
+  border-radius: 3px;
+  box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+  border: 1px solid #ddd;
+`;
+
+export const MenuItem = styled.div`
+  font-weight: normal;
+  font-size: 13px;
+  padding: 4px 10px;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+
+  &:hover {
+    background: #f3f3f3;
+    color: #cc4643;
+  }
+`;
+
+export const MenuItemDelete = styled.span`
+  display: flex;
+  align-items: center;
 `;
