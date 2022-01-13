@@ -28,6 +28,15 @@ export const addNewProject = createAsyncThunk(
   }
 );
 
+export const deleteProject = createAsyncThunk(
+  'project/deleteProject',
+  async (payload) => {
+    await api.delete(`/projects/${payload.id}`, {
+      headers: { user: payload.user, user_id: payload.user_id },
+    });
+  }
+);
+
 export const projectsSlice = createSlice({
   name: 'projects',
   initialState,
@@ -49,6 +58,11 @@ export const projectsSlice = createSlice({
       })
       .addCase(addNewProject.fulfilled, (state, action) => {
         state.list.push(action.payload);
+      })
+      .addCase(deleteProject.fulfilled, (state, action) => {
+        state.list = state.list.filter((project) => {
+          return project._id !== action.meta.arg.id;
+        });
       });
   },
 });

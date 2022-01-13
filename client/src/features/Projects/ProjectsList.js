@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProjects, selectProjects } from './projectsSlice';
+import { fetchProjects, selectProjects, deleteProject } from './projectsSlice';
 import {
   ListItem,
   ProjectContent,
@@ -79,8 +79,8 @@ const ProjectsList = ({ filterHandler }) => {
                     <MenuItem
                       data-id={project._id}
                       onClick={(e) => {
-                        console.log(
-                          'Delete project ID: ' + e.currentTarget.dataset.id
+                        dispatch(
+                          deleteProject({ id: project._id, user, user_id })
                         );
                       }}
                     >

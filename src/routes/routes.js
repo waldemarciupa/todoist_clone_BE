@@ -11,16 +11,22 @@ router
   .get(protect, taskController.getAllTasks)
   .post(protect, taskController.createTask);
 
+router.route('/tasks/:project').get(protect, taskController.getAllTasks);
+
+router
+  .route('/task/:id')
+  .get(taskController.getTaskById)
+  .put(protect, taskController.editTask)
+  .delete(protect, taskController.deleteTask);
+
+// Project
+
 router
   .route('/projects')
   .get(protect, projectController.getAllProjects)
   .post(protect, projectController.createProject);
 
-router.route('/tasks/:project').get(protect, taskController.getAllTasks);
-
-router.route('/task/:id').get(taskController.getTaskById);
-router.route('/task/:id').put(protect, taskController.editTask);
-router.route('/task/:id').delete(protect, taskController.deleteTask);
+router.route('/projects/:id').delete(protect, projectController.deleteProject);
 
 // User
 router.route('/users/register').post(userController.registerUser);

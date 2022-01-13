@@ -30,4 +30,18 @@ module.exports = {
       throw new Error(error);
     }
   },
+  async deleteProject(req, res) {
+    const { id } = req.params;
+
+    try {
+      const project = await Project.findById(id);
+
+      if (project) {
+        await Project.findByIdAndRemove(id);
+        return res.json({ message: 'Project deleted successfully' });
+      }
+    } catch (error) {
+      return res.status(400).json({ message: "Project doesn't exist" });
+    }
+  },
 };
