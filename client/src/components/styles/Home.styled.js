@@ -292,7 +292,7 @@ export const ProjectDots = styled.button`
 `;
 
 export const ListMenu = styled.div`
-  /* display: ${(props) => (props.isOpen ? 'block' : 'none')}; */
+  display: block;
   position: absolute;
   top: 0;
   left: 50%;

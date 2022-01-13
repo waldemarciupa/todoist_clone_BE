@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjects, selectProjects } from './projectsSlice';
 import {
@@ -29,10 +29,24 @@ const ProjectsList = ({ filterHandler }) => {
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
 
+  const ref = useRef(null);
+  const [open, setOpen] = useState('');
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setOpen('');
+    }
+  };
+
   useEffect(() => {
     if (projectsStatus === 'idle') {
       dispatch(fetchProjects({ user, user_id }));
     }
+
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
   }, [dispatch, projects, user, user_id, projectsStatus]);
 
   return (
@@ -50,25 +64,35 @@ const ProjectsList = ({ filterHandler }) => {
               <ProjectContent>
                 <Project>{project.name}</Project>
                 <ProjectDots
+                  data-id={project._id}
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log('click');
+                    setOpen(e.currentTarget.dataset.id);
                   }}
                 >
                   <AiOutlineEllipsis
                     style={{ width: '100%', height: '100%' }}
                   />
                 </ProjectDots>
-                <ListMenu>
-                  <MenuItem>
-                    <MenuItemDelete>
-                      <AiOutlineDelete
-                        style={{ width: '16px', height: '16px' }}
-                      />
-                    </MenuItemDelete>
-                    <span>Delete project</span>
-                  </MenuItem>
-                </ListMenu>
+                {open === project._id && (
+                  <ListMenu ref={ref} open={open}>
+                    <MenuItem
+                      data-id={project._id}
+                      onClick={(e) => {
+                        console.log(
+                          'Delete project ID: ' + e.currentTarget.dataset.id
+                        );
+                      }}
+                    >
+                      <MenuItemDelete>
+                        <AiOutlineDelete
+                          style={{ width: '16px', height: '16px' }}
+                        />
+                      </MenuItemDelete>
+                      <span>Delete project</span>
+                    </MenuItem>
+                  </ListMenu>
+                )}
               </ProjectContent>
             </ListItem>
           );
