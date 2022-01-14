@@ -83,6 +83,7 @@ const ProjectsList = ({
                     <MenuItem
                       data-id={project._id}
                       onClick={(e) => {
+                        e.stopPropagation();
                         setOpen('');
                         toggleProjectDeleteModal();
                         setStateToDelete(project._id, project.name);

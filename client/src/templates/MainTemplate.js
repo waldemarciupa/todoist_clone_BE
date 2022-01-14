@@ -164,6 +164,7 @@ const MainTemplate = () => {
           id={id}
           name={name}
           hideModal={toggleProjectDeleteModal}
+          filterHandler={filterHandler}
         />
       )}
       {isProjectModalVisible && (

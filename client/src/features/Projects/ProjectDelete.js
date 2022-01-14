@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { deleteProject } from './projectsSlice';
 import Modal from '../../components/Modal';
 
-const ProjectDelete = ({ id, name, hideModal }) => {
+const ProjectDelete = ({ id, name, hideModal, filterHandler }) => {
   const dispatch = useDispatch();
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
@@ -11,6 +11,7 @@ const ProjectDelete = ({ id, name, hideModal }) => {
     e.preventDefault();
     dispatch(deleteProject({ id, user, user_id }));
     hideModal();
+    filterHandler();
   };
 
   return (
