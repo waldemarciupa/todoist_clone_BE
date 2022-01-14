@@ -1,9 +1,16 @@
+import { useDispatch } from 'react-redux';
+import { deleteProject } from './projectsSlice';
 import Modal from '../../components/Modal';
 
-const ProjectDelete = ({ hideModal }) => {
+const ProjectDelete = ({ id, name, hideModal }) => {
+  const dispatch = useDispatch();
+  const user = localStorage.getItem('user');
+  const user_id = localStorage.getItem('user_id');
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Delete');
+    dispatch(deleteProject({ id, user, user_id }));
+    hideModal();
   };
 
   return (
@@ -13,7 +20,9 @@ const ProjectDelete = ({ hideModal }) => {
       handleSubmit={handleSubmit}
       hideProjectModal={hideModal}
     >
-      <div>Are you sure you want to delete PROJECT_NAME?</div>
+      <div>
+        Are you sure you want to delete <b>{name}</b>?
+      </div>
     </Modal>
   );
 };
