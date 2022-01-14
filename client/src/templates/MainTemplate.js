@@ -22,11 +22,14 @@ import {
   ListItem,
   Project,
 } from '../components/styles/Home.styled';
+import ProjectDelete from '../features/Projects/ProjectDelete';
 
 export const Context = createContext();
 
 const MainTemplate = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isProjectDeleteModalVisible, setIsProjectDeleteModalVisible] =
+    useState(true);
   const [isProjectModalVisible, setIsProjectModalVisible] = useState(false);
   const [isAsideVisible, setIsAsideVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
@@ -72,6 +75,10 @@ const MainTemplate = () => {
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
+  };
+
+  const toggleProjectDeleteModal = () => {
+    setIsProjectDeleteModalVisible(false);
   };
 
   const toggleProjectModal = () => {
@@ -135,6 +142,9 @@ const MainTemplate = () => {
           hideModal={toggleModal}
           setCreateMessage={setCreateMessage}
         />
+      )}
+      {isProjectDeleteModalVisible && (
+        <ProjectDelete hideModal={toggleProjectDeleteModal} />
       )}
       {isProjectModalVisible && (
         <ProjectCreate hideProjectModal={toggleProjectModal} />
