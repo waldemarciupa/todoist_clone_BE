@@ -21,7 +21,11 @@ const Message = styled.li`
   padding: 4px 0 4px 16px;
 `;
 
-const ProjectsList = ({ filterHandler }) => {
+const ProjectsList = ({
+  filterHandler,
+  toggleProjectDeleteModal,
+  setStateToDelete,
+}) => {
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
   const projectsStatus = useSelector((state) => state.projects.status);
@@ -79,9 +83,9 @@ const ProjectsList = ({ filterHandler }) => {
                     <MenuItem
                       data-id={project._id}
                       onClick={(e) => {
-                        dispatch(
-                          deleteProject({ id: project._id, user, user_id })
-                        );
+                        setOpen('');
+                        toggleProjectDeleteModal();
+                        setStateToDelete(project._id, project.name);
                       }}
                     >
                       <MenuItemDelete>

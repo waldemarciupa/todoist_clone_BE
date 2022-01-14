@@ -22,11 +22,16 @@ import {
   ListItem,
   Project,
 } from '../components/styles/Home.styled';
+import ProjectDelete from '../features/Projects/ProjectDelete';
 
 export const Context = createContext();
 
 const MainTemplate = () => {
+  const [name, setName] = useState(null);
+  const [id, setId] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isProjectDeleteModalVisible, setIsProjectDeleteModalVisible] =
+    useState(false);
   const [isProjectModalVisible, setIsProjectModalVisible] = useState(false);
   const [isAsideVisible, setIsAsideVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
@@ -70,8 +75,17 @@ const MainTemplate = () => {
     navigate('/task');
   };
 
+  const setStateToDelete = (id, name) => {
+    setId(id);
+    setName(name);
+  };
+
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
+  };
+
+  const toggleProjectDeleteModal = () => {
+    setIsProjectDeleteModalVisible(!isProjectDeleteModalVisible);
   };
 
   const toggleProjectModal = () => {
@@ -119,13 +133,22 @@ const MainTemplate = () => {
                   </AddProjectBtn>
                 </ProjectContent>
               </ProjectToggle>
-              <ProjectsList filterHandler={filterHandler} />
+              <ProjectsList
+                filterHandler={filterHandler}
+                toggleProjectDeleteModal={toggleProjectDeleteModal}
+                setStateToDelete={setStateToDelete}
+              />
             </li>
           </Navigation>
         </StyledAside>
         <Overlay isAsideVisible={isAsideVisible} onClick={toggleAside} />
         <Context.Provider
-          value={{ project, createMessage, setCreateMessage, setDeleteMessage }}
+          value={{
+            project,
+            createMessage,
+            setCreateMessage,
+            setDeleteMessage,
+          }}
         >
           <Outlet />
         </Context.Provider>
@@ -134,6 +157,13 @@ const MainTemplate = () => {
         <TaskCreate
           hideModal={toggleModal}
           setCreateMessage={setCreateMessage}
+        />
+      )}
+      {isProjectDeleteModalVisible && (
+        <ProjectDelete
+          id={id}
+          name={name}
+          hideModal={toggleProjectDeleteModal}
         />
       )}
       {isProjectModalVisible && (
