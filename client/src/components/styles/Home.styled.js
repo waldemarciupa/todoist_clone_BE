@@ -233,6 +233,10 @@ export const ListItem = styled.li`
     button {
       display: flex;
     }
+
+    .task-counter {
+      display: none;
+    }
   }
 `;
 
@@ -321,4 +325,11 @@ export const MenuItem = styled.div`
 export const MenuItemDelete = styled.span`
   display: flex;
   align-items: center;
+`;
+
+export const TaskCouter = styled.span`
+  font-size: 12px;
+  font-weight: normal;
+  color: #aaa;
+  text-align: center;
 `;
