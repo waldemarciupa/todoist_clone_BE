@@ -10,6 +10,7 @@ import {
   ListMenu,
   MenuItem,
   MenuItemDelete,
+  TaskCouter,
 } from '../../components/styles/Home.styled';
 import { AiOutlineEllipsis, AiOutlineDelete } from 'react-icons/ai';
 import styled from 'styled-components';
@@ -29,6 +30,13 @@ const ProjectsList = ({
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
   const projectsStatus = useSelector((state) => state.projects.status);
+  const tasks = useSelector((state) => state.tasks.tasks);
+
+  const tasksNumber = (project) => {
+    return tasks.filter((task) => {
+      return task.project === project;
+    }).length;
+  };
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
@@ -43,6 +51,7 @@ const ProjectsList = ({
   };
 
   useEffect(() => {
+    tasksNumber('Work');
     if (projectsStatus === 'idle') {
       dispatch(fetchProjects({ user, user_id }));
     }
@@ -67,6 +76,9 @@ const ProjectsList = ({
               <ProjectColor color={project.color} />
               <ProjectContent>
                 <Project>{project.name}</Project>
+                <TaskCouter className='task-counter'>
+                  {tasksNumber(project.name)}
+                </TaskCouter>
                 <ProjectDots
                   data-id={project._id}
                   onClick={(e) => {
