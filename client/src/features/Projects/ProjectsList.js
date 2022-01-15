@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProjects, selectProjects, deleteProject } from './projectsSlice';
+import { fetchProjects, selectProjects } from './projectsSlice';
 import {
   ListItem,
   ProjectContent,
@@ -32,11 +32,16 @@ const ProjectsList = ({
   const projectsStatus = useSelector((state) => state.projects.status);
   const tasks = useSelector((state) => state.tasks.tasks);
 
-  const tasksNumber = (project) => {
-    return tasks.filter((task) => {
-      return task.project === project;
-    }).length;
-  };
+  const tasksNumber = useCallback(
+    (project) => {
+      const number = tasks.filter((task) => {
+        return task.project === project;
+      }).length;
+
+      return number ? number : null;
+    },
+    [tasks]
+  );
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
@@ -60,7 +65,7 @@ const ProjectsList = ({
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-  }, [dispatch, projects, user, user_id, projectsStatus]);
+  }, [dispatch, projects, user, user_id, projectsStatus, tasksNumber]);
 
   return (
     <ul>
