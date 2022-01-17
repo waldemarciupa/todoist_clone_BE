@@ -36,7 +36,7 @@ const MainTemplate = () => {
   const [isAsideVisible, setIsAsideVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
-  const [project, setProject] = useState('Today');
+  const [project, setProject] = useState('All tasks');
   const [size, setSize] = useState(window.innerWidth);
 
   const dispatch = useDispatch();

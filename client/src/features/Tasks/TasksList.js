@@ -28,6 +28,9 @@ import {
   Wrapper,
 } from '../../components/styles/Home.styled';
 import ButtonAddTask from '../../components/ButtonAddTask';
+import Bicycle from '../../components/svg/Bicycle';
+import Peace from '../../components/svg/Peace';
+import Paint from '../../components/svg/Paint';
 
 const TaskList = () => {
   const dispatch = useDispatch();
@@ -75,67 +78,68 @@ const TaskList = () => {
       <TasksList>
         {taskStatus === 'failed' && error + ' Please refresh the page'}
         {taskStatus === 'loading' && 'Loading...'}
-        {tasks.length ? (
-          tasks.map((task) => {
-            return (
-              <Task data-id={task._id} key={task._id}>
-                <ButtonWrapper>
-                  <TaskButton>
-                    <TaskButtonOuter
-                      completed={task.completed}
-                      onClick={() => {
-                        dispatch(
-                          editTask({
-                            user,
-                            user_id,
-                            id: task._id,
-                            completed: !task.completed,
-                          })
-                        );
-                      }}
-                      color={task.priority}
-                    >
-                      <TaskButtonInner
+        {tasks.length
+          ? tasks.map((task) => {
+              return (
+                <Task data-id={task._id} key={task._id}>
+                  <ButtonWrapper>
+                    <TaskButton>
+                      <TaskButtonOuter
                         completed={task.completed}
+                        onClick={() => {
+                          dispatch(
+                            editTask({
+                              user,
+                              user_id,
+                              id: task._id,
+                              completed: !task.completed,
+                            })
+                          );
+                        }}
                         color={task.priority}
                       >
-                        <AiOutlineCheck
-                          style={{ width: '9px', height: '9px' }}
-                        />
-                      </TaskButtonInner>
-                    </TaskButtonOuter>
-                  </TaskButton>
-                </ButtonWrapper>
-                <TaskContent>
-                  <TaskLink
-                    onClick={() => {
-                      dispatch(selectTaskSingle(task._id));
-                    }}
-                    to={`/task/${task._id}`}
-                  >
-                    <TaskTitle completed={task.completed}>
-                      {task.title}
-                    </TaskTitle>
-                    <TaskDescription>{task.description}</TaskDescription>
-                    <Wrapper>
-                      <div></div>
-                      <TaskProject>{task.project}</TaskProject>
-                    </Wrapper>
-                  </TaskLink>
-                </TaskContent>
-                <TaskActions title='Delete' onClick={deleteTaskHandler}>
-                  <AiOutlineDelete />
-                </TaskActions>
-              </Task>
-            );
-          })
-        ) : (
-          <p>You're all done for the week! #TodoistZero</p>
-        )}
+                        <TaskButtonInner
+                          completed={task.completed}
+                          color={task.priority}
+                        >
+                          <AiOutlineCheck
+                            style={{ width: '9px', height: '9px' }}
+                          />
+                        </TaskButtonInner>
+                      </TaskButtonOuter>
+                    </TaskButton>
+                  </ButtonWrapper>
+                  <TaskContent>
+                    <TaskLink
+                      onClick={() => {
+                        dispatch(selectTaskSingle(task._id));
+                      }}
+                      to={`/task/${task._id}`}
+                    >
+                      <TaskTitle completed={task.completed}>
+                        {task.title}
+                      </TaskTitle>
+                      <TaskDescription>{task.description}</TaskDescription>
+                      <Wrapper>
+                        <div></div>
+                        <TaskProject>{task.project}</TaskProject>
+                      </Wrapper>
+                    </TaskLink>
+                  </TaskContent>
+                  <TaskActions title='Delete' onClick={deleteTaskHandler}>
+                    <AiOutlineDelete />
+                  </TaskActions>
+                </Task>
+              );
+            })
+          : null}
         <li>
           <ButtonAddTask toggleModal={toggleModal} />
         </li>
       </TasksList>
+      <Bicycle />
+      <Peace />
+      <Paint />
     </ListBox>
   );
 };
