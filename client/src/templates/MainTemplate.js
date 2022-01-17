@@ -148,6 +148,7 @@ const MainTemplate = () => {
             createMessage,
             setCreateMessage,
             setDeleteMessage,
+            toggleModal,
           }}
         >
           <Outlet />

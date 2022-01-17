@@ -27,14 +27,20 @@ import {
   TaskProject,
   Wrapper,
 } from '../../components/styles/Home.styled';
+import ButtonAddTask from '../../components/ButtonAddTask';
 
 const TaskList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasksByProject);
   const taskStatus = useSelector((state) => state.tasks.status);
   const error = useSelector((state) => state.tasks.error);
-  const { project, createMessage, setCreateMessage, setDeleteMessage } =
-    useContext(Context);
+  const {
+    project,
+    createMessage,
+    setCreateMessage,
+    setDeleteMessage,
+    toggleModal,
+  } = useContext(Context);
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
@@ -61,7 +67,10 @@ const TaskList = () => {
   return (
     <ListBox>
       <DateHeader>
-        {project} <DateToday>{new Date().toDateString()}</DateToday>
+        {project}{' '}
+        {project === 'Today' && (
+          <DateToday>{new Date().toDateString()}</DateToday>
+        )}
       </DateHeader>
       <TasksList>
         {taskStatus === 'failed' && error + ' Please refresh the page'}
@@ -123,6 +132,9 @@ const TaskList = () => {
         ) : (
           <p>You're all done for the week! #TodoistZero</p>
         )}
+        <li>
+          <ButtonAddTask toggleModal={toggleModal} />
+        </li>
       </TasksList>
     </ListBox>
   );
