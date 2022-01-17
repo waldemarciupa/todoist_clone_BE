@@ -6,11 +6,11 @@ const Peace = () => {
       data-svgs-path='theme_todoist/inbox_zero.svg'
       viewBox='0 0 220 200'
       xmlns='http://www.w3.org/2000/svg'
-      fill-rule='evenodd'
-      clip-rule='evenodd'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      stroke-miterlimit='1.5'
+      fillRule='evenodd'
+      clipRule='evenodd'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeMiterlimit='1.5'
     >
       <g transform='translate(-2050)'>
         <g id='InboxZero'>
@@ -78,31 +78,31 @@ const Peace = () => {
           <path
             d='M557.517 1647.1c.945.15 1.164 1.74-.1 1.81H528.5c-.987-.06-1.34-1.74 0-1.82h28.917c.033.01.066.01.1.01z'
             fill='#fff'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(1.0842 0 0 1.1043 1497.112 -1700.933)'
           ></path>
           <path
             d='M567.467 1647.11c.675.2.699 1.72-.101 1.8H528.5c-.731-.08-.908-1.72 0-1.82h38.866c.034.01.067.01.101.02z'
             fill='#fff'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(1.47851 0 0 1.1043 1402.612 -1700.933)'
           ></path>
           <path
             d='M567.679 1647.1c6.563.06 7.462 1.73 0 1.8-19.746.07-42.15.56-45.235-.58-1.444-.53 1.501-1.18 5.743-1.22 13.161-.05 26.332-.05 39.492 0z'
             fill='#fff'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(.15438 0 0 1.1043 2145.873 -1695.283)'
           ></path>
           <path
             d='M557.466 1647.12c.204.29.237 1.65-.049 1.79H528.5c-.236-.11-.281-1.68 0-1.82h28.917l.049.03z'
             fill='#fff'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(4.55063 0 0 1.1043 -314.136 -1695.413)'
           ></path>
           <path
             d='M557.521 1647.1c.988.15 1.216 1.74-.104 1.81H528.5c-1.03-.06-1.4-1.74 0-1.82h28.917c.035.01.069.01.104.01z'
             fill='#fff'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(1.0381 0 0 1.1043 1557.822 -1700.933)'
           ></path>
           <path
@@ -154,7 +154,7 @@ const Peace = () => {
           <path
             d='M2489.24 2404.58c.97.17.35 1.12-.12 1.46-2.89 2.16-5.18 6.74-5.19 12.43 0 0-.03.46-.23.61-.59.48-.63-2.37-.12-4.88.87-4.38 2.98-7.84 5.49-9.58 0 0 .08-.04.17-.04z'
             fill='#da4c3f'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(2.5787 0 0 1.48837 -4272.15 -3505.654)'
           ></path>
           <g transform='translate(-16668.478 -1287.763) scale(1.06068)'>
@@ -165,17 +165,17 @@ const Peace = () => {
             <clipPath id='_clip1'>
               <path d='M17680 1379.75c.2.79 48.9-4.14 59.7-42.02 0 0 6.3.68 11.6-7.09v2.5c.6 23.29 18.5 42.47 41.7 44.61 8 .74 14 1.29 14 1.29-38.7 12.9-83.9 15.27-127 .71z'></path>
             </clipPath>
-            <g clip-path='url(#_clip1)'>
+            <g clipPath='url(#_clip1)'>
               <path
                 d='M2469.83 2472.34c1.01.26 5.68 4.51 9.73 6.39 11.98 5.55 24.84 4.34 36.68-2.44 0 0 3.7 2.29-.18 4.46-15.16 8.3-31.97 8.55-46.26-3.97-2.61-2.29-.78-4.46.03-4.44z'
                 fill='#da4c3f'
-                fill-rule='nonzero'
+                fillRule='nonzero'
                 transform='matrix(.8442 .03279 -.01756 .45202 15676.4 162.548)'
               ></path>
               <path
                 d='M2469.87 2473.12c.49.23.55.45.81.68 9.67 8.37 20.7 10.99 31.39 9.4 0 0 2.06.4 1.09 2.16-.28.51-.79.43-1.25.5-10.97 1.55-22.18-1.15-32.04-9.87-1.73-1.53-.54-2.98 0-2.87z'
                 fill='#da4c3f'
-                fill-rule='nonzero'
+                fillRule='nonzero'
                 transform='matrix(1.34373 0 0 .71777 14388.4 -407.72)'
               ></path>
             </g>
@@ -184,7 +184,7 @@ const Peace = () => {
             d='M17697.8 1376.98c13.9-4.45 34.8-15.04 41.9-39.25.3-1.05.5-2 .7-2.88'
             fill='none'
             stroke='#da4c3f'
-            stroke-width='1.91'
+            strokeWidth='1.91'
             transform='matrix(1.07824 0 0 1.0188 -16979.979 -1231.733)'
           ></path>
           <path
@@ -195,13 +195,13 @@ const Peace = () => {
           <path
             d='M17735.3 1313.74c.1.01.2.04.2.09 1 .64 2.2.99 3.4.87.4-.04.5.19.5.19l-.3.41c-.9.45-2 .6-3 .25 0 0-.9-.42-1.5-1.16v-.25-.11c0-.1.1-.19.2-.25s.3-.08.4-.06c0 0 .1.01.1.02z'
             fill='#da4c3f'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(1.26742 0 0 1.5828 -20338.886 -1978.883)'
           ></path>
           <path
             d='M17741.3 1313.33c.2.03.3.18.4.38.1.2 0 .42-.1.55-1.4 1.26-3.1 2.26-4.9 1.7-.6-.16-1.5-1.01-1.9-1.37-.2-.09-.2-.25-.2-.4 0-.16.1-.31.2-.41.1-.1.2-.13.4-.1.9.24 2.6.65 3.5.5 1.1-.17 2.6-.86 2.6-.86v.01z'
             fill='#da4c3f'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(1.18525 0 0 1.07708 -18869.683 -1313.343)'
           ></path>
           <path
@@ -212,19 +212,19 @@ const Peace = () => {
           <path
             d='M2510.95 2480.69c1.19.43 1.48 2.1-.52 2.94-13.46 5.48-29.07 2.55-40.57-7.38-2.06-1.77-1.18-4.51 1.11-2.48 11.12 9.68 26.26 12.59 39.31 6.96 0 0 .25-.13.67-.04z'
             fill='#da4c3f'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(.84272 -.14186 .11908 .70736 -241.727 -1250.943)'
           ></path>
           <path
             d='M21142.1 1330.86c.9.15 1.1.97 0 1.72-12.7 8.72-18.8 23.47-17 37.05 0 0-.4 1.56-1.5.88-.4-.24-.4-.8-.5-1.24-1.6-14.08 5-29.2 17.9-37.98.3-.19.6-.47 1.1-.43z'
             fill='#fff'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(1.06398 0 0 1.28852 -20273.186 -1580.533)'
           ></path>
           <path
             d='M21142.4 1330.48c5.1.57-3 5.84-6.8 10.55-7.3 9.04-10.5 18.85-9.2 28.78 0 0-.2.98-1.6 1.19-3.8.57-3.4-4.1-3.3-7.82.6-11 7.5-21.8 17.9-31.54.6-.63 1.3-1.25 3-1.16z'
             fill='#fff'
-            fill-rule='nonzero'
+            fillRule='nonzero'
             transform='matrix(.43573 0 0 .86161 -6995.477 -993.494)'
           ></path>
           <path
