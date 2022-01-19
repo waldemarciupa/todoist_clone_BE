@@ -46,6 +46,11 @@ export const projectsSlice = createSlice({
         return (state = initialState);
       },
     },
+    setProjectSingle: {
+      reducer(state, action) {
+        state.single = action.payload;
+      },
+    },
   },
   extraReducers(builder) {
     builder
@@ -67,7 +72,7 @@ export const projectsSlice = createSlice({
   },
 });
 
-export const { resetProjects } = projectsSlice.actions;
+export const { resetProjects, setProjectSingle } = projectsSlice.actions;
 
 export default projectsSlice.reducer;
 

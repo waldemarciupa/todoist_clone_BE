@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetTasks } from '../features/Tasks/tasksSlice';
-import { resetProjects } from '../features/Projects/projectsSlice';
+import {
+  resetProjects,
+  setProjectSingle,
+} from '../features/Projects/projectsSlice';
 import Button from './Button';
 import {
   StyledHeader,
@@ -44,6 +47,7 @@ const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
           onClick={() => {
             navigate('/task');
             filterHandler();
+            dispatch(setProjectSingle(null));
           }}
         >
           <AiOutlineHome />

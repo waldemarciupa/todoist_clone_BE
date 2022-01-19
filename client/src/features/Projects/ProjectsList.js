@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProjects, selectProjects } from './projectsSlice';
+import {
+  fetchProjects,
+  selectProjects,
+  setProjectSingle,
+} from './projectsSlice';
 import {
   ListItem,
   ProjectContent,
@@ -75,6 +79,7 @@ const ProjectsList = ({
             <ListItem
               onClick={() => {
                 filterHandler(project.name);
+                dispatch(setProjectSingle('List'));
               }}
               key={project._id}
             >

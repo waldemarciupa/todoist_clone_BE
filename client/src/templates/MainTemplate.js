@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { selectTasks } from '../features/Tasks/tasksSlice';
+import { setProjectSingle } from '../features/Projects/projectsSlice';
 import TaskCreate from '../features/Tasks/TaskCreate';
 import ProjectCreate from '../features/Projects/ProjectCreate';
 import Header from '../components/Header';
@@ -113,6 +114,7 @@ const MainTemplate = () => {
               <Project
                 onClick={() => {
                   filterHandler('Today');
+                  dispatch(setProjectSingle('Today'));
                 }}
               >
                 Today
