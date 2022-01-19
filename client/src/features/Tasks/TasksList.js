@@ -31,12 +31,14 @@ import ButtonAddTask from '../../components/ButtonAddTask';
 import Bicycle from '../../components/svg/Bicycle';
 import Peace from '../../components/svg/Peace';
 import Paint from '../../components/svg/Paint';
+import EmptyState from '../../components/EmptyState';
 
 const TaskList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasksByProject);
   const taskStatus = useSelector((state) => state.tasks.status);
   const error = useSelector((state) => state.tasks.error);
+  const single = useSelector((state) => state.projects.single);
   const {
     project,
     createMessage,
@@ -77,7 +79,6 @@ const TaskList = () => {
       </DateHeader>
       <TasksList>
         {taskStatus === 'failed' && error + ' Please refresh the page'}
-        {taskStatus === 'loading' && 'Loading...'}
         {tasks.length
           ? tasks.map((task) => {
               return (
@@ -137,9 +138,15 @@ const TaskList = () => {
           <ButtonAddTask toggleModal={toggleModal} />
         </li>
       </TasksList>
-      <Bicycle />
-      <Peace />
-      <Paint />
+      {!tasks.length ? (
+        <>
+          <EmptyState>
+            {single === null && <Peace />}
+            {single === 'Today' && <Bicycle />}
+            {single === 'List' && <Paint />}
+          </EmptyState>
+        </>
+      ) : null}
     </ListBox>
   );
 };
