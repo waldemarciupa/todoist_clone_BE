@@ -39,15 +39,15 @@ const Span = styled.span`
   height: 17px;
 `;
 
-const ButtonAddTask = ({ toggleModal }) => {
+const ButtonAddTask = ({ onClick, title }) => {
   return (
-    <Button onClick={toggleModal}>
+    <Button onClick={onClick}>
       <StyledDiv>
         <Span>
           <AiOutlinePlus style={{ width: '17px', height: '17px' }} />
         </Span>
       </StyledDiv>
-      Add task
+      {title}
     </Button>
   );
 };

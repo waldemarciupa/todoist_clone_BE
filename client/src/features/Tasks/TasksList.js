@@ -136,7 +136,7 @@ const TaskList = () => {
             })
           : null}
         <li>
-          <ButtonAddTask toggleModal={toggleModal} />
+          <ButtonAddTask onClick={toggleModal} title='Add task' />
         </li>
       </TasksList>
       {!tasks.length ? (

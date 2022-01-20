@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { editTask, taskSingle } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import Button from '../../components/Button';
+import ButtonAddTask from '../../components/ButtonAddTask';
 import { AiOutlineCheck } from 'react-icons/ai';
 import {
   StyledTaskSingle,
@@ -19,6 +20,8 @@ import {
   AddedOn,
   FormButtonWrapper,
   TabsComponent,
+  CommentsContainer,
+  StyledParagraph,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -27,6 +30,7 @@ import {
   TaskButtonOuter,
   TaskButtonInner,
 } from '../../components/styles/Home.styled';
+import Note from '../../components/svg/Note';
 
 const TaskSingle = () => {
   const dispatch = useDispatch();
@@ -197,8 +201,24 @@ const TaskSingle = () => {
         </ButtonsList>
       </TaskDetails>
       <TabsComponent>
-        {activeTab === 'tab1' && <div>Sub-tasks</div>}
-        {activeTab === 'tab2' && <div>Comments</div>}
+        {activeTab === 'tab1' && (
+          <div>
+            <ButtonAddTask
+              onClick={() => {
+                console.log('Handle add sub-task');
+              }}
+              title='Add sub-task'
+            />
+          </div>
+        )}
+        {activeTab === 'tab2' && (
+          <CommentsContainer>
+            <Note />
+            <StyledParagraph>
+              Add relevant notes, links, files, photos, or anything else here.
+            </StyledParagraph>
+          </CommentsContainer>
+        )}
         {activeTab === 'tab3' && (
           <AddedOn>
             Added on {new Date(task.createdAt).getDate()}{' '}

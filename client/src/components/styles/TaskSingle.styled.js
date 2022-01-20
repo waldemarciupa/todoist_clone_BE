@@ -93,3 +93,19 @@ export const FormButtonWrapper = styled.div`
 `;
 
 export const TabsComponent = styled.div``;
+
+export const CommentsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+`;
+
+export const StyledParagraph = styled.p`
+  max-width: 250px;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+`;
