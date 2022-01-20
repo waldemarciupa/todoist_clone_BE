@@ -18,6 +18,7 @@ import {
   Button as TabButton,
   AddedOn,
   FormButtonWrapper,
+  TabsComponent,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -37,8 +38,8 @@ const TaskSingle = () => {
   const [description, setDescription] = useState(task.description);
   const [completed, setCompleted] = useState(task.completed);
   const [projectColor, setProjectColor] = useState('rgb(5, 133, 39)');
-
   const [isEditingMode, setIsEditingMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('tab1');
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
@@ -53,7 +54,7 @@ const TaskSingle = () => {
     } else {
       return;
     }
-  }, []);
+  }, [projects, task.project]);
 
   const startEdition = () => {
     if (completed) return;
@@ -71,6 +72,10 @@ const TaskSingle = () => {
     e.preventDefault();
     dispatch(editTask({ user, user_id, title, description, id, completed }));
     setIsEditingMode(false);
+  };
+
+  const handleClick = (e) => {
+    setActiveTab(e.target.value);
   };
 
   const months = {
@@ -168,19 +173,43 @@ const TaskSingle = () => {
       </form>
       <TaskDetails>
         <ButtonsList>
-          <TabButton tabSelected={false}>Sub-tasks</TabButton>
-          <TabButton tabSelected={false}>Comments</TabButton>
-          <TabButton tabSelected={true}>Activity</TabButton>
+          <TabButton
+            value='tab1'
+            onClick={handleClick}
+            tabSelected={activeTab === 'tab1' && true}
+          >
+            Sub-tasks
+          </TabButton>
+          <TabButton
+            value='tab2'
+            onClick={handleClick}
+            tabSelected={activeTab === 'tab2' && true}
+          >
+            Comments
+          </TabButton>
+          <TabButton
+            value='tab3'
+            onClick={handleClick}
+            tabSelected={activeTab === 'tab3' && true}
+          >
+            Activity
+          </TabButton>
         </ButtonsList>
       </TaskDetails>
-      <AddedOn>
-        Added on {new Date(task.createdAt).getDate()}{' '}
-        {months[new Date(task.createdAt).getMonth()]}{' '}
-        {new Date(task.createdAt).getFullYear()}
-        {', '}
-        {new Date(task.createdAt).getHours()}:
-        {new Date(task.createdAt).getMinutes()}
-      </AddedOn>
+      <TabsComponent>
+        {activeTab === 'tab1' && <div>Sub-tasks</div>}
+        {activeTab === 'tab2' && <div>Comments</div>}
+        {activeTab === 'tab3' && (
+          <AddedOn>
+            Added on {new Date(task.createdAt).getDate()}{' '}
+            {months[new Date(task.createdAt).getMonth()]}{' '}
+            {new Date(task.createdAt).getFullYear()}
+            {', '}
+            {new Date(task.createdAt).getHours()}:
+            {new Date(task.createdAt).getMinutes()}
+          </AddedOn>
+        )}
+      </TabsComponent>
     </StyledTaskSingle>
   ) : (
     <StyledTaskSingle>There is no task with specific ID</StyledTaskSingle>

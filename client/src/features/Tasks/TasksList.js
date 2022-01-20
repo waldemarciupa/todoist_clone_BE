@@ -86,6 +86,7 @@ const TaskList = () => {
                   <ButtonWrapper>
                     <TaskButton>
                       <TaskButtonOuter
+                        title='Complete task'
                         completed={task.completed}
                         onClick={() => {
                           dispatch(
