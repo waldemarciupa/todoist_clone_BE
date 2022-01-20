@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { editTask, taskSingle } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import Button from '../../components/Button';
+import ButtonAddTask from '../../components/ButtonAddTask';
 import { AiOutlineCheck } from 'react-icons/ai';
 import {
   StyledTaskSingle,
@@ -18,6 +19,9 @@ import {
   Button as TabButton,
   AddedOn,
   FormButtonWrapper,
+  TabsComponent,
+  CommentsContainer,
+  StyledParagraph,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -26,6 +30,7 @@ import {
   TaskButtonOuter,
   TaskButtonInner,
 } from '../../components/styles/Home.styled';
+import Note from '../../components/svg/Note';
 
 const TaskSingle = () => {
   const dispatch = useDispatch();
@@ -37,8 +42,8 @@ const TaskSingle = () => {
   const [description, setDescription] = useState(task.description);
   const [completed, setCompleted] = useState(task.completed);
   const [projectColor, setProjectColor] = useState('rgb(5, 133, 39)');
-
   const [isEditingMode, setIsEditingMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('tab1');
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
@@ -53,7 +58,7 @@ const TaskSingle = () => {
     } else {
       return;
     }
-  }, []);
+  }, [projects, task.project]);
 
   const startEdition = () => {
     if (completed) return;
@@ -71,6 +76,10 @@ const TaskSingle = () => {
     e.preventDefault();
     dispatch(editTask({ user, user_id, title, description, id, completed }));
     setIsEditingMode(false);
+  };
+
+  const handleClick = (e) => {
+    setActiveTab(e.target.value);
   };
 
   const months = {
@@ -168,19 +177,59 @@ const TaskSingle = () => {
       </form>
       <TaskDetails>
         <ButtonsList>
-          <TabButton tabSelected={false}>Sub-tasks</TabButton>
-          <TabButton tabSelected={false}>Comments</TabButton>
-          <TabButton tabSelected={true}>Activity</TabButton>
+          <TabButton
+            value='tab1'
+            onClick={handleClick}
+            tabSelected={activeTab === 'tab1' && true}
+          >
+            Sub-tasks
+          </TabButton>
+          <TabButton
+            value='tab2'
+            onClick={handleClick}
+            tabSelected={activeTab === 'tab2' && true}
+          >
+            Comments
+          </TabButton>
+          <TabButton
+            value='tab3'
+            onClick={handleClick}
+            tabSelected={activeTab === 'tab3' && true}
+          >
+            Activity
+          </TabButton>
         </ButtonsList>
       </TaskDetails>
-      <AddedOn>
-        Added on {new Date(task.createdAt).getDate()}{' '}
-        {months[new Date(task.createdAt).getMonth()]}{' '}
-        {new Date(task.createdAt).getFullYear()}
-        {', '}
-        {new Date(task.createdAt).getHours()}:
-        {new Date(task.createdAt).getMinutes()}
-      </AddedOn>
+      <TabsComponent>
+        {activeTab === 'tab1' && (
+          <div>
+            <ButtonAddTask
+              onClick={() => {
+                console.log('Handle add sub-task');
+              }}
+              title='Add sub-task'
+            />
+          </div>
+        )}
+        {activeTab === 'tab2' && (
+          <CommentsContainer>
+            <Note />
+            <StyledParagraph>
+              Add relevant notes, links, files, photos, or anything else here.
+            </StyledParagraph>
+          </CommentsContainer>
+        )}
+        {activeTab === 'tab3' && (
+          <AddedOn>
+            Added on {new Date(task.createdAt).getDate()}{' '}
+            {months[new Date(task.createdAt).getMonth()]}{' '}
+            {new Date(task.createdAt).getFullYear()}
+            {', '}
+            {new Date(task.createdAt).getHours()}:
+            {new Date(task.createdAt).getMinutes()}
+          </AddedOn>
+        )}
+      </TabsComponent>
     </StyledTaskSingle>
   ) : (
     <StyledTaskSingle>There is no task with specific ID</StyledTaskSingle>

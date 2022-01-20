@@ -86,6 +86,7 @@ const TaskList = () => {
                   <ButtonWrapper>
                     <TaskButton>
                       <TaskButtonOuter
+                        title='Complete task'
                         completed={task.completed}
                         onClick={() => {
                           dispatch(
@@ -135,7 +136,7 @@ const TaskList = () => {
             })
           : null}
         <li>
-          <ButtonAddTask toggleModal={toggleModal} />
+          <ButtonAddTask onClick={toggleModal} title='Add task' />
         </li>
       </TasksList>
       {!tasks.length ? (

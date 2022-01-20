@@ -70,7 +70,6 @@ export const Button = styled.button`
   line-height: ${(props) => (props.tabSelected ? `1em` : '1.7')};
   font-size: ${(props) => (props.tabSelected ? `13px` : '0.875rem')};
   color: ${(props) => (props.tabSelected ? `#202020` : '#b3b3b3')};
-  color: ;
   font-weight: ${(props) => (props.tabSelected ? `700` : '400')};
   text-decoration: none;
   border: none;
@@ -91,4 +90,22 @@ export const FormButtonWrapper = styled.div`
   grid-template-columns: 100px 100px 1fr;
   grid-gap: 10px;
   padding: 10px 0;
+`;
+
+export const TabsComponent = styled.div``;
+
+export const CommentsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+`;
+
+export const StyledParagraph = styled.p`
+  max-width: 250px;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #777;
+  text-align: center;
 `;
