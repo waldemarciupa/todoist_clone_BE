@@ -42,8 +42,10 @@ const projectBtnStyles = css`
 `;
 
 export const ListBox = styled.div`
+  height: calc(100vh - 44px);
+  overflow-y: auto;
   flex-grow: 1;
-  padding: 16px 45px 0;
+  padding: 16px 16px 84px 32px;
 `;
 
 export const DateHeader = styled.h1`
@@ -140,7 +142,6 @@ export const TaskTitle = styled.p`
   margin: 0;
   font-size: 14px;
   line-height: 16px;
-  word-wrap: break-word;
   word-break: break-word;
   text-decoration: ${(props) => (props.completed ? `line-through` : 'none')};
 `;
@@ -148,8 +149,7 @@ export const TaskTitle = styled.p`
 export const TaskDescription = styled.p`
   margin: 0;
   font-size: 12px;
-  word-wrap: break-word;
-  word-break: break-all;
+  word-break: break-word;
   color: #808080;
 `;
 
@@ -169,6 +169,8 @@ export const TaskActions = styled.button`
   justify-content: center;
   align-items: center;
   min-width: 40px;
+  height: 40px;
+  align-self: center;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -181,6 +183,8 @@ export const TaskActions = styled.button`
 
 export const Message = styled.div`
   position: fixed;
+  z-index: 3;
+  background: #fff;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);

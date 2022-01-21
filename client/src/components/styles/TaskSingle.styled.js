@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
 export const StyledTaskSingle = styled.div`
+  height: calc(100vh - 44px);
+  overflow-y: auto;
   width: 100%;
-  height: 100%;
   padding: 30px;
+  padding-bottom: 84px;
 `;
 
 export const ProjectColorWrapper = styled.div`
@@ -54,6 +56,7 @@ export const TaskDescription = styled.div`
   margin-bottom: 16px;
   outline: none;
   color: ${(props) => (props.completed ? `rgba(0,0,0,.4)` : '#202020')};
+  word-break: break-word;
 `;
 
 export const TaskDetails = styled.div``;

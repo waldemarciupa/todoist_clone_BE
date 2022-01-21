@@ -7,6 +7,7 @@ import Label from '../components/Label';
 import Button from '../components/Button';
 import Error from '../components/Error';
 import HelpBlock from '../components/HelpBlock';
+import Disclaimer from '../components/Disclaimer';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -67,6 +68,7 @@ const Register = () => {
           <HelpBlock register />
         </LoginForm>
       </StyledLogin>
+      <Disclaimer />
     </>
   );
 };

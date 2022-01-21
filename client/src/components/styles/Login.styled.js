@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledLogin = styled.div`
-  min-height: 100vh;
+  min-height: calc(100vh - 30px);
   display: flex;
   justify-content: center;
   align-items: center;
