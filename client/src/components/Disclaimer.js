@@ -7,7 +7,12 @@ const Container = styled.div`
   margin-bottom: 10px;
   font-size: 13px;
   color: #666;
+  background: #fafafa;
   text-align: center;
+
+  @media (max-width: 400px) {
+    background: #fff;
+  }
 `;
 
 const Disclaimer = () => {
