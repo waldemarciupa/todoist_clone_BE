@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addNewProject } from './projectsSlice';
 import styled, { css } from 'styled-components';
 import { ProjectColorList } from './ProjectColorList';
-import Modal from '../../components/Modal';
+import ProjectModal from './ProjectModal';
 
 const styles = css`
   width: 100%;
@@ -97,7 +97,7 @@ const ProjectCreate = ({ hideProjectModal }) => {
   };
 
   return (
-    <Modal
+    <ProjectModal
       onClick={hideProjectModal}
       title={'Add project'}
       handleSubmit={handleSubmit}
@@ -138,7 +138,7 @@ const ProjectCreate = ({ hideProjectModal }) => {
           })}
         </ColorList>
       </FormField>
-    </Modal>
+    </ProjectModal>
   );
 };
 

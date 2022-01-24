@@ -156,7 +156,7 @@ const TaskCreate = ({ hideModal, setCreateMessage }) => {
     setIsPriorityVisible(false);
   };
 
-  const TaskCreate = async (event) => {
+  const taskCreate = async (event) => {
     event.preventDefault();
     dispatch(
       addNewTask({
@@ -187,7 +187,7 @@ const TaskCreate = ({ hideModal, setCreateMessage }) => {
           event.stopPropagation();
         }}
       >
-        <form onSubmit={TaskCreate}>
+        <form onSubmit={taskCreate}>
           <TaskContent>
             <Input
               required
