@@ -67,6 +67,10 @@ const TaskList = () => {
     }, 3000);
   };
 
+  const toggleAddTaskVisible = () => {
+    setAddTaskVisible(!addTaskVisible);
+  };
+
   return (
     <ListBox>
       <DateHeader>
@@ -135,14 +139,12 @@ const TaskList = () => {
           : null}
         <li>
           {addTaskVisible ? (
-            <TaskCreate />
-          ) : (
-            <ButtonAddTask
-              onClick={() => {
-                setAddTaskVisible(!addTaskVisible);
-              }}
-              title='Add task'
+            <TaskCreate
+              handleCancel={toggleAddTaskVisible}
+              setCreateMessage={setCreateMessage}
             />
+          ) : (
+            <ButtonAddTask onClick={toggleAddTaskVisible} title='Add task' />
           )}
         </li>
       </TasksList>

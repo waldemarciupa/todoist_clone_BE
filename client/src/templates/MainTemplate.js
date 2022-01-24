@@ -3,6 +3,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { selectTasks } from '../features/Tasks/tasksSlice';
 import { setProjectSingle } from '../features/Projects/projectsSlice';
+import TaskModal from '../features/Tasks/TaskModal';
 import TaskCreate from '../features/Tasks/TaskCreate';
 import ProjectCreate from '../features/Projects/ProjectCreate';
 import Header from '../components/Header';
@@ -157,10 +158,14 @@ const MainTemplate = () => {
         </Context.Provider>
       </Wrapper>
       {isModalVisible && (
-        <TaskCreate
-          hideModal={toggleModal}
-          setCreateMessage={setCreateMessage}
-        />
+        <TaskModal hideModal={toggleModal}>
+          <TaskCreate
+            isModal
+            hideModal={toggleModal}
+            handleCancel={toggleModal}
+            setCreateMessage={setCreateMessage}
+          />
+        </TaskModal>
       )}
       {isProjectDeleteModalVisible && (
         <ProjectDelete

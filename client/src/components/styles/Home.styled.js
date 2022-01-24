@@ -45,7 +45,7 @@ export const ListBox = styled.div`
   height: calc(100vh - 44px);
   overflow-y: auto;
   flex-grow: 1;
-  padding: 16px 16px 84px 32px;
+  padding: 16px 32px 84px 32px;
 `;
 
 export const DateHeader = styled.h1`
