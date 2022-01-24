@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { deleteProject } from './projectsSlice';
-import Modal from '../../components/Modal';
+import ProjectModal from './ProjectModal';
 
 const ProjectDelete = ({ id, name, hideModal, filterHandler }) => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const ProjectDelete = ({ id, name, hideModal, filterHandler }) => {
   };
 
   return (
-    <Modal
+    <ProjectModal
       onClick={hideModal}
       title={'Delete'}
       handleSubmit={handleSubmit}
@@ -24,7 +24,7 @@ const ProjectDelete = ({ id, name, hideModal, filterHandler }) => {
       <div>
         Are you sure you want to delete <b>{name}</b>?
       </div>
-    </Modal>
+    </ProjectModal>
   );
 };
 

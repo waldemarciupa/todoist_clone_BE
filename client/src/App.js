@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import TasksList from './features/Tasks/TasksList';
 import TaskSingle from './features/Tasks/TaskSingle';
+import NotFound from './pages/NotFound';
 import GlobalStyle from './components/styles/Global';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           </Route>
           <Route path='/users/login' element={<Login />} />
           <Route path='/user/register' element={<Register />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>
     </>

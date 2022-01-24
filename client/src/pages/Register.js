@@ -45,7 +45,12 @@ const Register = () => {
     <>
       <StyledLogin onSubmit={handleSubmit}>
         <LoginForm>
-          <img alt='logo' src='/images/todoist-logo.svg' />
+          <img
+            widt='92px'
+            height='24px'
+            alt='logo'
+            src='/images/todoist-logo.svg'
+          />
           <h2>Sign up</h2>
           <Error>{errorMessage ? errorMessage : ''}</Error>
           <Label>Name</Label>

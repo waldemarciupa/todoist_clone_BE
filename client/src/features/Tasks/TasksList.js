@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchTasks,
@@ -32,20 +32,18 @@ import Bicycle from '../../components/svg/Bicycle';
 import Peace from '../../components/svg/Peace';
 import Paint from '../../components/svg/Paint';
 import EmptyState from '../../components/EmptyState';
+import TaskCreate from './TaskCreate';
 
 const TaskList = () => {
+  const [addTaskVisible, setAddTaskVisible] = useState(false);
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasksByProject);
   const taskStatus = useSelector((state) => state.tasks.status);
   const error = useSelector((state) => state.tasks.error);
   const single = useSelector((state) => state.projects.single);
-  const {
-    project,
-    createMessage,
-    setCreateMessage,
-    setDeleteMessage,
-    toggleModal,
-  } = useContext(Context);
+
+  const { project, createMessage, setCreateMessage, setDeleteMessage } =
+    useContext(Context);
 
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
@@ -67,6 +65,10 @@ const TaskList = () => {
     setTimeout(() => {
       setDeleteMessage(false);
     }, 3000);
+  };
+
+  const toggleAddTaskVisible = () => {
+    setAddTaskVisible(!addTaskVisible);
   };
 
   return (
@@ -136,7 +138,14 @@ const TaskList = () => {
             })
           : null}
         <li>
-          <ButtonAddTask onClick={toggleModal} title='Add task' />
+          {addTaskVisible ? (
+            <TaskCreate
+              handleCancel={toggleAddTaskVisible}
+              setCreateMessage={setCreateMessage}
+            />
+          ) : (
+            <ButtonAddTask onClick={toggleAddTaskVisible} title='Add task' />
+          )}
         </li>
       </TasksList>
       {!tasks.length ? (
