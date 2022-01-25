@@ -38,7 +38,10 @@ module.exports = {
         user: user_id,
       });
 
-      return res.json(task);
+      return res.json({
+        task,
+        message: 'Task successfully created',
+      });
     } catch (error) {
       throw new Error(error);
     }

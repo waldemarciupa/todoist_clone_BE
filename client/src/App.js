@@ -8,8 +8,8 @@ import {
 import MainTemplate from './templates/MainTemplate';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import TasksList from './features/Tasks/TasksList';
-import TaskSingle from './features/Tasks/TaskSingle';
+import TasksList from './features/tasks/TasksList';
+import TaskSingle from './features/tasks/TaskSingle';
 import NotFound from './pages/NotFound';
 import GlobalStyle from './components/styles/Global';
 

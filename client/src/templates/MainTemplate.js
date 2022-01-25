@@ -1,13 +1,13 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { selectTasks } from '../features/Tasks/tasksSlice';
-import { setProjectSingle } from '../features/Projects/projectsSlice';
-import TaskModal from '../features/Tasks/TaskModal';
-import TaskCreate from '../features/Tasks/TaskCreate';
-import ProjectCreate from '../features/Projects/ProjectCreate';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectTasks } from '../features/tasks/tasksSlice';
+import { setProjectSingle } from '../features/projects/projectsSlice';
+import TaskModal from '../features/tasks/TaskModal';
+import TaskCreate from '../features/tasks/TaskCreate';
+import ProjectCreate from '../features/projects/ProjectCreate';
 import Header from '../components/Header';
-import ProjectsList from '../features/Projects/ProjectsList';
+import ProjectsList from '../features/projects/ProjectsList';
 import Today from '../components/Today';
 import GlobalStyles from '../components/styles/Global';
 import { BsChevronDown } from 'react-icons/bs';
@@ -24,9 +24,7 @@ import {
   ListItem,
   Project,
 } from '../components/styles/Home.styled';
-import ProjectDelete from '../features/Projects/ProjectDelete';
-
-export const Context = createContext();
+import ProjectDelete from '../features/projects/ProjectDelete';
 
 const MainTemplate = () => {
   const [name, setName] = useState(null);
@@ -36,10 +34,9 @@ const MainTemplate = () => {
     useState(false);
   const [isProjectModalVisible, setIsProjectModalVisible] = useState(false);
   const [isAsideVisible, setIsAsideVisible] = useState(false);
-  const [createMessage, setCreateMessage] = useState(false);
-  const [deleteMessage, setDeleteMessage] = useState(false);
-  const [project, setProject] = useState('All tasks');
   const [size, setSize] = useState(window.innerWidth);
+
+  const taskMessage = useSelector((state) => state.tasks.message);
 
   const dispatch = useDispatch();
 
@@ -66,13 +63,13 @@ const MainTemplate = () => {
   const filterHandler = (query) => {
     if (query) {
       dispatch(selectTasks(query));
-      setProject(query);
+      dispatch(setProjectSingle(query));
       if (size < 767) {
         toggleAside();
       }
     } else {
       dispatch(selectTasks());
-      setProject('All tasks');
+      dispatch(setProjectSingle('All tasks'));
     }
     navigate('/task');
   };
@@ -115,7 +112,6 @@ const MainTemplate = () => {
               <Project
                 onClick={() => {
                   filterHandler('Today');
-                  dispatch(setProjectSingle('Today'));
                 }}
               >
                 Today
@@ -145,17 +141,7 @@ const MainTemplate = () => {
           </Navigation>
         </StyledAside>
         <Overlay isAsideVisible={isAsideVisible} onClick={toggleAside} />
-        <Context.Provider
-          value={{
-            project,
-            createMessage,
-            setCreateMessage,
-            setDeleteMessage,
-            toggleModal,
-          }}
-        >
-          <Outlet />
-        </Context.Provider>
+        <Outlet />
       </Wrapper>
       {isModalVisible && (
         <TaskModal hideModal={toggleModal}>
@@ -163,7 +149,6 @@ const MainTemplate = () => {
             isModal
             hideModal={toggleModal}
             handleCancel={toggleModal}
-            setCreateMessage={setCreateMessage}
           />
         </TaskModal>
       )}
@@ -178,12 +163,7 @@ const MainTemplate = () => {
       {isProjectModalVisible && (
         <ProjectCreate hideProjectModal={toggleProjectModal} />
       )}
-      {createMessage ? (
-        <Message>
-          Task successfully created for {new Date().toLocaleDateString()}{' '}
-        </Message>
-      ) : null}
-      {deleteMessage ? <Message>Task successfully deleted</Message> : null}
+      {taskMessage.length ? <Message>{taskMessage[0]}</Message> : null}
     </>
   );
 };
