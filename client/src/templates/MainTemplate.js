@@ -1,13 +1,13 @@
 import { useState, useEffect, createContext } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { selectTasks } from '../features/Tasks/tasksSlice';
-import { setProjectSingle } from '../features/Projects/projectsSlice';
-import TaskModal from '../features/Tasks/TaskModal';
-import TaskCreate from '../features/Tasks/TaskCreate';
-import ProjectCreate from '../features/Projects/ProjectCreate';
+import { selectTasks } from '../features/tasks/tasksSlice';
+import { setProjectSingle } from '../features/projects/projectsSlice';
+import TaskModal from '../features/tasks/TaskModal';
+import TaskCreate from '../features/tasks/TaskCreate';
+import ProjectCreate from '../features/projects/ProjectCreate';
 import Header from '../components/Header';
-import ProjectsList from '../features/Projects/ProjectsList';
+import ProjectsList from '../features/projects/ProjectsList';
 import Today from '../components/Today';
 import GlobalStyles from '../components/styles/Global';
 import { BsChevronDown } from 'react-icons/bs';
@@ -24,7 +24,7 @@ import {
   ListItem,
   Project,
 } from '../components/styles/Home.styled';
-import ProjectDelete from '../features/Projects/ProjectDelete';
+import ProjectDelete from '../features/projects/ProjectDelete';
 
 export const Context = createContext();
 
@@ -148,7 +148,6 @@ const MainTemplate = () => {
             createMessage,
             setCreateMessage,
             setDeleteMessage,
-            toggleModal,
           }}
         >
           <Outlet />

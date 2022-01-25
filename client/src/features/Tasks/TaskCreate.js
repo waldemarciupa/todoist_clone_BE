@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProjects } from '../Projects/projectsSlice';
+import { selectProjects } from '../projects/projectsSlice';
 import { addNewTask } from './tasksSlice';
 import styled from 'styled-components';
 import Button from '../../components/Button';

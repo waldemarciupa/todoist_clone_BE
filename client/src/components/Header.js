@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { resetTasks } from '../features/Tasks/tasksSlice';
-import { resetProjects } from '../features/Projects/projectsSlice';
+import { resetTasks } from '../features/tasks/tasksSlice';
+import { resetProjects } from '../features/projects/projectsSlice';
 import Button from './Button';
 import {
   StyledHeader,

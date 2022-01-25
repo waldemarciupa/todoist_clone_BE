@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { editTask, taskSingle } from './tasksSlice';
-import { selectProjects } from '../Projects/projectsSlice';
+import { selectProjects } from '../projects/projectsSlice';
 import Button from '../../components/Button';
 import ButtonAddTask from '../../components/ButtonAddTask';
 import { AiOutlineCheck } from 'react-icons/ai';
