@@ -38,7 +38,6 @@ const MainTemplate = () => {
   const [isAsideVisible, setIsAsideVisible] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState(false);
-  const [project, setProject] = useState('All tasks');
   const [size, setSize] = useState(window.innerWidth);
 
   const dispatch = useDispatch();
@@ -66,13 +65,13 @@ const MainTemplate = () => {
   const filterHandler = (query) => {
     if (query) {
       dispatch(selectTasks(query));
-      setProject(query);
+      dispatch(setProjectSingle(query));
       if (size < 767) {
         toggleAside();
       }
     } else {
       dispatch(selectTasks());
-      setProject('All tasks');
+      dispatch(setProjectSingle('All tasks'));
     }
     navigate('/task');
   };
@@ -115,7 +114,6 @@ const MainTemplate = () => {
               <Project
                 onClick={() => {
                   filterHandler('Today');
-                  dispatch(setProjectSingle('Today'));
                 }}
               >
                 Today
@@ -147,7 +145,6 @@ const MainTemplate = () => {
         <Overlay isAsideVisible={isAsideVisible} onClick={toggleAside} />
         <Context.Provider
           value={{
-            project,
             createMessage,
             setCreateMessage,
             setDeleteMessage,

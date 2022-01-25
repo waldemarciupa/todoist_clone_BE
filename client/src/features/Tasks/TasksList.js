@@ -36,13 +36,15 @@ import TaskCreate from './TaskCreate';
 
 const TaskList = () => {
   const [addTaskVisible, setAddTaskVisible] = useState(false);
-  const dispatch = useDispatch();
+
+  const project = useSelector((state) => state.projects.single);
   const tasks = useSelector(selectTasksByProject);
   const taskStatus = useSelector((state) => state.tasks.status);
   const error = useSelector((state) => state.tasks.error);
-  const single = useSelector((state) => state.projects.single);
 
-  const { project, createMessage, setCreateMessage, setDeleteMessage } =
+  const dispatch = useDispatch();
+
+  const { createMessage, setCreateMessage, setDeleteMessage } =
     useContext(Context);
 
   const user = localStorage.getItem('user');
@@ -151,9 +153,9 @@ const TaskList = () => {
       {!tasks.length ? (
         <>
           <EmptyState>
-            {single === null && <Peace />}
-            {single === 'Today' && <Bicycle />}
-            {single === 'List' && <Paint />}
+            {project === 'All tasks' && <Peace />}
+            {project === 'Today' && <Bicycle />}
+            {project !== 'All tasks' && project !== 'Today' && <Paint />}
           </EmptyState>
         </>
       ) : null}
