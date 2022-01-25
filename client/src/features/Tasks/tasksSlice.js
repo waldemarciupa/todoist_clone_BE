@@ -5,6 +5,7 @@ const initialState = {
   task: null,
   tasks: [],
   tasksByProject: [],
+  message: [],
   status: 'idle',
   error: null,
 };
@@ -48,9 +49,10 @@ export const editTask = createAsyncThunk('tasks/editTask', async (payload) => {
 export const deleteTask = createAsyncThunk(
   'task/deleteTask',
   async (payload) => {
-    await api.delete(`/task/${payload.task_id}`, {
+    const response = await api.delete(`/task/${payload.task_id}`, {
       headers: { user: payload.user, user_id: payload.user_id },
     });
+    return response.data;
   }
 );
 
@@ -77,6 +79,11 @@ export const tasksSlice = createSlice({
         return (state = initialState);
       },
     },
+    resetTaskMessage: {
+      reducer(state, action) {
+        state.message = [];
+      },
+    },
   },
   extraReducers(builder) {
     builder
@@ -93,8 +100,9 @@ export const tasksSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addNewTask.fulfilled, (state, action) => {
-        state.tasks.push(action.payload);
-        state.tasksByProject.push(action.payload);
+        state.message.push(action.payload.message);
+        state.tasks.push(action.payload.task);
+        state.tasksByProject.push(action.payload.task);
       })
       .addCase(editTask.fulfilled, (state, action) => {
         state.task = action.payload;
@@ -120,6 +128,8 @@ export const tasksSlice = createSlice({
         });
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
+        state.message.push(action.payload.message);
+
         state.tasks = state.tasks.filter((task) => {
           return task._id !== action.meta.arg.task_id;
         });
@@ -131,7 +141,8 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const { selectTaskSingle, selectTasks, resetTasks } = tasksSlice.actions;
+export const { selectTaskSingle, selectTasks, resetTasks, resetTaskMessage } =
+  tasksSlice.actions;
 
 export default tasksSlice.reducer;
 

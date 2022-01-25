@@ -1,6 +1,6 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectTasks } from '../features/tasks/tasksSlice';
 import { setProjectSingle } from '../features/projects/projectsSlice';
 import TaskModal from '../features/tasks/TaskModal';
@@ -26,8 +26,6 @@ import {
 } from '../components/styles/Home.styled';
 import ProjectDelete from '../features/projects/ProjectDelete';
 
-export const Context = createContext();
-
 const MainTemplate = () => {
   const [name, setName] = useState(null);
   const [id, setId] = useState(null);
@@ -36,9 +34,9 @@ const MainTemplate = () => {
     useState(false);
   const [isProjectModalVisible, setIsProjectModalVisible] = useState(false);
   const [isAsideVisible, setIsAsideVisible] = useState(false);
-  const [createMessage, setCreateMessage] = useState(false);
-  const [deleteMessage, setDeleteMessage] = useState(false);
   const [size, setSize] = useState(window.innerWidth);
+
+  const taskMessage = useSelector((state) => state.tasks.message);
 
   const dispatch = useDispatch();
 
@@ -143,15 +141,7 @@ const MainTemplate = () => {
           </Navigation>
         </StyledAside>
         <Overlay isAsideVisible={isAsideVisible} onClick={toggleAside} />
-        <Context.Provider
-          value={{
-            createMessage,
-            setCreateMessage,
-            setDeleteMessage,
-          }}
-        >
-          <Outlet />
-        </Context.Provider>
+        <Outlet />
       </Wrapper>
       {isModalVisible && (
         <TaskModal hideModal={toggleModal}>
@@ -159,7 +149,6 @@ const MainTemplate = () => {
             isModal
             hideModal={toggleModal}
             handleCancel={toggleModal}
-            setCreateMessage={setCreateMessage}
           />
         </TaskModal>
       )}
@@ -174,12 +163,7 @@ const MainTemplate = () => {
       {isProjectModalVisible && (
         <ProjectCreate hideProjectModal={toggleProjectModal} />
       )}
-      {createMessage ? (
-        <Message>
-          Task successfully created for {new Date().toLocaleDateString()}{' '}
-        </Message>
-      ) : null}
-      {deleteMessage ? <Message>Task successfully deleted</Message> : null}
+      {taskMessage.length ? <Message>{taskMessage[0]}</Message> : null}
     </>
   );
 };

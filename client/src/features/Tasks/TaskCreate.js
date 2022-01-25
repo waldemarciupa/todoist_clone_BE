@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectProjects } from '../projects/projectsSlice';
-import { addNewTask } from './tasksSlice';
+import { addNewTask, resetTaskMessage } from './tasksSlice';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
@@ -105,7 +105,7 @@ const ButtonsWrapper = styled.div`
   border-top: ${(props) => (props.modal ? '1px solid #ddd' : 'none')};
 `;
 
-const TaskCreate = ({ isModal, hideModal, handleCancel, setCreateMessage }) => {
+const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
 
@@ -158,10 +158,7 @@ const TaskCreate = ({ isModal, hideModal, handleCancel, setCreateMessage }) => {
     setPriority('Priority 4');
     hideModal && hideModal();
     setTimeout(() => {
-      setCreateMessage(true);
-    }, 500);
-    setTimeout(() => {
-      setCreateMessage(false);
+      dispatch(resetTaskMessage());
     }, 3000);
   };
 

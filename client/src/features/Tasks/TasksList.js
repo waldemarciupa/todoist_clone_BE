@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchTasks,
@@ -6,8 +6,8 @@ import {
   deleteTask,
   selectTasksByProject,
   selectTaskSingle,
+  resetTaskMessage,
 } from './tasksSlice';
-import { Context } from '../../templates/MainTemplate';
 import { AiOutlineDelete, AiOutlineCheck } from 'react-icons/ai';
 import {
   ListBox,
@@ -44,9 +44,6 @@ const TaskList = () => {
 
   const dispatch = useDispatch();
 
-  const { createMessage, setCreateMessage, setDeleteMessage } =
-    useContext(Context);
-
   const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
 
@@ -62,10 +59,8 @@ const TaskList = () => {
   const deleteTaskHandler = (e) => {
     const task_id = e.currentTarget.parentNode.dataset.id;
     dispatch(deleteTask({ task_id, user, user_id }));
-    createMessage && setCreateMessage(false);
-    setDeleteMessage(true);
     setTimeout(() => {
-      setDeleteMessage(false);
+      dispatch(resetTaskMessage());
     }, 3000);
   };
 
@@ -141,10 +136,7 @@ const TaskList = () => {
           : null}
         <li>
           {addTaskVisible ? (
-            <TaskCreate
-              handleCancel={toggleAddTaskVisible}
-              setCreateMessage={setCreateMessage}
-            />
+            <TaskCreate handleCancel={toggleAddTaskVisible} />
           ) : (
             <ButtonAddTask onClick={toggleAddTaskVisible} title='Add task' />
           )}
