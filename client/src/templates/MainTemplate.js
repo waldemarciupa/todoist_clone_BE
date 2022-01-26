@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectTasks } from '../features/tasks/tasksSlice';
-import { setProjectSingle } from '../features/projects/projectsSlice';
-import TaskModal from '../features/tasks/TaskModal';
-import TaskCreate from '../features/tasks/TaskCreate';
-import ProjectCreate from '../features/projects/ProjectCreate';
+import { selectTasks } from '../features/Tasks/tasksSlice';
+import TaskModal from '../features/Tasks/TaskModal';
+import TaskCreate from '../features/Tasks/TaskCreate';
+import { setProjectSingle } from '../features/Projects/projectsSlice';
+import ProjectsList from '../features/Projects/ProjectsList';
+import ProjectCreate from '../features/Projects/ProjectCreate';
+import ProjectDelete from '../features/Projects/ProjectDelete';
 import Header from '../components/Header';
-import ProjectsList from '../features/projects/ProjectsList';
 import Today from '../components/Today';
 import GlobalStyles from '../components/styles/Global';
-import { BsChevronDown } from 'react-icons/bs';
-import { AiOutlinePlus } from 'react-icons/ai';
 import {
   Wrapper,
   Message,
@@ -24,7 +23,8 @@ import {
   ListItem,
   Project,
 } from '../components/styles/Home.styled';
-import ProjectDelete from '../features/projects/ProjectDelete';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { BsChevronDown } from 'react-icons/bs';
 
 const MainTemplate = () => {
   const [name, setName] = useState(null);
