@@ -11,7 +11,7 @@ const StyledInput = styled.input`
   border-radius: 5px;
 `;
 
-const Input = ({ onChange, type, id, name, mb }) => {
+const Input = ({ onChange, type, id, name, mb, value }) => {
   return (
     <StyledInput
       onChange={onChange}
@@ -19,6 +19,7 @@ const Input = ({ onChange, type, id, name, mb }) => {
       id={id}
       name={name}
       mb={mb}
+      value={value}
       required
     />
   );
