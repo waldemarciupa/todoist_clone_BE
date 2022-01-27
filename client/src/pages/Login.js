@@ -50,15 +50,19 @@ const Login = () => {
           />
           <h2>Log in</h2>
           <Error>{error ? error : ''}</Error>
-          <Label>Email</Label>
+          <Label htmlFor='email'>Email</Label>
           <Input
             onChange={(event) => setEmail(event.target.value)}
             type='email'
+            id='email'
+            name='email'
           />
-          <Label>Password</Label>
+          <Label htmlFor='password'>Password</Label>
           <Input
             onChange={(event) => setPassword(event.target.value)}
             type='password'
+            id='password'
+            name='password'
             mb='20px'
           />
           <Button primary>Log in</Button>

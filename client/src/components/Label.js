@@ -7,8 +7,8 @@ const StyledLabel = styled.label`
   margin: 5px 0;
 `;
 
-const Label = ({ children }) => {
-  return <StyledLabel>{children}</StyledLabel>;
+const Label = ({ children, htmlFor }) => {
+  return <StyledLabel htmlFor={htmlFor}>{children}</StyledLabel>;
 };
 
 export default Label;
