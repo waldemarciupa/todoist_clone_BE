@@ -53,20 +53,29 @@ const Register = () => {
           />
           <h2>Sign up</h2>
           <Error>{errorMessage ? errorMessage : ''}</Error>
-          <Label>Name</Label>
+          <Label htmlFor='name'>Name</Label>
           <Input
             onChange={(event) => setName(event.target.value)}
             type='text'
+            id='name'
+            name='name'
+            value={name}
           />
-          <Label>Email</Label>
+          <Label htmlFor='email'>Email</Label>
           <Input
             onChange={(event) => setEmail(event.target.value)}
             type='email'
+            id='email'
+            name='email'
+            value={email}
           />
-          <Label>Password</Label>
+          <Label htmlFor='password'>Password</Label>
           <Input
             onChange={(event) => setPassword(event.target.value)}
             type='password'
+            id='password'
+            name='password'
+            value={password}
             mb='20px'
           />
           <Button primary>Sign up</Button>
