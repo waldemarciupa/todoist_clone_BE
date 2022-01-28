@@ -11,6 +11,11 @@ const setup = () =>
   );
 
 describe('Register test', () => {
+  test('should be able to find form element', () => {
+    setup();
+    screen.getByRole('form');
+  });
+
   test('inputs should be initially empty', () => {
     setup();
     expect(screen.getByLabelText('Name').value).toBe('');

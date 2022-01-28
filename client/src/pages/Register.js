@@ -44,7 +44,7 @@ const Register = () => {
   return (
     <>
       <StyledLogin onSubmit={handleSubmit}>
-        <LoginForm>
+        <LoginForm aria-label='form'>
           <img
             widt='92px'
             height='24px'
