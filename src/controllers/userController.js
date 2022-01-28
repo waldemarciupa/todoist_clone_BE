@@ -22,6 +22,14 @@ module.exports = {
         .json({ message: "You can't use any whitespace characters" });
     }
 
+    if (!email.includes('@')) {
+      return res.status(200).json({ message: 'Invalid email' });
+    }
+
+    if (email.split('').filter((x) => x === '@').length > 1) {
+      return res.status(200).json({ message: 'Invalid email' });
+    }
+
     const userExist = await User.findOne({ email });
 
     if (!userExist) {
