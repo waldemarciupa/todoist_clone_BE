@@ -1,11 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import api from '../../services/api';
 
-const initialState = {
-  id: '',
-  email: '',
-  name: '',
-  token: '',
-};
+const user = JSON.parse(localStorage.getItem('user'));
+
+const initialState = user
+  ? { isLoggedIn: true, data: user, error: null }
+  : { isLoggedIn: false, data: null, error: null };
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await api.post(`/auth/login`, {
+        email: payload.email,
+        password: payload.password,
+      });
+      if (data.token) {
+        localStorage.setItem('user', JSON.stringify(data));
+      }
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const logout = createAsyncThunk('auth/logout', async () => {
+  localStorage.removeItem('user');
+});
 
 export const userSlice = createSlice({
   name: 'user',
@@ -13,8 +35,19 @@ export const userSlice = createSlice({
   reducers: {
     // TODO: Reducer comes here
   },
-  extraReducers: {
-    // TODO: Extra reducer comes here
+  extraReducers(builder) {
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.data = action.payload;
+      state.isLoggedIn = true;
+      state.error = '';
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.error = action.payload;
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.isLoggedIn = false;
+      state.data = null;
+    });
   },
 });
 

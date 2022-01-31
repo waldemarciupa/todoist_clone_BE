@@ -85,8 +85,10 @@ module.exports = {
           process.env.JWT_SECRET,
           (err, token) => {
             return res.json({
-              user: token,
-              user_id: user._id,
+              token: token,
+              id: user._id,
+              name: user.name,
+              email: user.email,
             });
           }
         );
