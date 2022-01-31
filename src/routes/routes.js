@@ -29,8 +29,8 @@ router
 router.route('/projects/:id').delete(protect, projectController.deleteProject);
 
 // User
-router.route('/users/register').post(userController.registerUser);
-router.route('/users/login').post(userController.authUser);
+router.route('/auth/register').post(userController.registerUser);
+router.route('/auth/login').post(userController.authUser);
 router.route('/user/:id').get(userController.getUserById);
 
 module.exports = router;

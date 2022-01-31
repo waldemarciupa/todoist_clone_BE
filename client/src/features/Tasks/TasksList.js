@@ -44,21 +44,15 @@ const TaskList = () => {
 
   const dispatch = useDispatch();
 
-  const user = localStorage.getItem('user');
-  const user_id = localStorage.getItem('user_id');
-
   useEffect(() => {
-    if (!user) {
-      return;
-    }
     if (taskStatus === 'idle') {
-      dispatch(fetchTasks({ user, user_id }));
+      dispatch(fetchTasks());
     }
-  }, [user, user_id, taskStatus, dispatch]);
+  }, [dispatch, taskStatus]);
 
   const deleteTaskHandler = (e) => {
     const task_id = e.currentTarget.parentNode.dataset.id;
-    dispatch(deleteTask({ task_id, user, user_id }));
+    dispatch(deleteTask({ task_id }));
     setTimeout(() => {
       dispatch(resetTaskMessage());
     }, 3000);
@@ -90,8 +84,6 @@ const TaskList = () => {
                         onClick={() => {
                           dispatch(
                             editTask({
-                              user,
-                              user_id,
                               id: task._id,
                               completed: !task.completed,
                             })

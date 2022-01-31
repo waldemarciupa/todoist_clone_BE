@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../features/User/userSlice';
 import { StyledLogin, LoginForm } from '../components/styles/Login.styled';
 import Input from '../components/Input';
 import Label from '../components/Label';
@@ -7,35 +9,26 @@ import Button from '../components/Button';
 import Error from '../components/Error';
 import HelpBlock from '../components/HelpBlock';
 import Disclaimer from '../components/Disclaimer';
-import api from '../services/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
+  const error = useSelector((state) => state.user.error);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try {
-      const { data } = await api.post(`/users/login`, { email, password });
-
-      const user = data.user;
-      const user_id = data.user_id || false;
-
-      if (user && user_id) {
-        localStorage.setItem('user', user);
-        localStorage.setItem('user_id', user_id);
+    dispatch(login({ email, password }))
+      .unwrap()
+      .then(() => {
         navigate('/');
-      }
-
-      setError(data.message);
-    } catch (error) {
-      console.error(error);
-      setError(error.response.data.message);
-    }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

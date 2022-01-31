@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { logout } from '../features/User/userSlice';
 import { resetTasks } from '../features/Tasks/tasksSlice';
 import { resetProjects } from '../features/Projects/projectsSlice';
 import Button from './Button';
@@ -23,8 +24,7 @@ const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('user_id');
+    dispatch(logout());
     dispatch(resetTasks());
     dispatch(resetProjects());
     navigate('/users/login');
