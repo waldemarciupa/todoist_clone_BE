@@ -45,9 +45,6 @@ const TaskSingle = () => {
   const [isEditingMode, setIsEditingMode] = useState(false);
   const [activeTab, setActiveTab] = useState('tab1');
 
-  const user = localStorage.getItem('user');
-  const user_id = localStorage.getItem('user_id');
-
   useEffect(() => {
     const currentColor = projects.filter((pp) => {
       return pp.name === task.project;
@@ -74,7 +71,7 @@ const TaskSingle = () => {
 
   const saveTask = (e) => {
     e.preventDefault();
-    dispatch(editTask({ user, user_id, title, description, id, completed }));
+    dispatch(editTask({ title, description, id, completed }));
     setIsEditingMode(false);
   };
 
@@ -115,8 +112,6 @@ const TaskSingle = () => {
                   setCompleted(!completed);
                   dispatch(
                     editTask({
-                      user,
-                      user_id,
                       title,
                       description,
                       id,

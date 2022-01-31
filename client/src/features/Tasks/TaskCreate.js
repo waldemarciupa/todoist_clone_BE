@@ -117,17 +117,6 @@ const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
   const [project, setProject] = useState('Today');
   const [priority, setPriority] = useState('Priority 4');
   const [completed] = useState(false);
-  const [user, setUser] = useState(null);
-  const [user_id, setUserId] = useState(null);
-
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-    const user_id = localStorage.getItem('user_id');
-    if (user_id) {
-      setUser(user);
-      setUserId(user_id);
-    }
-  }, []);
 
   const handleProject = (event) => {
     setProject(event.target.innerText);
@@ -148,8 +137,6 @@ const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
         project,
         priority,
         completed,
-        user,
-        user_id,
       })
     );
     setTitle('');

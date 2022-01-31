@@ -13,9 +13,7 @@ const initialState = {
 export const fetchTasks = createAsyncThunk(
   'tasks/fetchTasks',
   async (payload) => {
-    const { data } = await api.get('', {
-      headers: { user: payload.user, user_id: payload.user_id },
-    });
+    const { data } = await api.get('');
     return data;
   }
 );
@@ -23,35 +21,25 @@ export const fetchTasks = createAsyncThunk(
 export const addNewTask = createAsyncThunk(
   'tasks/addNewTask',
   async (payload) => {
-    const response = await api.post('', payload, {
-      headers: { user: payload.user, user_id: payload.user_id },
-    });
+    const response = await api.post('', payload);
     return response.data;
   }
 );
 
 export const editTask = createAsyncThunk('tasks/editTask', async (payload) => {
-  const response = await api.put(
-    `/task/${payload.id}`,
-    {
-      title: payload.title,
-      description: payload.description,
-      id: payload.id,
-      completed: payload.completed,
-    },
-    {
-      headers: { user: payload.user, user_id: payload.user_id },
-    }
-  );
+  const response = await api.put(`/task/${payload.id}`, {
+    title: payload.title,
+    description: payload.description,
+    id: payload.id,
+    completed: payload.completed,
+  });
   return response.data;
 });
 
 export const deleteTask = createAsyncThunk(
   'task/deleteTask',
   async (payload) => {
-    const response = await api.delete(`/task/${payload.task_id}`, {
-      headers: { user: payload.user, user_id: payload.user_id },
-    });
+    const response = await api.delete(`/task/${payload.task_id}`);
     return response.data;
   }
 );
