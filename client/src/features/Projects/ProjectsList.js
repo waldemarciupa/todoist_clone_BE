@@ -43,9 +43,6 @@ const ProjectsList = ({
     [tasks]
   );
 
-  const user = localStorage.getItem('user');
-  const user_id = localStorage.getItem('user_id');
-
   const ref = useRef(null);
   const [open, setOpen] = useState('');
 
@@ -58,14 +55,14 @@ const ProjectsList = ({
   useEffect(() => {
     tasksNumber('Work');
     if (projectsStatus === 'idle') {
-      dispatch(fetchProjects({ user, user_id }));
+      dispatch(fetchProjects());
     }
 
     document.addEventListener('click', handleClickOutside, true);
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-  }, [dispatch, projects, user, user_id, projectsStatus, tasksNumber]);
+  }, [dispatch, projects, projectsStatus, tasksNumber]);
 
   return (
     <ul>

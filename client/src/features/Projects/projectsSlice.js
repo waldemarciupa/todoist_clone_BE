@@ -11,9 +11,7 @@ const initialState = {
 export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
   async (payload) => {
-    const { data } = await api.get('/projects', {
-      headers: { user: payload.user, user_id: payload.user_id },
-    });
+    const { data } = await api.get('/projects');
     return data;
   }
 );
@@ -21,9 +19,7 @@ export const fetchProjects = createAsyncThunk(
 export const addNewProject = createAsyncThunk(
   'projects/addNewProject',
   async (payload) => {
-    const { data } = await api.post('/projects', payload, {
-      headers: { user: payload.user, user_id: payload.user_id },
-    });
+    const { data } = await api.post('/projects', payload);
     return data;
   }
 );
@@ -31,9 +27,7 @@ export const addNewProject = createAsyncThunk(
 export const deleteProject = createAsyncThunk(
   'project/deleteProject',
   async (payload) => {
-    await api.delete(`/projects/${payload.id}`, {
-      headers: { user: payload.user, user_id: payload.user_id },
-    });
+    await api.delete(`/projects/${payload.id}`);
   }
 );
 
