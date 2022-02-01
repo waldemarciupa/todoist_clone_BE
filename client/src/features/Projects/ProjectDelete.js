@@ -4,12 +4,10 @@ import ProjectModal from './ProjectModal';
 
 const ProjectDelete = ({ id, name, hideModal, filterHandler }) => {
   const dispatch = useDispatch();
-  const user = localStorage.getItem('user');
-  const user_id = localStorage.getItem('user_id');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(deleteProject({ id, user, user_id }));
+    dispatch(deleteProject({ id }));
     hideModal();
     filterHandler();
   };

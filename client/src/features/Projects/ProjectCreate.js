@@ -83,8 +83,6 @@ const ProjectCreate = ({ hideProjectModal }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const user = localStorage.getItem('user');
-  const user_id = localStorage.getItem('user_id');
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -92,7 +90,7 @@ const ProjectCreate = ({ hideProjectModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addNewProject({ name, title, color, user, user_id }));
+    dispatch(addNewProject({ name, title, color }));
     hideProjectModal();
   };
 
