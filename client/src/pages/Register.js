@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../features/User/userSlice';
 import { StyledLogin, LoginForm } from '../components/styles/Login.styled';
 import Input from '../components/Input';
 import Label from '../components/Label';
@@ -13,32 +14,22 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+
+  const error = useSelector((state) => state.user.error);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try {
-      const { data } = await api.post('/users/register', {
-        name,
-        email,
-        password,
-      });
-
-      const user = data.user || false;
-      const user_id = data.user_id || false;
-
-      if (user && user_id) {
-        localStorage.setItem('user', user);
-        localStorage.setItem('user_id', user_id);
+    dispatch(register({ name, email, password }))
+      .unwrap()
+      .then(() => {
         navigate('/');
-      } else {
-        setErrorMessage(data.message);
-      }
-    } catch (error) {
-      setErrorMessage(error.response.data.message);
-    }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -52,7 +43,7 @@ const Register = () => {
             src='/images/todoist-logo.svg'
           />
           <h2>Sign up</h2>
-          <Error>{errorMessage ? errorMessage : ''}</Error>
+          <Error>{error && error}</Error>
           <Label htmlFor='name'>Name</Label>
           <Input
             onChange={(event) => setName(event.target.value)}

@@ -8,7 +8,7 @@ module.exports = {
 
     if (!name || !email || !password) {
       return res
-        .status(200)
+        .status(400)
         .json({ message: 'Enter your name, email and password ' });
     }
 
@@ -18,16 +18,16 @@ module.exports = {
       password.includes(' ') > 0
     ) {
       return res
-        .status(200)
+        .status(400)
         .json({ message: "You can't use any whitespace characters" });
     }
 
     if (!email.includes('@')) {
-      return res.status(200).json({ message: 'Invalid email' });
+      return res.status(400).json({ message: 'Invalid email' });
     }
 
     if (email.split('').filter((x) => x === '@').length > 1) {
-      return res.status(200).json({ message: 'Invalid email' });
+      return res.status(400).json({ message: 'Invalid email' });
     }
 
     const userExist = await User.findOne({ email });
@@ -50,8 +50,10 @@ module.exports = {
         process.env.JWT_SECRET,
         (err, token) => {
           return res.json({
-            user: token,
-            user_id: user._id,
+            token: token,
+            id: user._id,
+            name: user.name,
+            email: user.email,
           });
         }
       );
@@ -67,7 +69,7 @@ module.exports = {
 
       if (!email || !password) {
         return res
-          .status(200)
+          .status(401)
           .json({ message: 'Enter your email and password ' });
       }
 
