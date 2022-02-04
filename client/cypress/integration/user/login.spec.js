@@ -1,8 +1,11 @@
-describe('Login Test', () => {
-  it('should redirect to login page when user is not logged in', () => {
-    cy.visit('http://localhost:3000');
+describe('Login - inupts required', () => {
+  beforeEach(() => {
+    cy.visit('/users/login');
+  });
+
+  it('should successfully load login page', () => {
     cy.url().should('include', '/users/login');
-    cy.contains('Log in');
+    cy.contains('h2', 'Log in');
   });
 
   it('inputs and error element should be initially empty', () => {
@@ -21,9 +24,6 @@ describe('Login Test', () => {
     cy.get('[type=password]')
       .type('realy!strongp4ssw0rd')
       .should('have.value', 'realy!strongp4ssw0rd');
-
-    cy.get('[type=email]').clear();
-    cy.get('[type=password]').clear();
   });
 
   it('should show error message on invalid email or password', () => {
@@ -31,11 +31,5 @@ describe('Login Test', () => {
     cy.get('[type=password]').type('realy!strongp4ssw0rd');
     cy.get('button').click();
     cy.get('.sc-faUpoM').contains('Invalid email or password');
-  });
-
-  it('should remove password input required attribute', () => {
-    cy.get('[type=password]')
-      .invoke('removeAttr', 'required')
-      .should('not.have.attr', 'required');
   });
 });
