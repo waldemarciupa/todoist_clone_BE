@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const initialState = {
   task: null,
   tasks: [],
+  project: 'All tasks',
   tasksByProject: [],
   message: [],
   status: 'idle',
@@ -80,6 +81,11 @@ export const tasksSlice = createSlice({
         state.message = [];
       },
     },
+    setTaskProject: {
+      reducer(state, action) {
+        state.project = action.payload;
+      },
+    },
   },
   extraReducers(builder) {
     builder
@@ -101,7 +107,14 @@ export const tasksSlice = createSlice({
       .addCase(addNewTask.fulfilled, (state, action) => {
         state.message.push(action.payload.message);
         state.tasks.push(action.payload.task);
-        state.tasksByProject.push(action.payload.task);
+        // add for all tasks
+        if (state.project === 'All tasks') {
+          state.tasksByProject.push(action.payload.task);
+        }
+        // add for single project
+        if (state.project === action.payload.task.project) {
+          state.tasksByProject.push(action.payload.task);
+        }
       })
       .addCase(editTask.fulfilled, (state, action) => {
         state.task = action.payload;
@@ -140,8 +153,13 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const { selectTaskSingle, selectTasks, resetTasks, resetTaskMessage } =
-  tasksSlice.actions;
+export const {
+  selectTaskSingle,
+  selectTasks,
+  resetTasks,
+  resetTaskMessage,
+  setTaskProject,
+} = tasksSlice.actions;
 
 export default tasksSlice.reducer;
 
