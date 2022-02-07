@@ -45,7 +45,7 @@ function App() {
             <Route path=':id' element={<TaskSingle />} />
           </Route>
           <Route path='/users/login' element={<Login />} />
-          <Route path='/user/register' element={<Register />} />
+          <Route path='/users/register' element={<Register />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>
