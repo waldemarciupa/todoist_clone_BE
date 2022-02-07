@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { editTask, taskSingle } from './tasksSlice';
+import { fetchTaskSingle, editTask, taskSingle } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import Button from '../../components/Button';
 import ButtonAddTask from '../../components/ButtonAddTask';
@@ -33,29 +34,38 @@ import {
 import Note from '../../components/svg/Note';
 
 const TaskSingle = () => {
+  const params = useParams();
   const dispatch = useDispatch();
   const task = useSelector(taskSingle);
   const projects = useSelector(selectProjects);
 
-  const [id] = useState(task._id);
-  const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
-  const [completed, setCompleted] = useState(task.completed);
+  const [id] = useState(params.id);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [completed, setCompleted] = useState('');
+
   const [projectColor, setProjectColor] = useState('rgb(5, 133, 39)');
   const [isEditingMode, setIsEditingMode] = useState(false);
   const [activeTab, setActiveTab] = useState('tab1');
 
   useEffect(() => {
-    const currentColor = projects.filter((pp) => {
-      return pp.name === task.project;
-    });
-
-    if (currentColor.length) {
-      setProjectColor(currentColor[0].color);
+    if (!task) {
+      dispatch(fetchTaskSingle({ id: params.id }));
     } else {
-      return;
+      const currentColor = projects.filter((project) => {
+        return project.name === task.project;
+      });
+
+      if (currentColor.length) {
+        setProjectColor(currentColor[0].color);
+      } else {
+        return;
+      }
+      setTitle(task.title);
+      setDescription(task.description);
+      setCompleted(task.completed);
     }
-  }, [projects, task.project]);
+  }, [dispatch, params.id, task, projects]);
 
   const startEdition = () => {
     if (completed) return;
