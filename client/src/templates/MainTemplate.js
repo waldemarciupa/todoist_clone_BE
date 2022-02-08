@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectTasks } from '../features/Tasks/tasksSlice';
+import { selectTasks, setTaskProject } from '../features/Tasks/tasksSlice';
 import TaskModal from '../features/Tasks/TaskModal';
 import TaskCreate from '../features/Tasks/TaskCreate';
 import { setProjectSingle } from '../features/Projects/projectsSlice';
@@ -64,12 +64,14 @@ const MainTemplate = () => {
     if (query) {
       dispatch(selectTasks(query));
       dispatch(setProjectSingle(query));
+      dispatch(setTaskProject(query));
       if (size < 767) {
         toggleAside();
       }
     } else {
       dispatch(selectTasks());
       dispatch(setProjectSingle('All tasks'));
+      dispatch(setTaskProject('All tasks'));
     }
     navigate('/task');
   };

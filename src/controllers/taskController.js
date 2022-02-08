@@ -68,9 +68,11 @@ module.exports = {
 
       if (task) {
         return res.json(task);
+      } else {
+        return res.status(404).json({ message: "Task doesn't exist" });
       }
     } catch (error) {
-      return res.status(400).json({ message: "Task doesn't exist" });
+      return res.status(404).json({ message: "Task doesn't exist" });
     }
   },
   async deleteTask(req, res) {
