@@ -15,7 +15,7 @@ const initialState = {
 export const fetchTasks = createAsyncThunk(
   'tasks/fetchTasks',
   async (payload) => {
-    const { data } = await api.get('');
+    const { data } = await api.get('/tasks');
     return data;
   }
 );
@@ -31,7 +31,7 @@ export const fetchTaskSingle = createAsyncThunk(
 export const addNewTask = createAsyncThunk(
   'tasks/addNewTask',
   async (payload) => {
-    const response = await api.post('', payload);
+    const response = await api.post('/tasks', payload);
     return response.data;
   }
 );
