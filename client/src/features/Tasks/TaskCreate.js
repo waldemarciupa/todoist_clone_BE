@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectProjects } from '../Projects/projectsSlice';
 import { addNewTask, resetTaskMessage } from './tasksSlice';
@@ -111,12 +111,17 @@ const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
 
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
+  const projectSingle = useSelector((state) => state.projects.single);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [project, setProject] = useState('Today');
+  const [project, setProject] = useState('');
   const [priority, setPriority] = useState('Priority 4');
   const [completed] = useState(false);
+
+  useEffect(() => {
+    setProject(projectSingle === 'All tasks' ? 'Today' : projectSingle);
+  }, [projectSingle]);
 
   const handleProject = (event) => {
     setProject(event.target.innerText);
@@ -141,7 +146,7 @@ const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
     );
     setTitle('');
     setDescription('');
-    setProject('Today');
+    setProject(projectSingle === 'All tasks' ? 'Today' : projectSingle);
     setPriority('Priority 4');
     hideModal && hideModal();
     setTimeout(() => {

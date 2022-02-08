@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTaskSingle, editTask, taskSingle } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
+import TaskCreate from './TaskCreate';
 import Button from '../../components/Button';
 import ButtonAddTask from '../../components/ButtonAddTask';
 import { AiOutlineCheck } from 'react-icons/ai';
@@ -45,6 +46,7 @@ const TaskSingle = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [completed, setCompleted] = useState('');
+  const [addTaskVisible, setAddTaskVisible] = useState(false);
 
   const [projectColor, setProjectColor] = useState('rgb(5, 133, 39)');
   const [isEditingMode, setIsEditingMode] = useState(false);
@@ -89,6 +91,10 @@ const TaskSingle = () => {
 
   const handleClick = (e) => {
     setActiveTab(e.target.value);
+  };
+
+  const toggleAddTaskVisible = () => {
+    setAddTaskVisible(!addTaskVisible);
   };
 
   const months = {
@@ -222,12 +228,14 @@ const TaskSingle = () => {
         <TabsComponent>
           {activeTab === 'tab1' && (
             <div>
-              <ButtonAddTask
-                onClick={() => {
-                  console.log('Handle add sub-task');
-                }}
-                title='Add sub-task'
-              />
+              {addTaskVisible ? (
+                <TaskCreate handleCancel={toggleAddTaskVisible} />
+              ) : (
+                <ButtonAddTask
+                  onClick={toggleAddTaskVisible}
+                  title='Add sub-task'
+                />
+              )}
             </div>
           )}
           {activeTab === 'tab2' && (
