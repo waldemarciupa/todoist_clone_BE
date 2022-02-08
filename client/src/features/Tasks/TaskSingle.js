@@ -51,9 +51,11 @@ const TaskSingle = () => {
   const [activeTab, setActiveTab] = useState('tab1');
 
   useEffect(() => {
-    if (!task) {
+    if (taskStatus === 'idle') {
       dispatch(fetchTaskSingle({ id: params.id }));
-    } else {
+    }
+
+    if (taskStatus === 'succeeded') {
       const currentColor = projects.filter((project) => {
         return project.name === task.project;
       });
@@ -65,7 +67,7 @@ const TaskSingle = () => {
       setDescription(task.description);
       setCompleted(task.completed);
     }
-  }, [dispatch, params.id, projects, task]);
+  }, [dispatch, params.id, projects, task, taskStatus]);
 
   const startEdition = () => {
     if (completed) return;
