@@ -4,23 +4,26 @@ const taskController = require('../controllers/taskController');
 const projectController = require('../controllers/projectController');
 const userController = require('../controllers/userController');
 const protect = require('../middleware/authMiddleware');
+const subTaskController = require('../controllers/subTaskController');
 
 // Task
 router
-  .route('/')
+  .route('/tasks')
   .get(protect, taskController.getAllTasks)
   .post(protect, taskController.createTask);
-
-router.route('/tasks/:project').get(protect, taskController.getAllTasks);
-
 router
   .route('/task/:id')
-  .get(taskController.getTaskById)
+  .get(protect, taskController.getTaskById)
   .put(protect, taskController.editTask)
   .delete(protect, taskController.deleteTask);
 
-// Project
+// sub-task
+router
+  .route('/subtasks')
+  .get(subTaskController.getAllSubtasks)
+  .post(subTaskController.createSubtask);
 
+// roject
 router
   .route('/projects')
   .get(protect, projectController.getAllProjects)
