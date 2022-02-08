@@ -8,6 +8,7 @@ const initialState = {
   tasksByProject: [],
   message: [],
   status: 'idle',
+  statusSingle: 'idle',
   error: null,
 };
 
@@ -59,6 +60,7 @@ export const tasksSlice = createSlice({
   reducers: {
     selectTaskSingle: {
       reducer(state, action) {
+        state.statusSingle = 'succeeded';
         state.task = state.tasks.filter((task) => {
           return task._id === action.payload;
         })[0];
@@ -101,8 +103,16 @@ export const tasksSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      .addCase(fetchTaskSingle.pending, (state, action) => {
+        state.statusSingle = 'loading';
+      })
       .addCase(fetchTaskSingle.fulfilled, (state, action) => {
+        state.statusSingle = 'succeeded';
         state.task = action.payload;
+      })
+      .addCase(fetchTaskSingle.rejected, (state, action) => {
+        state.statusSingle = 'failed';
+        state.error = 'There is no task with specific ID';
       })
       .addCase(addNewTask.fulfilled, (state, action) => {
         state.message.push(action.payload.message);

@@ -38,6 +38,8 @@ const TaskSingle = () => {
   const dispatch = useDispatch();
   const task = useSelector(taskSingle);
   const projects = useSelector(selectProjects);
+  const taskStatus = useSelector((state) => state.tasks.statusSingle);
+  const error = useSelector((state) => state.tasks.error);
 
   const [id] = useState(params.id);
   const [title, setTitle] = useState('');
@@ -58,14 +60,12 @@ const TaskSingle = () => {
 
       if (currentColor.length) {
         setProjectColor(currentColor[0].color);
-      } else {
-        return;
       }
       setTitle(task.title);
       setDescription(task.description);
       setCompleted(task.completed);
     }
-  }, [dispatch, params.id, task, projects]);
+  }, [dispatch, params.id, projects, task]);
 
   const startEdition = () => {
     if (completed) return;
@@ -104,141 +104,152 @@ const TaskSingle = () => {
     11: 'December',
   };
 
-  return task ? (
-    <StyledTaskSingle>
-      <FlexLine>
-        <ProjectColorWrapper>
-          <ProjectColor color={projectColor} />
-        </ProjectColorWrapper>
-        <Project>{task.project}</Project>
-      </FlexLine>
-      <form onSubmit={saveTask}>
-        <Task isEditingMode={isEditingMode}>
-          <FlexLine>
-            <ButtonWrapper isEditingMode={isEditingMode}>
-              <TaskButton
-                type='button'
-                onClick={() => {
-                  setCompleted(!completed);
-                  dispatch(
-                    editTask({
-                      title,
-                      description,
-                      id,
-                      completed: !completed,
-                    })
-                  );
+  if (taskStatus === 'idle' || taskStatus === 'loading') {
+    return <StyledTaskSingle>Loading...</StyledTaskSingle>;
+  }
+
+  if (taskStatus === 'failed') {
+    return <StyledTaskSingle>{error}</StyledTaskSingle>;
+  }
+
+  if (taskStatus === 'succeeded') {
+    return (
+      <StyledTaskSingle>
+        <FlexLine>
+          <ProjectColorWrapper>
+            <ProjectColor color={projectColor} />
+          </ProjectColorWrapper>
+          <Project>{task.project}</Project>
+        </FlexLine>
+        <form onSubmit={saveTask}>
+          <Task isEditingMode={isEditingMode}>
+            <FlexLine>
+              <ButtonWrapper isEditingMode={isEditingMode}>
+                <TaskButton
+                  type='button'
+                  onClick={() => {
+                    setCompleted(!completed);
+                    dispatch(
+                      editTask({
+                        title,
+                        description,
+                        id,
+                        completed: !completed,
+                      })
+                    );
+                  }}
+                >
+                  <TaskButtonOuter completed={completed} color={task.priority}>
+                    <TaskButtonInner
+                      completed={completed}
+                      color={task.priority}
+                    >
+                      <AiOutlineCheck
+                        style={{
+                          width: '9px',
+                          height: '9px',
+                        }}
+                      />
+                    </TaskButtonInner>
+                  </TaskButtonOuter>
+                </TaskButton>
+              </ButtonWrapper>
+              <TaskTitle
+                completed={completed}
+                contentEditable={isEditingMode}
+                suppressContentEditableWarning={true}
+                onClick={(e) => {
+                  startEdition();
+                }}
+                onBlur={(e) => {
+                  setTitle(e.target.innerText + ' ');
                 }}
               >
-                <TaskButtonOuter completed={completed} color={task.priority}>
-                  <TaskButtonInner completed={completed} color={task.priority}>
-                    <AiOutlineCheck
-                      style={{
-                        width: '9px',
-                        height: '9px',
-                      }}
-                    />
-                  </TaskButtonInner>
-                </TaskButtonOuter>
-              </TaskButton>
-            </ButtonWrapper>
-            <TaskTitle
+                {title}
+              </TaskTitle>
+            </FlexLine>
+            <TaskDescription
               completed={completed}
               contentEditable={isEditingMode}
+              isEditingMode={isEditingMode}
               suppressContentEditableWarning={true}
-              onClick={(e) => {
+              onClick={() => {
                 startEdition();
               }}
               onBlur={(e) => {
-                setTitle(e.target.innerText + ' ');
+                setDescription(e.target.innerText + ' ');
               }}
             >
-              {title}
-            </TaskTitle>
-          </FlexLine>
-          <TaskDescription
-            completed={completed}
-            contentEditable={isEditingMode}
-            isEditingMode={isEditingMode}
-            suppressContentEditableWarning={true}
-            onClick={() => {
-              startEdition();
-            }}
-            onBlur={(e) => {
-              setDescription(e.target.innerText + ' ');
-            }}
-          >
-            {description}
-          </TaskDescription>
-        </Task>
-        <FormButtonWrapper isEditingMode={isEditingMode}>
-          <Button primary type='submit'>
-            Save
-          </Button>
-          <Button type='button' clickHandler={finishEdition}>
-            Cancel
-          </Button>
-        </FormButtonWrapper>
-      </form>
-      <TaskDetails>
-        <ButtonsList>
-          <TabButton
-            value='tab1'
-            onClick={handleClick}
-            tabSelected={activeTab === 'tab1' && true}
-          >
-            Sub-tasks
-          </TabButton>
-          <TabButton
-            value='tab2'
-            onClick={handleClick}
-            tabSelected={activeTab === 'tab2' && true}
-          >
-            Comments
-          </TabButton>
-          <TabButton
-            value='tab3'
-            onClick={handleClick}
-            tabSelected={activeTab === 'tab3' && true}
-          >
-            Activity
-          </TabButton>
-        </ButtonsList>
-      </TaskDetails>
-      <TabsComponent>
-        {activeTab === 'tab1' && (
-          <div>
-            <ButtonAddTask
-              onClick={() => {
-                console.log('Handle add sub-task');
-              }}
-              title='Add sub-task'
-            />
-          </div>
-        )}
-        {activeTab === 'tab2' && (
-          <CommentsContainer>
-            <Note />
-            <StyledParagraph>
-              Add relevant notes, links, files, photos, or anything else here.
-            </StyledParagraph>
-          </CommentsContainer>
-        )}
-        {activeTab === 'tab3' && (
-          <AddedOn>
-            Added on {new Date(task.createdAt).getDate()}{' '}
-            {months[new Date(task.createdAt).getMonth()]}{' '}
-            {new Date(task.createdAt).getFullYear()}
-            {', '}
-            {new Date(task.createdAt).getHours()}:
-            {new Date(task.createdAt).getMinutes()}
-          </AddedOn>
-        )}
-      </TabsComponent>
-    </StyledTaskSingle>
-  ) : (
-    <StyledTaskSingle>There is no task with specific ID</StyledTaskSingle>
-  );
+              {description}
+            </TaskDescription>
+          </Task>
+          <FormButtonWrapper isEditingMode={isEditingMode}>
+            <Button primary type='submit'>
+              Save
+            </Button>
+            <Button type='button' clickHandler={finishEdition}>
+              Cancel
+            </Button>
+          </FormButtonWrapper>
+        </form>
+        <TaskDetails>
+          <ButtonsList>
+            <TabButton
+              value='tab1'
+              onClick={handleClick}
+              tabSelected={activeTab === 'tab1' && true}
+            >
+              Sub-tasks
+            </TabButton>
+            <TabButton
+              value='tab2'
+              onClick={handleClick}
+              tabSelected={activeTab === 'tab2' && true}
+            >
+              Comments
+            </TabButton>
+            <TabButton
+              value='tab3'
+              onClick={handleClick}
+              tabSelected={activeTab === 'tab3' && true}
+            >
+              Activity
+            </TabButton>
+          </ButtonsList>
+        </TaskDetails>
+        <TabsComponent>
+          {activeTab === 'tab1' && (
+            <div>
+              <ButtonAddTask
+                onClick={() => {
+                  console.log('Handle add sub-task');
+                }}
+                title='Add sub-task'
+              />
+            </div>
+          )}
+          {activeTab === 'tab2' && (
+            <CommentsContainer>
+              <Note />
+              <StyledParagraph>
+                Add relevant notes, links, files, photos, or anything else here.
+              </StyledParagraph>
+            </CommentsContainer>
+          )}
+          {activeTab === 'tab3' && (
+            <AddedOn>
+              Added on {new Date(task.createdAt).getDate()}{' '}
+              {months[new Date(task.createdAt).getMonth()]}{' '}
+              {new Date(task.createdAt).getFullYear()}
+              {', '}
+              {new Date(task.createdAt).getHours()}:
+              {new Date(task.createdAt).getMinutes()}
+            </AddedOn>
+          )}
+        </TabsComponent>
+      </StyledTaskSingle>
+    );
+  }
 };
 
 export default TaskSingle;
