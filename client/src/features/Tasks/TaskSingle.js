@@ -33,6 +33,7 @@ import {
   TaskButtonInner,
 } from '../../components/styles/Home.styled';
 import Note from '../../components/svg/Note';
+import TaskItem from './TaskItem';
 
 const TaskSingle = () => {
   const params = useParams();
@@ -166,6 +167,7 @@ const TaskSingle = () => {
                 completed={completed}
                 contentEditable={isEditingMode}
                 suppressContentEditableWarning={true}
+                isEditingMode={isEditingMode}
                 onClick={(e) => {
                   startEdition();
                 }}
@@ -228,6 +230,17 @@ const TaskSingle = () => {
         <TabsComponent>
           {activeTab === 'tab1' && (
             <div>
+              {task.subtasks.length ? (
+                <div>
+                  <ul>
+                    {task.subtasks.map((task) => {
+                      return <TaskItem key={task._id} task={task} />;
+                    })}
+                  </ul>
+                </div>
+              ) : (
+                'nie mam dzieci'
+              )}
               {addTaskVisible ? (
                 <TaskCreate handleCancel={toggleAddTaskVisible} />
               ) : (

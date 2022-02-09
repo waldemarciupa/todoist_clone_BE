@@ -36,7 +36,7 @@ const Login = () => {
       <StyledLogin onSubmit={handleSubmit}>
         <LoginForm>
           <img
-            widt='92px'
+            width='92px'
             height='24px'
             alt='logo'
             src='/images/todoist-logo.svg'

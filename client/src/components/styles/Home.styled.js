@@ -52,6 +52,7 @@ export const DateHeader = styled.h1`
   font-size: 20px;
   margin-bottom: 24px;
   padding-left: 14px;
+  color: #202020;
 `;
 
 export const DateToday = styled.span`
@@ -100,7 +101,7 @@ export const TaskButtonOuter = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px solid rgb(${(props) => colors[props.color]});
+  border: 1px solid rgb(${(props) => colors[props.color]});
   background: ${(props) =>
     props.completed
       ? `rgb(${colors[props.color]})`
@@ -151,6 +152,7 @@ export const TaskDescription = styled.p`
   font-size: 12px;
   word-break: break-word;
   color: #808080;
+  margin-bottom: 3px;
 `;
 
 export const Wrapper = styled.div`
@@ -159,8 +161,21 @@ export const Wrapper = styled.div`
   align-items: flex-start;
 `;
 
-export const TaskProject = styled.span`
+export const TaskBottomWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 12px;
+  color: #808080;
+`;
+
+export const BranchWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+`;
+
+export const TaskProject = styled.span`
   color: grey;
 `;
 
@@ -259,6 +274,7 @@ export const ProjectContent = styled.div`
   align-items: center;
   font-weight: 700;
   line-height: 26px;
+  color: #202020;
 `;
 
 export const AddProjectBtn = styled.button`

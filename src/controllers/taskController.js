@@ -26,6 +26,20 @@ module.exports = {
         .json({ message: "Enjoy your day. You don't have any task to do" });
     }
   },
+  async getTaskById(req, res) {
+    const { id } = req.params;
+    try {
+      const task = await Task.findById(id);
+
+      if (task) {
+        return res.json(task);
+      } else {
+        return res.status(404).json({ message: "Task doesn't exist" });
+      }
+    } catch (error) {
+      return res.status(404).json({ message: "Task doesn't exist" });
+    }
+  },
   async createTask(req, res) {
     const { title, description, project, priority } = req.body;
     const { user_id } = req.headers;
@@ -61,18 +75,27 @@ module.exports = {
       return res.status(400).json({ message: "Task doesn't exist" });
     }
   },
-  async getTaskById(req, res) {
-    const { id } = req.params;
-    try {
-      const task = await Task.findById(id);
+  async createSubtask(req, res) {
+    const { title, description, project, priority } = req.body;
 
-      if (task) {
-        return res.json(task);
-      } else {
-        return res.status(404).json({ message: "Task doesn't exist" });
-      }
-    } catch (error) {
-      return res.status(404).json({ message: "Task doesn't exist" });
+    const task = await Task.findById(req.params.id);
+
+    if (task) {
+      const subtask = {
+        title,
+        description,
+        project,
+        priority,
+      };
+
+      task.subtasks.push(subtask);
+
+      await task.save();
+
+      res.status(201).json({ message: 'Subtask added' });
+    } else {
+      res.status(404);
+      throw new Error('Task not found');
     }
   },
   async deleteTask(req, res) {
