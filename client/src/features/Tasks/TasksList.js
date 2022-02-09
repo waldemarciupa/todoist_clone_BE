@@ -24,6 +24,7 @@ import {
   TaskActions,
   TaskTitle,
   TaskDescription,
+  BranchWrapper,
   TaskProject,
   Wrapper,
 } from '../../components/styles/Home.styled';
@@ -114,13 +115,29 @@ const TaskList = () => {
                       </TaskTitle>
                       <TaskDescription>{task.description}</TaskDescription>
                       <Wrapper>
-                        <div></div>
+                        {task.subtasks.length ? (
+                          <BranchWrapper>
+                            <img
+                              width='16px'
+                              height='16px'
+                              alt='branch'
+                              src='/images/branch.svg'
+                            />
+                            {
+                              task.subtasks.filter((task) => task.completed)
+                                .length
+                            }
+                            /{task.subtasks.length}
+                          </BranchWrapper>
+                        ) : (
+                          <div></div>
+                        )}
                         <TaskProject>{task.project}</TaskProject>
                       </Wrapper>
                     </TaskLink>
                   </TaskContent>
                   <TaskActions title='Delete' onClick={deleteTaskHandler}>
-                    <AiOutlineDelete />
+                    <AiOutlineDelete style={{ color: '#202020' }} />
                   </TaskActions>
                 </Task>
               );

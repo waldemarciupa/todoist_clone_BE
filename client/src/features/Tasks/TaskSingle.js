@@ -166,6 +166,7 @@ const TaskSingle = () => {
                 completed={completed}
                 contentEditable={isEditingMode}
                 suppressContentEditableWarning={true}
+                isEditingMode={isEditingMode}
                 onClick={(e) => {
                   startEdition();
                 }}

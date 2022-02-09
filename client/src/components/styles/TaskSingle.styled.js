@@ -24,7 +24,10 @@ export const ProjectColor = styled.span`
   border-radius: 50%;
 `;
 
-export const Project = styled.div``;
+export const Project = styled.div`
+  font-size: 14px;
+  color: #202020;
+`;
 
 export const FlexLine = styled.div`
   display: flex;
@@ -33,17 +36,17 @@ export const FlexLine = styled.div`
 `;
 
 export const Task = styled.div`
-  margin-top: 10px;
+  margin-top: 5px;
   border-radius: 5px;
   cursor: text;
-  padding: ${(props) => (props.isEditingMode ? `10px 10px 0` : '10px 0 0 0 ')};
+  padding: ${(props) => (props.isEditingMode ? `5px 10px 0` : '5px 0 0 0 ')};
   border: ${(props) =>
     props.isEditingMode ? `1px solid #ddd` : '1px solid transparent'};
 `;
 
 export const TaskTitle = styled.div`
   width: 100%;
-  font-size: 16px;
+  font-size: ${(props) => (props.isEditingMode ? `14px` : '16px')};
   line-height: 26px;
   font-weight: 700;
   outline: none;

@@ -37,7 +37,7 @@ const Register = () => {
       <StyledLogin onSubmit={handleSubmit}>
         <LoginForm aria-label='form'>
           <img
-            widt='92px'
+            width='92px'
             height='24px'
             alt='logo'
             src='/images/todoist-logo.svg'
