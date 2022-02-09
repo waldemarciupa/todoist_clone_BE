@@ -159,14 +159,20 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  color: #808080;
+`;
+
+export const TaskBottomWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 12px;
+  color: #808080;
 `;
 
 export const BranchWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: px;
+  gap: 3px;
 `;
 
 export const TaskProject = styled.span`

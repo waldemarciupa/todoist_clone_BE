@@ -26,7 +26,7 @@ import {
   TaskDescription,
   BranchWrapper,
   TaskProject,
-  Wrapper,
+  TaskBottomWrapper,
 } from '../../components/styles/Home.styled';
 import ButtonAddTask from '../../components/ButtonAddTask';
 import Bicycle from '../../components/svg/Bicycle';
@@ -114,7 +114,7 @@ const TaskList = () => {
                         {task.title}
                       </TaskTitle>
                       <TaskDescription>{task.description}</TaskDescription>
-                      <Wrapper>
+                      <TaskBottomWrapper>
                         {task.subtasks.length ? (
                           <BranchWrapper>
                             <img
@@ -133,7 +133,7 @@ const TaskList = () => {
                           <div></div>
                         )}
                         <TaskProject>{task.project}</TaskProject>
-                      </Wrapper>
+                      </TaskBottomWrapper>
                     </TaskLink>
                   </TaskContent>
                   <TaskActions title='Delete' onClick={deleteTaskHandler}>
