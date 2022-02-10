@@ -172,6 +172,17 @@ export const tasksSlice = createSlice({
         state.tasksByProject = state.tasksByProject.filter((task) => {
           return task._id !== action.meta.arg.task_id;
         });
+      })
+      .addCase(addNewSubtask.fulfilled, (state, action) => {
+        state.task = action.payload;
+        state.tasks = state.tasks.map((task) => {
+          return task._id === action.meta.arg.id
+            ? {
+                ...task,
+                subtasks: action.payload.subtasks,
+              }
+            : task;
+        });
       });
   },
 });

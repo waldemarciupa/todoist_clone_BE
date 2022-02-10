@@ -106,7 +106,7 @@ module.exports = {
 
       await task.save();
 
-      res.status(201).json({ message: 'Subtask added' });
+      res.status(201).json(task);
     } else {
       res.status(404).json({ message: "Task doesn't exist" });
     }
