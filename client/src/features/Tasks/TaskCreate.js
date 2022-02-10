@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectProjects } from '../Projects/projectsSlice';
-import { addNewTask, resetTaskMessage } from './tasksSlice';
+import { resetTaskMessage } from './tasksSlice';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
@@ -46,7 +46,7 @@ const Actions = styled.div`
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 8%);
     list-style: none;
-    top: 35px;
+    top: 0;
     width: 275px;
     border-radius: 5px;
   }
@@ -62,7 +62,8 @@ const ActionButton = styled.button`
   border-radius: 5px;
   padding: 4px 8px;
   background: transparent;
-  cursor: pointer;
+  disabled: ${(props) => (props.subtask ? 'true' : 'false')};
+  cursor: ${(props) => (props.subtask ? 'default' : 'pointer')};
 
   &:hover {
     background: #eee;
@@ -105,7 +106,14 @@ const ButtonsWrapper = styled.div`
   border-top: ${(props) => (props.modal ? '1px solid #ddd' : 'none')};
 `;
 
-const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
+const TaskCreate = ({
+  isModal,
+  hideModal,
+  handleCancel,
+  action,
+  id,
+  subtask,
+}) => {
   const [isProjectVisible, setIsProjectVisible] = useState(false);
   const [isPriorityVisible, setIsPriorityVisible] = useState(false);
 
@@ -117,7 +125,6 @@ const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
   const [description, setDescription] = useState('');
   const [project, setProject] = useState('');
   const [priority, setPriority] = useState('Priority 4');
-  const [completed] = useState(false);
 
   useEffect(() => {
     setProject(projectSingle === 'All tasks' ? 'Today' : projectSingle);
@@ -136,12 +143,12 @@ const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
   const taskCreate = async (event) => {
     event.preventDefault();
     dispatch(
-      addNewTask({
+      action({
+        id: id ? id : '',
         title,
         description,
         project,
         priority,
-        completed,
       })
     );
     setTitle('');
@@ -171,17 +178,22 @@ const TaskCreate = ({ isModal, hideModal, handleCancel }) => {
           onChange={(event) => setDescription(event.target.value)}
         />
         <Actions>
-          <ActionButton
-            onClick={() => {
-              setIsPriorityVisible(false);
-              setIsProjectVisible(!isProjectVisible);
-            }}
-            title='Select a project'
-            type='button'
-          >
-            <AiOutlineFundProjectionScreen />
-            {project}
-          </ActionButton>
+          {subtask ? (
+            <div></div>
+          ) : (
+            <ActionButton
+              onClick={() => {
+                setIsPriorityVisible(false);
+                setIsProjectVisible(!isProjectVisible);
+              }}
+              title='Select a project'
+              type='button'
+            >
+              <AiOutlineFundProjectionScreen />
+              {project}
+            </ActionButton>
+          )}
+
           {projects.length ? (
             <ProjectList visible={isProjectVisible}>
               {projects.map((project) => {

@@ -75,6 +75,20 @@ module.exports = {
       return res.status(400).json({ message: "Task doesn't exist" });
     }
   },
+  async deleteTask(req, res) {
+    const { id } = req.params;
+
+    try {
+      const task = await Task.findById(id);
+
+      if (task) {
+        await Task.findByIdAndRemove(id);
+        return res.json({ message: 'Task deleted successfully' });
+      }
+    } catch (error) {
+      return res.status(400).json({ message: "Task doesn't exist" });
+    }
+  },
   async createSubtask(req, res) {
     const { title, description, project, priority } = req.body;
 
@@ -92,24 +106,37 @@ module.exports = {
 
       await task.save();
 
-      res.status(201).json({ message: 'Subtask added' });
+      res.status(201).json(task);
     } else {
-      res.status(404);
-      throw new Error('Task not found');
+      res.status(404).json({ message: "Task doesn't exist" });
     }
   },
-  async deleteTask(req, res) {
-    const { id } = req.params;
+  async deleteSubtask(req, res) {
+    const { subtask_id } = req.body;
+    console.log('odpalam funckje backend');
+    console.log(subtask_id);
+    const task = await Task.findById(req.params.id);
 
-    try {
-      const task = await Task.findById(id);
+    if (task) {
+      const subtask = task.subtasks.find((subtask) => {
+        return subtask._id.valueOf() === subtask_id;
+      });
 
-      if (task) {
-        await Task.findByIdAndRemove(id);
-        return res.json({ message: 'Task deleted successfully' });
+      if (subtask) {
+        const subtasks = task.subtasks.filter((subtask) => {
+          return subtask._id.valueOf() !== subtask_id;
+        });
+
+        task.subtasks = subtasks;
+
+        await task.save();
+
+        res.status(201).json(task);
+      } else {
+        res.status(404).json({ message: "Subtask doesn't exist" });
       }
-    } catch (error) {
-      return res.status(400).json({ message: "Task doesn't exist" });
+    } else {
+      res.status(404).json({ message: "Task doesn't exist" });
     }
   },
 };

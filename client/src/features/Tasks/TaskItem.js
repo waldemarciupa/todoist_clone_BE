@@ -9,6 +9,7 @@ import {
   TaskButtonInner,
   TaskContent,
   TaskLink,
+  Subtask,
   TaskActions,
   TaskTitle,
   TaskDescription,
@@ -17,11 +18,11 @@ import {
   TaskBottomWrapper,
 } from '../../components/styles/Home.styled';
 
-const TaskItem = ({ task, deleteTaskHandler }) => {
+const TaskItem = ({ task, deleteTaskHandler, subtask_id }) => {
   const dispatch = useDispatch();
 
   return (
-    <Task data-id={task._id}>
+    <Task data-id={task._id} subtask_id={subtask_id}>
       <ButtonWrapper>
         <TaskButton>
           <TaskButtonOuter
@@ -44,34 +45,45 @@ const TaskItem = ({ task, deleteTaskHandler }) => {
         </TaskButton>
       </ButtonWrapper>
       <TaskContent>
-        <TaskLink
-          onClick={() => {
-            dispatch(selectTaskSingle(task._id));
-          }}
-          to={`/task/${task._id}`}
-        >
-          <TaskTitle completed={task.completed}>{task.title}</TaskTitle>
-          <TaskDescription>{task.description}</TaskDescription>
-          <TaskBottomWrapper>
-            {task.subtasks && task.subtasks.length ? (
-              <BranchWrapper>
-                <img
-                  width='16px'
-                  height='16px'
-                  alt='branch'
-                  src='/images/branch.svg'
-                />
-                {task.subtasks.filter((task) => task.completed).length}/
-                {task.subtasks.length}
-              </BranchWrapper>
-            ) : (
-              <div></div>
-            )}
-            <TaskProject>{task.project}</TaskProject>
-          </TaskBottomWrapper>
-        </TaskLink>
+        {subtask_id ? (
+          <Subtask>
+            <TaskTitle completed={task.completed}>{task.title}</TaskTitle>
+            <TaskDescription>{task.description}</TaskDescription>
+          </Subtask>
+        ) : (
+          <TaskLink
+            onClick={() => {
+              dispatch(selectTaskSingle(task._id));
+            }}
+            to={`/task/${task._id}`}
+          >
+            <TaskTitle completed={task.completed}>{task.title}</TaskTitle>
+            <TaskDescription>{task.description}</TaskDescription>
+            <TaskBottomWrapper>
+              {task.subtasks && task.subtasks.length ? (
+                <BranchWrapper>
+                  <img
+                    width='16px'
+                    height='16px'
+                    alt='branch'
+                    src='/images/branch.svg'
+                  />
+                  {task.subtasks.filter((task) => task.completed).length}/
+                  {task.subtasks.length}
+                </BranchWrapper>
+              ) : (
+                <div></div>
+              )}
+              <TaskProject>{task.project}</TaskProject>
+            </TaskBottomWrapper>
+          </TaskLink>
+        )}
       </TaskContent>
-      <TaskActions title='Delete' onClick={deleteTaskHandler}>
+      <TaskActions
+        data-subtask_id={subtask_id}
+        title='Delete'
+        onClick={deleteTaskHandler}
+      >
         <AiOutlineDelete style={{ color: '#202020' }} />
       </TaskActions>
     </Task>

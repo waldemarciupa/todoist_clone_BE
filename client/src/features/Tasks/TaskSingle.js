@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTaskSingle, editTask, taskSingle } from './tasksSlice';
+import {
+  fetchTaskSingle,
+  editTask,
+  taskSingle,
+  addNewSubtask,
+  deleteSubtask,
+} from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import TaskCreate from './TaskCreate';
 import Button from '../../components/Button';
@@ -24,6 +30,7 @@ import {
   TabsComponent,
   CommentsContainer,
   StyledParagraph,
+  SubtasksList,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -96,6 +103,15 @@ const TaskSingle = () => {
 
   const toggleAddTaskVisible = () => {
     setAddTaskVisible(!addTaskVisible);
+  };
+
+  const handleDeleteSubtask = (event) => {
+    dispatch(
+      deleteSubtask({
+        id,
+        subtask_id: event.currentTarget.dataset.subtask_id,
+      })
+    );
   };
 
   const months = {
@@ -229,27 +245,37 @@ const TaskSingle = () => {
         </TaskDetails>
         <TabsComponent>
           {activeTab === 'tab1' && (
-            <div>
+            <SubtasksList>
               {task.subtasks.length ? (
-                <div>
-                  <ul>
-                    {task.subtasks.map((task) => {
-                      return <TaskItem key={task._id} task={task} />;
-                    })}
-                  </ul>
-                </div>
+                <ul>
+                  {task.subtasks.map((subtask) => {
+                    return (
+                      <TaskItem
+                        key={subtask._id}
+                        task={subtask}
+                        subtask_id={subtask._id}
+                        deleteTaskHandler={handleDeleteSubtask}
+                      />
+                    );
+                  })}
+                </ul>
               ) : (
-                'nie mam dzieci'
+                ''
               )}
               {addTaskVisible ? (
-                <TaskCreate handleCancel={toggleAddTaskVisible} />
+                <TaskCreate
+                  subtask
+                  handleCancel={toggleAddTaskVisible}
+                  action={addNewSubtask}
+                  id={id}
+                />
               ) : (
                 <ButtonAddTask
                   onClick={toggleAddTaskVisible}
                   title='Add sub-task'
                 />
               )}
-            </div>
+            </SubtasksList>
           )}
           {activeTab === 'tab2' && (
             <CommentsContainer>
