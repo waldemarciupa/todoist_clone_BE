@@ -70,12 +70,16 @@ export const Task = styled.li`
   padding: 10px 10px;
   border-bottom: 1px solid #f0f0f0;
   gap: 6px;
-  cursor: pointer;
+  cursor: ${(props) => (props.subtask_id ? 'default' : 'pointer')};
 
   &:hover {
     background-color: #fafafa;
-    border-radius: 5px;
     box-shadow: inset 0 0 0 1px rgb(31 96 194 / 40%);
+    border-radius: 5px;
+    cursor: ${(props) => (props.subtask_id ? 'default' : 'pointer')};
+    box-shadow: ${(props) =>
+      props.subtask_id ? 'none' : 'inset 0 0 0 1px rgb(31 96 194 / 40%)'};
+    background-color: ${(props) => (props.subtask_id ? '#fff' : '#fafafa')};
   }
 `;
 
@@ -137,6 +141,8 @@ export const TaskLink = styled(Link)`
   cursor: pointer;
   text-decoration: none;
 `;
+
+export const Subtask = styled.div``;
 
 export const TaskTitle = styled.p`
   color: ${(props) => (props.completed ? `#808080` : '#202020')};

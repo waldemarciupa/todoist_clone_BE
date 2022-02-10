@@ -115,3 +115,7 @@ export const StyledParagraph = styled.p`
   color: #777;
   text-align: center;
 `;
+
+export const SubtasksList = styled.div`
+  padding: 0 22px;
+`;

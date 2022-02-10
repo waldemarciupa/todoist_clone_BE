@@ -179,10 +179,7 @@ const TaskCreate = ({
         />
         <Actions>
           {subtask ? (
-            <ActionButton type='button' subtask>
-              <AiOutlineFundProjectionScreen />
-              {project}
-            </ActionButton>
+            <div></div>
           ) : (
             <ActionButton
               onClick={() => {

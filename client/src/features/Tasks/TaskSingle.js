@@ -30,6 +30,7 @@ import {
   TabsComponent,
   CommentsContainer,
   StyledParagraph,
+  SubtasksList,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -244,22 +245,20 @@ const TaskSingle = () => {
         </TaskDetails>
         <TabsComponent>
           {activeTab === 'tab1' && (
-            <div>
+            <SubtasksList>
               {task.subtasks.length ? (
-                <div>
-                  <ul>
-                    {task.subtasks.map((subtask) => {
-                      return (
-                        <TaskItem
-                          key={subtask._id}
-                          task={subtask}
-                          subtask_id={subtask._id}
-                          deleteTaskHandler={handleDeleteSubtask}
-                        />
-                      );
-                    })}
-                  </ul>
-                </div>
+                <ul>
+                  {task.subtasks.map((subtask) => {
+                    return (
+                      <TaskItem
+                        key={subtask._id}
+                        task={subtask}
+                        subtask_id={subtask._id}
+                        deleteTaskHandler={handleDeleteSubtask}
+                      />
+                    );
+                  })}
+                </ul>
               ) : (
                 ''
               )}
@@ -276,7 +275,7 @@ const TaskSingle = () => {
                   title='Add sub-task'
                 />
               )}
-            </div>
+            </SubtasksList>
           )}
           {activeTab === 'tab2' && (
             <CommentsContainer>
