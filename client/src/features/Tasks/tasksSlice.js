@@ -54,6 +54,19 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
+export const addNewSubtask = createAsyncThunk(
+  'tasks/addNewSubtask',
+  async (payload) => {
+    const response = await api.post(`/task/${payload.id}/subtask`, {
+      title: payload.title,
+      description: payload.description,
+      project: payload.project,
+      priority: payload.priority,
+    });
+    return response.data;
+  }
+);
+
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,

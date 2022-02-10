@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTaskSingle, editTask, taskSingle } from './tasksSlice';
+import {
+  fetchTaskSingle,
+  editTask,
+  taskSingle,
+  addNewSubtask,
+} from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import TaskCreate from './TaskCreate';
 import Button from '../../components/Button';
@@ -242,7 +247,12 @@ const TaskSingle = () => {
                 'nie mam dzieci'
               )}
               {addTaskVisible ? (
-                <TaskCreate handleCancel={toggleAddTaskVisible} />
+                <TaskCreate
+                  subtask
+                  handleCancel={toggleAddTaskVisible}
+                  action={addNewSubtask}
+                  id={id}
+                />
               ) : (
                 <ButtonAddTask
                   onClick={toggleAddTaskVisible}

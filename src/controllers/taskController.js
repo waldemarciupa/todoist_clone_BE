@@ -75,6 +75,20 @@ module.exports = {
       return res.status(400).json({ message: "Task doesn't exist" });
     }
   },
+  async deleteTask(req, res) {
+    const { id } = req.params;
+
+    try {
+      const task = await Task.findById(id);
+
+      if (task) {
+        await Task.findByIdAndRemove(id);
+        return res.json({ message: 'Task deleted successfully' });
+      }
+    } catch (error) {
+      return res.status(400).json({ message: "Task doesn't exist" });
+    }
+  },
   async createSubtask(req, res) {
     const { title, description, project, priority } = req.body;
 
@@ -121,20 +135,6 @@ module.exports = {
       }
     } else {
       res.status(404).json({ message: "Task doesn't exist" });
-    }
-  },
-  async deleteTask(req, res) {
-    const { id } = req.params;
-
-    try {
-      const task = await Task.findById(id);
-
-      if (task) {
-        await Task.findByIdAndRemove(id);
-        return res.json({ message: 'Task deleted successfully' });
-      }
-    } catch (error) {
-      return res.status(400).json({ message: "Task doesn't exist" });
     }
   },
 };

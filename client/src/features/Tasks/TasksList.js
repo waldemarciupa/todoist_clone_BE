@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  addNewTask,
   fetchTasks,
   deleteTask,
   selectTasksByProject,
@@ -71,7 +72,10 @@ const TaskList = () => {
           : null}
         <li>
           {addTaskVisible ? (
-            <TaskCreate handleCancel={toggleAddTaskVisible} />
+            <TaskCreate
+              handleCancel={toggleAddTaskVisible}
+              action={addNewTask}
+            />
           ) : (
             <ButtonAddTask onClick={toggleAddTaskVisible} title='Add task' />
           )}
