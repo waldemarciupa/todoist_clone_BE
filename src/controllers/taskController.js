@@ -94,8 +94,33 @@ module.exports = {
 
       res.status(201).json({ message: 'Subtask added' });
     } else {
-      res.status(404);
-      throw new Error('Task not found');
+      res.status(404).json({ message: "Task doesn't exist" });
+    }
+  },
+  async deleteSubtask(req, res) {
+    const { subtask_id } = req.headers;
+    const task = await Task.findById(req.params.id);
+
+    if (task) {
+      const subtask = task.subtasks.find((subtask) => {
+        return subtask._id.valueOf() === subtask_id;
+      });
+
+      if (subtask) {
+        const subtasks = task.subtasks.filter((subtask) => {
+          return subtask._id.valueOf() !== subtask_id;
+        });
+
+        task.subtasks = subtasks;
+
+        await task.save();
+
+        res.status(201).json({ message: 'Subtask successfully deleted' });
+      } else {
+        res.status(404).json({ message: "Subtask doesn't exist" });
+      }
+    } else {
+      res.status(404).json({ message: "Task doesn't exist" });
     }
   },
   async deleteTask(req, res) {
