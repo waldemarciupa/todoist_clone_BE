@@ -17,7 +17,7 @@ import {
   TaskBottomWrapper,
 } from '../../components/styles/Home.styled';
 
-const TaskItem = ({ task, deleteTaskHandler }) => {
+const TaskItem = ({ task, deleteTaskHandler, subtask_id }) => {
   const dispatch = useDispatch();
 
   return (
@@ -71,7 +71,11 @@ const TaskItem = ({ task, deleteTaskHandler }) => {
           </TaskBottomWrapper>
         </TaskLink>
       </TaskContent>
-      <TaskActions title='Delete' onClick={deleteTaskHandler}>
+      <TaskActions
+        data-subtask_id={subtask_id}
+        title='Delete'
+        onClick={deleteTaskHandler}
+      >
         <AiOutlineDelete style={{ color: '#202020' }} />
       </TaskActions>
     </Task>

@@ -112,7 +112,9 @@ module.exports = {
     }
   },
   async deleteSubtask(req, res) {
-    const { subtask_id } = req.headers;
+    const { subtask_id } = req.body;
+    console.log('odpalam funckje backend');
+    console.log(subtask_id);
     const task = await Task.findById(req.params.id);
 
     if (task) {
@@ -129,7 +131,7 @@ module.exports = {
 
         await task.save();
 
-        res.status(201).json({ message: 'Subtask successfully deleted' });
+        res.status(201).json(task);
       } else {
         res.status(404).json({ message: "Subtask doesn't exist" });
       }

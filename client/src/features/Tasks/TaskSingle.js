@@ -6,6 +6,7 @@ import {
   editTask,
   taskSingle,
   addNewSubtask,
+  deleteSubtask,
 } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import TaskCreate from './TaskCreate';
@@ -101,6 +102,15 @@ const TaskSingle = () => {
 
   const toggleAddTaskVisible = () => {
     setAddTaskVisible(!addTaskVisible);
+  };
+
+  const handleDeleteSubtask = (event) => {
+    dispatch(
+      deleteSubtask({
+        id,
+        subtask_id: event.currentTarget.dataset.subtask_id,
+      })
+    );
   };
 
   const months = {
@@ -238,13 +248,20 @@ const TaskSingle = () => {
               {task.subtasks.length ? (
                 <div>
                   <ul>
-                    {task.subtasks.map((task) => {
-                      return <TaskItem key={task._id} task={task} />;
+                    {task.subtasks.map((subtask) => {
+                      return (
+                        <TaskItem
+                          key={subtask._id}
+                          task={subtask}
+                          subtask_id={subtask._id}
+                          deleteTaskHandler={handleDeleteSubtask}
+                        />
+                      );
                     })}
                   </ul>
                 </div>
               ) : (
-                'nie mam dzieci'
+                ''
               )}
               {addTaskVisible ? (
                 <TaskCreate
