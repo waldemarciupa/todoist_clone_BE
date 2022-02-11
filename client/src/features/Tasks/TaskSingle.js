@@ -7,6 +7,7 @@ import {
   taskSingle,
   addNewSubtask,
   deleteSubtask,
+  completeSubtask,
 } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import TaskCreate from './TaskCreate';
@@ -253,8 +254,10 @@ const TaskSingle = () => {
                       <TaskItem
                         key={subtask._id}
                         task={subtask}
+                        task_id={id}
                         subtask_id={subtask._id}
                         deleteTaskHandler={handleDeleteSubtask}
+                        dispatchAction={completeSubtask}
                       />
                     );
                   })}

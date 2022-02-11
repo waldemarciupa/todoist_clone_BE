@@ -67,6 +67,17 @@ export const addNewSubtask = createAsyncThunk(
   }
 );
 
+export const completeSubtask = createAsyncThunk(
+  'tasks/completeSubtask',
+  async (payload) => {
+    const response = await api.put(`/task/${payload.id}/subtask`, {
+      subtask_id: payload.subtask_id,
+      subtask_completed: payload.completed,
+    });
+    return response.data;
+  }
+);
+
 export const deleteSubtask = createAsyncThunk(
   'tasks/deleteSubtask',
   async (payload) => {
@@ -195,6 +206,17 @@ export const tasksSlice = createSlice({
         });
       })
       .addCase(deleteSubtask.fulfilled, (state, action) => {
+        state.task = action.payload;
+        state.tasks = state.tasks.map((task) => {
+          return task._id === action.meta.arg.id
+            ? {
+                ...task,
+                subtasks: action.payload.subtasks,
+              }
+            : task;
+        });
+      })
+      .addCase(completeSubtask.fulfilled, (state, action) => {
         state.task = action.payload;
         state.tasks = state.tasks.map((task) => {
           return task._id === action.meta.arg.id

@@ -6,6 +6,7 @@ import {
   deleteTask,
   selectTasksByProject,
   resetTaskMessage,
+  editTask,
 } from './tasksSlice';
 import {
   ListBox,
@@ -65,6 +66,8 @@ const TaskList = () => {
                 <TaskItem
                   key={task._id}
                   task={task}
+                  task_id={task._id}
+                  dispatchAction={editTask}
                   deleteTaskHandler={deleteTaskHandler}
                 />
               );
