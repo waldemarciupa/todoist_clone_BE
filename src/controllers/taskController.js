@@ -111,10 +111,32 @@ module.exports = {
       res.status(404).json({ message: "Task doesn't exist" });
     }
   },
+  async completeSubtask(req, res) {
+    const { subtask_id } = req.body;
+    const { subtask_completed } = req.body;
+
+    const task = await Task.findById(req.params.id);
+
+    if (task) {
+      const subtask = task.subtasks.find((subtask) => {
+        return subtask._id.valueOf() === subtask_id;
+      });
+
+      if (subtask) {
+        subtask.completed = subtask_completed;
+
+        await task.save();
+
+        res.status(201).json(task);
+      } else {
+        res.status(404).json({ message: "Subtask doesn't exist" });
+      }
+    } else {
+      res.status(404).json({ message: "Task doesn't exist" });
+    }
+  },
   async deleteSubtask(req, res) {
     const { subtask_id } = req.body;
-    console.log('odpalam funckje backend');
-    console.log(subtask_id);
     const task = await Task.findById(req.params.id);
 
     if (task) {

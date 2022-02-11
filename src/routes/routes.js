@@ -19,6 +19,7 @@ router
 
 // Subtask
 router.route('/task/:id/subtask').post(taskController.createSubtask);
+router.route('/task/:id/subtask').put(taskController.completeSubtask);
 router.route('/task/:id/subtask-delete').post(taskController.deleteSubtask);
 
 // Project
