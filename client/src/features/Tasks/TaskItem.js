@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { editTask, selectTaskSingle } from './tasksSlice';
+import { selectTaskSingle } from './tasksSlice';
 import { AiOutlineDelete, AiOutlineCheck } from 'react-icons/ai';
 import {
   Task,
@@ -17,8 +17,15 @@ import {
   TaskProject,
   TaskBottomWrapper,
 } from '../../components/styles/Home.styled';
+import Branch from '../../components/svg/Branch';
 
-const TaskItem = ({ task, deleteTaskHandler, subtask_id }) => {
+const TaskItem = ({
+  task,
+  deleteTaskHandler,
+  task_id,
+  subtask_id,
+  dispatchAction,
+}) => {
   const dispatch = useDispatch();
 
   return (
@@ -30,9 +37,10 @@ const TaskItem = ({ task, deleteTaskHandler, subtask_id }) => {
             completed={task.completed}
             onClick={() => {
               dispatch(
-                editTask({
-                  id: task._id,
+                dispatchAction({
                   completed: !task.completed,
+                  id: task_id,
+                  subtask_id,
                 })
               );
             }}
@@ -62,12 +70,7 @@ const TaskItem = ({ task, deleteTaskHandler, subtask_id }) => {
             <TaskBottomWrapper>
               {task.subtasks && task.subtasks.length ? (
                 <BranchWrapper>
-                  <img
-                    width='16px'
-                    height='16px'
-                    alt='branch'
-                    src='/images/branch.svg'
-                  />
+                  <Branch width='16px' height='16px' />
                   {task.subtasks.filter((task) => task.completed).length}/
                   {task.subtasks.length}
                 </BranchWrapper>
