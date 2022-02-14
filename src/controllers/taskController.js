@@ -161,4 +161,23 @@ module.exports = {
       res.status(404).json({ message: "Task doesn't exist" });
     }
   },
+  async createComment(req, res) {
+    const { content } = req.body;
+
+    const task = await Task.findById(req.params.id);
+
+    if (task) {
+      const comment = {
+        content,
+      };
+
+      task.comments.push(comment);
+
+      await task.save();
+
+      res.status(201).json(task);
+    } else {
+      res.status(404).json({ message: "Task doesn't exist" });
+    }
+  },
 };
