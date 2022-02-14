@@ -29,6 +29,32 @@ const subtaskSchema = new mongoose.Schema(
   }
 );
 
+const commentSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: false,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    task: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Task',
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const taskSchema = new mongoose.Schema(
   {
     title: {
@@ -58,6 +84,7 @@ const taskSchema = new mongoose.Schema(
       default: false,
     },
     subtasks: [subtaskSchema],
+    comments: [commentSchema],
   },
   {
     timestamps: true,
