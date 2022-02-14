@@ -105,7 +105,30 @@ export const CommentsContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+`;
+
+export const CommentsList = styled.ul`
+  width: 100%;
+  padding: 0 22px;
+  list-style: none;
+`;
+
+export const Comment = styled.li`
+  padding: 10px 0;
+`;
+
+export const CommentUser = styled.span`
+  font-weight: 700;
+  margin-right: 8px;
+`;
+
+export const CommentDate = styled.span`
+  font-size: 12px;
+  color: #808080;
+`;
+
+export const CommentContent = styled.div`
+  margin-bottom: 14px;
 `;
 
 export const StyledParagraph = styled.p`

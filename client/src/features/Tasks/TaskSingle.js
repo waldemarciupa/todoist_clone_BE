@@ -32,6 +32,11 @@ import {
   CommentsContainer,
   StyledParagraph,
   SubtasksList,
+  CommentsList,
+  Comment,
+  CommentUser,
+  CommentDate,
+  CommentContent,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -50,6 +55,7 @@ const TaskSingle = () => {
   const projects = useSelector(selectProjects);
   const taskStatus = useSelector((state) => state.tasks.statusSingle);
   const error = useSelector((state) => state.tasks.error);
+  const user = useSelector((state) => state.user.data.name);
 
   const [id] = useState(params.id);
   const [title, setTitle] = useState('');
@@ -282,10 +288,34 @@ const TaskSingle = () => {
           )}
           {activeTab === 'tab2' && (
             <CommentsContainer>
-              <Note />
-              <StyledParagraph>
-                Add relevant notes, links, files, photos, or anything else here.
-              </StyledParagraph>
+              {task.comments.length ? (
+                <CommentsList>
+                  {task.comments.map((comment) => {
+                    return (
+                      <Comment key={comment._id}>
+                        <div>
+                          <CommentUser>{user}</CommentUser>
+                          <CommentDate>
+                            {new Date(comment.createdAt).getDate()}{' '}
+                            {months[new Date(comment.createdAt).getMonth()]}{' '}
+                            {new Date(comment.createdAt).getHours()}:
+                            {new Date(comment.createdAt).getMinutes()}
+                          </CommentDate>
+                        </div>
+                        <CommentContent>{comment.content}</CommentContent>
+                      </Comment>
+                    );
+                  })}
+                </CommentsList>
+              ) : (
+                <>
+                  <Note />
+                  <StyledParagraph>
+                    Add relevant notes, links, files, photos, or anything else
+                    here.
+                  </StyledParagraph>
+                </>
+              )}
             </CommentsContainer>
           )}
           {activeTab === 'tab3' && (
