@@ -4,6 +4,7 @@ import { selectProjects } from '../Projects/projectsSlice';
 import { resetTaskMessage } from './tasksSlice';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { Input } from '../../components/styles/TaskSingle.styled';
 import { AiOutlineFundProjectionScreen, AiOutlineFlag } from 'react-icons/ai';
 
 const TaskContent = styled.div`
@@ -13,26 +14,6 @@ const TaskContent = styled.div`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-`;
-
-const Input = styled.textarea`
-  font-size: 14px;
-  line-height: 21px;
-  border: none;
-  outline: none;
-  resize: none;
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
-    helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
-  color: #808080;
-  font-size: ${(props) => (props.primary ? '14px' : '13px')};
-  font-weight: ${(props) => (props.primary ? '500' : '300')};
-  height: ${(props) => (props.primary ? '25px' : '60px')};
-  margin: ${(props) => (props.primary ? '0' : '4px 0')};
-
-  &::placeholder {
-    color: #aaa;
-  }
 `;
 
 const Actions = styled.div`

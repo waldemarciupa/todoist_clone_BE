@@ -5,7 +5,7 @@ const StyledButton = styled.button`
   text-align: center;
   display: block;
   height: auto;
-  width: 100%;
+  width: ${(props) => (props.width ? props.width : '100%')};
   font-size: 13px !important;
   font-weight: 700;
   padding: 9px 12px;
@@ -21,13 +21,14 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ clickHandler, children, primary, type, title }) => {
+const Button = ({ clickHandler, children, primary, type, title, width }) => {
   return (
     <StyledButton
       title={title}
       onClick={clickHandler}
       type={type}
       primary={primary}
+      width={width}
     >
       {children}
     </StyledButton>
