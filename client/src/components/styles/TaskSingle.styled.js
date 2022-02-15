@@ -105,11 +105,11 @@ export const CommentsContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 22px;
 `;
 
 export const CommentsList = styled.ul`
   width: 100%;
-  padding: 0 22px;
   list-style: none;
 `;
 
@@ -131,6 +131,28 @@ export const CommentContent = styled.div`
   margin-bottom: 14px;
 `;
 
+export const WriteComment = styled.div`
+  width: 100%;
+  margin-top: 32px;
+  padding: 8px 16px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+`;
+
+export const AttachmentBtn = styled.label`
+  width: 34px;
+  height: 34px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #eee;
+  }
+`;
+
 export const StyledParagraph = styled.p`
   max-width: 250px;
   padding-top: 20px;
@@ -141,4 +163,24 @@ export const StyledParagraph = styled.p`
 
 export const SubtasksList = styled.div`
   padding: 0 22px;
+`;
+
+export const Input = styled.textarea`
+  font-size: 14px;
+  line-height: 21px;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
+    helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+  color: #808080;
+  font-size: ${(props) => (props.primary ? '14px' : '13px')};
+  font-weight: ${(props) => (props.primary ? '500' : '300')};
+  height: ${(props) => (props.primary ? '25px' : '60px')};
+  margin: ${(props) => (props.primary ? '0' : '4px 0')};
+
+  &::placeholder {
+    color: #aaa;
+  }
 `;

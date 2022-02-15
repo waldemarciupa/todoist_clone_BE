@@ -37,6 +37,9 @@ import {
   CommentUser,
   CommentDate,
   CommentContent,
+  WriteComment,
+  Input,
+  AttachmentBtn,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -47,6 +50,7 @@ import {
 } from '../../components/styles/Home.styled';
 import Note from '../../components/svg/Note';
 import TaskItem from './TaskItem';
+import Attachment from '../../components/svg/Attachment';
 
 const TaskSingle = () => {
   const params = useParams();
@@ -66,6 +70,8 @@ const TaskSingle = () => {
   const [projectColor, setProjectColor] = useState('rgb(5, 133, 39)');
   const [isEditingMode, setIsEditingMode] = useState(false);
   const [activeTab, setActiveTab] = useState('tab1');
+
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
     if (taskStatus === 'idle') {
@@ -289,24 +295,26 @@ const TaskSingle = () => {
           {activeTab === 'tab2' && (
             <CommentsContainer>
               {task.comments.length ? (
-                <CommentsList>
-                  {task.comments.map((comment) => {
-                    return (
-                      <Comment key={comment._id}>
-                        <div>
-                          <CommentUser>{user}</CommentUser>
-                          <CommentDate>
-                            {new Date(comment.createdAt).getDate()}{' '}
-                            {months[new Date(comment.createdAt).getMonth()]}{' '}
-                            {new Date(comment.createdAt).getHours()}:
-                            {new Date(comment.createdAt).getMinutes()}
-                          </CommentDate>
-                        </div>
-                        <CommentContent>{comment.content}</CommentContent>
-                      </Comment>
-                    );
-                  })}
-                </CommentsList>
+                <>
+                  <CommentsList>
+                    {task.comments.map((comment) => {
+                      return (
+                        <Comment key={comment._id}>
+                          <div>
+                            <CommentUser>{user}</CommentUser>
+                            <CommentDate>
+                              {new Date(comment.createdAt).getDate()}{' '}
+                              {months[new Date(comment.createdAt).getMonth()]}{' '}
+                              {new Date(comment.createdAt).getHours()}:
+                              {new Date(comment.createdAt).getMinutes()}
+                            </CommentDate>
+                          </div>
+                          <CommentContent>{comment.content}</CommentContent>
+                        </Comment>
+                      );
+                    })}
+                  </CommentsList>
+                </>
               ) : (
                 <>
                   <Note />
@@ -316,6 +324,29 @@ const TaskSingle = () => {
                   </StyledParagraph>
                 </>
               )}
+              <WriteComment>
+                <form>
+                  <Input
+                    required
+                    placeholder='Write a comment'
+                    value={comment}
+                    onChange={(event) => setComment(event.target.value)}
+                  />
+                  <FlexLine style={{ justifyContent: 'space-between' }}>
+                    <AttachmentBtn htmlFor='file-upload' title='Attach file'>
+                      <Attachment />
+                    </AttachmentBtn>
+                    <input
+                      style={{ display: 'none' }}
+                      id='file-upload'
+                      type='file'
+                    />
+                    <Button primary type='submit' width={'100px'}>
+                      Comment
+                    </Button>
+                  </FlexLine>
+                </form>
+              </WriteComment>
             </CommentsContainer>
           )}
           {activeTab === 'tab3' && (
