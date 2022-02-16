@@ -8,6 +8,7 @@ import {
   addNewSubtask,
   deleteSubtask,
   completeSubtask,
+  addNewComment,
 } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import TaskCreate from './TaskCreate';
@@ -125,6 +126,15 @@ const TaskSingle = () => {
         subtask_id: event.currentTarget.dataset.subtask_id,
       })
     );
+  };
+
+  const submitComment = (event) => {
+    event.preventDefault();
+
+    dispatch(addNewComment({ id, comment }));
+
+    console.log(comment);
+    setComment('');
   };
 
   const months = {
@@ -325,7 +335,7 @@ const TaskSingle = () => {
                 </>
               )}
               <WriteComment>
-                <form>
+                <form onSubmit={submitComment}>
                   <Input
                     required
                     placeholder='Write a comment'

@@ -114,7 +114,7 @@ export const CommentsList = styled.ul`
 `;
 
 export const Comment = styled.li`
-  padding: 10px 0;
+  padding: 10px 16px;
 `;
 
 export const CommentUser = styled.span`
@@ -128,7 +128,8 @@ export const CommentDate = styled.span`
 `;
 
 export const CommentContent = styled.div`
-  margin-bottom: 14px;
+  padding-top: 8px;
+  line-height: 1.5;
 `;
 
 export const WriteComment = styled.div`
@@ -166,6 +167,7 @@ export const SubtasksList = styled.div`
 `;
 
 export const Input = styled.textarea`
+  width: 100%;
   font-size: 14px;
   line-height: 21px;
   border: none;
