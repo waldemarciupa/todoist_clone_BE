@@ -74,7 +74,8 @@ export const Button = styled.button`
   display: block;
   padding: 10px 0;
   line-height: ${(props) => (props.tabSelected ? `1em` : '1.7')};
-  font-size: ${(props) => (props.tabSelected ? `13px` : '0.875rem')};
+  /* font-size: ${(props) => (props.tabSelected ? `13px` : '0.875rem')}; */
+  font-size: 13px;
   color: ${(props) => (props.tabSelected ? `#202020` : '#b3b3b3')};
   font-weight: ${(props) => (props.tabSelected ? `700` : '400')};
   text-decoration: none;
@@ -83,6 +84,7 @@ export const Button = styled.button`
   background-color: transparent;
   border-bottom: ${(props) =>
     props.tabSelected ? `1px solid #202020` : '1px solid #ddd'};
+  transition: all 0.2s;
 `;
 
 export const AddedOn = styled.div`
@@ -114,7 +116,7 @@ export const CommentsList = styled.ul`
 `;
 
 export const Comment = styled.li`
-  padding: 10px 0;
+  padding: 10px 16px;
 `;
 
 export const CommentUser = styled.span`
@@ -128,7 +130,8 @@ export const CommentDate = styled.span`
 `;
 
 export const CommentContent = styled.div`
-  margin-bottom: 14px;
+  padding-top: 8px;
+  line-height: 1.5;
 `;
 
 export const WriteComment = styled.div`
@@ -166,6 +169,7 @@ export const SubtasksList = styled.div`
 `;
 
 export const Input = styled.textarea`
+  width: 100%;
   font-size: 14px;
   line-height: 21px;
   border: none;

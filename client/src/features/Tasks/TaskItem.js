@@ -16,8 +16,10 @@ import {
   BranchWrapper,
   TaskProject,
   TaskBottomWrapper,
+  Container,
 } from '../../components/styles/Home.styled';
-import Branch from '../../components/svg/Branch';
+import Branch from '../../components/icons/Branch';
+import Comment from '../../components/icons/Comment';
 
 const TaskItem = ({
   task,
@@ -68,15 +70,25 @@ const TaskItem = ({
             <TaskTitle completed={task.completed}>{task.title}</TaskTitle>
             <TaskDescription>{task.description}</TaskDescription>
             <TaskBottomWrapper>
-              {task.subtasks && task.subtasks.length ? (
-                <BranchWrapper>
-                  <Branch width='16px' height='16px' />
-                  {task.subtasks.filter((task) => task.completed).length}/
-                  {task.subtasks.length}
-                </BranchWrapper>
-              ) : (
-                <div></div>
-              )}
+              <Container>
+                {task.subtasks && task.subtasks.length ? (
+                  <BranchWrapper>
+                    <Branch width='16px' height='16px' />
+                    {task.subtasks.filter((task) => task.completed).length}/
+                    {task.subtasks.length}
+                  </BranchWrapper>
+                ) : (
+                  ''
+                )}
+                {task.comments && task.comments.length ? (
+                  <BranchWrapper>
+                    <Comment width='16px' height='16px' />
+                    {task.comments.length}
+                  </BranchWrapper>
+                ) : (
+                  ''
+                )}
+              </Container>
               <TaskProject>{task.project}</TaskProject>
             </TaskBottomWrapper>
           </TaskLink>

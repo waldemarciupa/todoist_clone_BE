@@ -15,9 +15,9 @@ import {
   TasksList,
 } from '../../components/styles/Home.styled';
 import ButtonAddTask from '../../components/ButtonAddTask';
-import Bicycle from '../../components/svg/Bicycle';
-import Peace from '../../components/svg/Peace';
-import Paint from '../../components/svg/Paint';
+import Bicycle from '../../components/icons/Bicycle';
+import Peace from '../../components/icons/Peace';
+import Paint from '../../components/icons/Paint';
 import EmptyState from '../../components/EmptyState';
 import TaskCreate from './TaskCreate';
 import TaskItem from './TaskItem';
