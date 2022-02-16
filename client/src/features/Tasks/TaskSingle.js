@@ -49,9 +49,9 @@ import {
   TaskButtonOuter,
   TaskButtonInner,
 } from '../../components/styles/Home.styled';
-import Note from '../../components/svg/Note';
+import Note from '../../components/icons/Note';
 import TaskItem from './TaskItem';
-import Attachment from '../../components/svg/Attachment';
+import Attachment from '../../components/icons/Attachment';
 
 const TaskSingle = () => {
   const params = useParams();
@@ -73,6 +73,9 @@ const TaskSingle = () => {
   const [activeTab, setActiveTab] = useState('tab1');
 
   const [comment, setComment] = useState('');
+
+  const subtasksNumber = task && task.subtasks.length;
+  const commentsNumber = task && task.comments.length;
 
   useEffect(() => {
     if (taskStatus === 'idle') {
@@ -130,10 +133,7 @@ const TaskSingle = () => {
 
   const submitComment = (event) => {
     event.preventDefault();
-
     dispatch(addNewComment({ id, comment }));
-
-    console.log(comment);
     setComment('');
   };
 
@@ -249,6 +249,7 @@ const TaskSingle = () => {
               tabSelected={activeTab === 'tab1' && true}
             >
               Sub-tasks
+              <small> {subtasksNumber > 0 && subtasksNumber}</small>
             </TabButton>
             <TabButton
               value='tab2'
@@ -256,6 +257,7 @@ const TaskSingle = () => {
               tabSelected={activeTab === 'tab2' && true}
             >
               Comments
+              <small> {commentsNumber > 0 && commentsNumber}</small>
             </TabButton>
             <TabButton
               value='tab3'

@@ -158,7 +158,7 @@ export const TaskDescription = styled.p`
   font-size: 12px;
   word-break: break-word;
   color: #808080;
-  margin-bottom: 3px;
+  margin-bottom: 6px;
 `;
 
 export const Wrapper = styled.div`
@@ -173,6 +173,12 @@ export const TaskBottomWrapper = styled.div`
   align-items: center;
   font-size: 12px;
   color: #808080;
+`;
+
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 export const BranchWrapper = styled.div`

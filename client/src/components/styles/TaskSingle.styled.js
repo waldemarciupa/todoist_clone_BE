@@ -74,7 +74,8 @@ export const Button = styled.button`
   display: block;
   padding: 10px 0;
   line-height: ${(props) => (props.tabSelected ? `1em` : '1.7')};
-  font-size: ${(props) => (props.tabSelected ? `13px` : '0.875rem')};
+  /* font-size: ${(props) => (props.tabSelected ? `13px` : '0.875rem')}; */
+  font-size: 13px;
   color: ${(props) => (props.tabSelected ? `#202020` : '#b3b3b3')};
   font-weight: ${(props) => (props.tabSelected ? `700` : '400')};
   text-decoration: none;
@@ -83,6 +84,7 @@ export const Button = styled.button`
   background-color: transparent;
   border-bottom: ${(props) =>
     props.tabSelected ? `1px solid #202020` : '1px solid #ddd'};
+  transition: all 0.2s;
 `;
 
 export const AddedOn = styled.div`
