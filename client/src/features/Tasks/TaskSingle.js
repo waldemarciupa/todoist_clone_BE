@@ -9,12 +9,14 @@ import {
   deleteSubtask,
   completeSubtask,
   addNewComment,
+  deleteComment,
 } from './tasksSlice';
 import { selectProjects } from '../Projects/projectsSlice';
 import TaskCreate from './TaskCreate';
 import Button from '../../components/Button';
 import ButtonAddTask from '../../components/ButtonAddTask';
-import { AiOutlineCheck } from 'react-icons/ai';
+import { AiOutlineCheck, AiOutlineDelete } from 'react-icons/ai';
+
 import {
   StyledTaskSingle,
   ProjectColorWrapper,
@@ -41,6 +43,7 @@ import {
   WriteComment,
   Input,
   AttachmentBtn,
+  CommentDelete,
 } from '../../components/styles/TaskSingle.styled';
 
 import {
@@ -135,6 +138,15 @@ const TaskSingle = () => {
     event.preventDefault();
     dispatch(addNewComment({ id, comment }));
     setComment('');
+  };
+
+  const handleDeleteComment = (event) => {
+    dispatch(
+      deleteComment({
+        id,
+        comment_id: event.currentTarget.dataset.id,
+      })
+    );
   };
 
   const months = {
@@ -322,6 +334,15 @@ const TaskSingle = () => {
                             </CommentDate>
                           </div>
                           <CommentContent>{comment.content}</CommentContent>
+                          <CommentDelete
+                            data-id={comment._id}
+                            title='Delete comment'
+                            onClick={handleDeleteComment}
+                          >
+                            <AiOutlineDelete
+                              style={{ width: '16px', height: '16px' }}
+                            />
+                          </CommentDelete>
                         </Comment>
                       );
                     })}

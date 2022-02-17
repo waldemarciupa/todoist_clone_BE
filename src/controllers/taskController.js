@@ -180,4 +180,31 @@ module.exports = {
       res.status(404).json({ message: "Task doesn't exist" });
     }
   },
+  async deleteComment(req, res) {
+    const { comment_id } = req.body;
+
+    const task = await Task.findById(req.params.id);
+
+    if (task) {
+      const comment = task.comments.find((comment) => {
+        return comment._id.valueOf() === comment_id;
+      });
+
+      if (comment) {
+        const comments = task.comments.filter((comment) => {
+          return comment._id.valueOf() !== comment_id;
+        });
+
+        task.comments = comments;
+
+        await task.save();
+
+        res.status(201).json(task);
+      } else {
+        res.status(404).json({ message: "Comment doesn't exist" });
+      }
+    } else {
+      res.status(404).json({ message: "Task doesn't exist" });
+    }
+  },
 };
