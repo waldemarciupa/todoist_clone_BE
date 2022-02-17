@@ -117,6 +117,13 @@ export const CommentsList = styled.ul`
 
 export const Comment = styled.li`
   padding: 10px 16px;
+  position: relative;
+
+  &:hover {
+    button {
+      display: flex;
+    }
+  }
 `;
 
 export const CommentUser = styled.span`
@@ -140,6 +147,20 @@ export const WriteComment = styled.div`
   padding: 8px 16px 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
+`;
+
+export const CommentDelete = styled.button`
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 `;
 
 export const AttachmentBtn = styled.label`
