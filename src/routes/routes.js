@@ -25,6 +25,7 @@ router.route('/task/:id/subtask-delete').post(taskController.deleteSubtask);
 // Comment
 
 router.route('/task/:id/comment').post(taskController.createComment);
+router.route('/task/:id/comment-delete').post(taskController.deleteComment);
 
 // Project
 router
