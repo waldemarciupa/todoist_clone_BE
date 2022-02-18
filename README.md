@@ -3,6 +3,8 @@
 ## Demo
 Click the link - https://my-todoist-clone.herokuapp.com/
 
+![my-todosit-clone](./client/public/images/todoist-screenshot.png)
+
 ## Technologies
 Project is created with:
 * Mongo
