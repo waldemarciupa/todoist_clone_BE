@@ -1,4 +1,10 @@
 # MERN Todoist clone!
+This app is for educational purposes only
+
+If you don't want to register new account please use these credentials:
+
+email: jane@example.com
+password: 111111
 
 ## Demo
 Click the link - https://my-todoist-clone.herokuapp.com/
