@@ -159,6 +159,10 @@ export const TaskDescription = styled.p`
   word-break: break-word;
   color: #808080;
   margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export const Wrapper = styled.div`
