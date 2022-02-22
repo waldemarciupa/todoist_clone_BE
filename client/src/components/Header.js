@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/User/userSlice';
-import { resetTasks, selectTaskBySearch } from '../features/Tasks/tasksSlice';
+import {
+  resetTasks,
+  selectTaskBySearch,
+  selectTaskSingle,
+} from '../features/Tasks/tasksSlice';
 import { resetProjects } from '../features/Projects/projectsSlice';
 import Button from './Button';
 import {
@@ -11,6 +15,13 @@ import {
   StyledButton,
   SearchBar,
   Search,
+  SearchBox,
+  SearchClose,
+  TaskLink,
+  EmptySearch,
+  TaskLinkBottom,
+  Project,
+  Description,
 } from './styles/Header.styled';
 import {
   AiOutlineHome,
@@ -18,13 +29,16 @@ import {
   AiOutlinePlus,
   AiOutlineBell,
   AiOutlineSearch,
+  AiOutlineClose,
 } from 'react-icons/ai';
 
 const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
   const [searchInput, setSearchInput] = useState('');
+  const [searchBoxVisible, setSearchsearchBoxVisible] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const searchTasks = useSelector((state) => state.tasks.tasksBySearch);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -57,7 +71,7 @@ const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
           <AiOutlineHome />
         </StyledButton>
         <SearchBar onSubmit={handleSubmit}>
-          <StyledButton search type='submit'>
+          <StyledButton search type='submit' title='Search'>
             <AiOutlineSearch />
           </StyledButton>
           <Search
@@ -66,8 +80,42 @@ const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
               setSearchInput(e.currentTarget.value);
               dispatch(selectTaskBySearch(e.currentTarget.value));
             }}
+            onFocus={() => {
+              setSearchsearchBoxVisible(true);
+            }}
+            onBlur={(e) => {
+              e.relatedTarget?.click();
+              setSearchsearchBoxVisible(false);
+              setSearchInput('');
+            }}
             placeholder='Search'
-          ></Search>
+          />
+          <SearchClose title='Close'>
+            <AiOutlineClose />
+          </SearchClose>
+          <SearchBox visible={searchBoxVisible}>
+            {searchTasks.length > 0 ? (
+              searchTasks.map((task) => (
+                <TaskLink
+                  to={`/task/${task._id}`}
+                  onClick={() => {
+                    dispatch(selectTaskSingle(task._id));
+                  }}
+                  key={task._id}
+                >
+                  {task.title}
+                  <TaskLinkBottom>
+                    <Description>{task.description}</Description>
+                    <Project>{task.project}</Project>
+                  </TaskLinkBottom>
+                </TaskLink>
+              ))
+            ) : (
+              <EmptySearch>
+                No matches for {searchInput ? searchInput : 'empty search'}
+              </EmptySearch>
+            )}
+          </SearchBox>
         </SearchBar>
       </Control>
       <Control>

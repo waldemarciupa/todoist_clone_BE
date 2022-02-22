@@ -130,10 +130,7 @@ export const tasksSlice = createSlice({
     },
     selectTaskBySearch: {
       reducer(state, action) {
-        console.log('reducer: selectTaskBySearch');
-        console.log(action.payload);
         state.tasksBySearch = state.tasks.filter((task) => {
-          console.log(task.title.includes(action.payload));
           return task.title.includes(action.payload);
         });
       },
