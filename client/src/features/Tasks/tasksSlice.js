@@ -2,14 +2,15 @@ import api from '../../services/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
-  task: null,
-  tasks: [],
-  project: 'All tasks',
-  tasksByProject: [],
+  error: null,
   message: [],
+  project: 'All tasks',
   status: 'idle',
   statusSingle: 'idle',
-  error: null,
+  task: null,
+  tasks: [],
+  tasksByProject: [],
+  tasksBySearch: [],
 };
 
 export const fetchTasks = createAsyncThunk(
@@ -124,6 +125,16 @@ export const tasksSlice = createSlice({
       reducer(state, action) {
         state.tasksByProject = state.tasks.filter((task) => {
           return action.payload ? task.project === action.payload : true;
+        });
+      },
+    },
+    selectTaskBySearch: {
+      reducer(state, action) {
+        console.log('reducer: selectTaskBySearch');
+        console.log(action.payload);
+        state.tasksBySearch = state.tasks.filter((task) => {
+          console.log(task.title.includes(action.payload));
+          return task.title.includes(action.payload);
         });
       },
     },
@@ -275,6 +286,7 @@ export const tasksSlice = createSlice({
 export const {
   selectTaskSingle,
   selectTasks,
+  selectTaskBySearch,
   resetTasks,
   resetTaskMessage,
   setTaskProject,

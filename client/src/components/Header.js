@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../features/User/userSlice';
-import { resetTasks } from '../features/Tasks/tasksSlice';
+import { resetTasks, selectTaskBySearch } from '../features/Tasks/tasksSlice';
 import { resetProjects } from '../features/Projects/projectsSlice';
 import Button from './Button';
 import {
@@ -20,6 +21,8 @@ import {
 } from 'react-icons/ai';
 
 const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
+  const [searchInput, setSearchInput] = useState('');
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,6 +31,11 @@ const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
     dispatch(resetTasks());
     dispatch(resetProjects());
     navigate('/users/login');
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(selectTaskBySearch(searchInput));
   };
 
   return (
@@ -48,11 +56,18 @@ const Header = ({ showModal, isAsideVisible, toggleAside, filterHandler }) => {
         >
           <AiOutlineHome />
         </StyledButton>
-        <SearchBar>
-          <StyledButton style={{ position: 'absolute' }}>
+        <SearchBar onSubmit={handleSubmit}>
+          <StyledButton search type='submit'>
             <AiOutlineSearch />
           </StyledButton>
-          <Search placeholder='Search'></Search>
+          <Search
+            value={searchInput}
+            onChange={(e) => {
+              setSearchInput(e.currentTarget.value);
+              dispatch(selectTaskBySearch(e.currentTarget.value));
+            }}
+            placeholder='Search'
+          ></Search>
         </SearchBar>
       </Control>
       <Control>

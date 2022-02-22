@@ -21,6 +21,7 @@ export const Control = styled.div`
 `;
 
 export const StyledButton = styled.button`
+  position: ${(props) => (props.search ? 'absolute' : 'initial')};
   height: 28px;
   border: 0;
   background: transparent;
@@ -38,7 +39,7 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const SearchBar = styled.div`
+export const SearchBar = styled.form`
   height: 28px;
   background: hsla(0, 0%, 100%, 0.2);
   border-radius: 3px;
@@ -56,6 +57,7 @@ export const Search = styled.input`
   margin-left: 25px;
   padding-left: 4px;
   height: 100%;
+  color: #fff;
 
   &:focus {
     background: #fff;
