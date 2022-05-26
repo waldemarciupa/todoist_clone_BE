@@ -22,5 +22,5 @@ Project is created with:
 * redux toolkit
 * styled components 
 * axios
-* jest
+* react-testing-library
 * cypress
