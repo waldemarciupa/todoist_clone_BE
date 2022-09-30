@@ -13,6 +13,16 @@ const GloalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
     }
+    
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    #root {
+        height: 100vh;
+        overflow: hidden
+    }
 `;
 
 export default GloalStyles;
